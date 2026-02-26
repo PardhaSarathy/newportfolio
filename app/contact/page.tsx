@@ -45,7 +45,7 @@ export default function ContactPage() {
     };
 
     return (
-        <div className="relative min-h-[60vh] flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700">
+        <div className="relative min-h-[60vh] flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700 pb-32 md:pb-40">
 
             {/* Ambient Background Glow */}
             <div className="absolute top-1/4 left-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-brand-light/40 rounded-full blur-[100px] -z-10 animate-pulse pointer-events-none" />
@@ -56,7 +56,7 @@ export default function ContactPage() {
                 <p className="text-text-secondary mt-2">Broadcast a message frequency.</p>
             </div>
 
-            <Card className="max-w-2xl w-full !p-10 md:p-14 border-2 border-brand-light dark:border-white/10 shadow-xl bg-white/50 dark:bg-[#0F261E]/80 backdrop-blur-md relative overflow-hidden">
+            <Card className="max-w-2xl w-full !p-8 md:p-14 border-2 border-brand-light dark:border-white/10 shadow-xl bg-white/50 dark:bg-[#0F261E]/80 backdrop-blur-md relative overflow-hidden">
                 <form onSubmit={handleSubmit(onSubmit)} className="text-xl md:text-2xl leading-relaxed text-text-primary font-medium space-y-4">
 
                     {/* Name Field */}
@@ -69,7 +69,7 @@ export default function ContactPage() {
                             aria-label="Your Name"
                             disabled={isSubmitting}
                             className={clsx(
-                                "bg-transparent border-b-2 outline-none px-2 w-[160px] md:w-[200px] transition-colors placeholder:text-gray-300 dark:placeholder:text-[#8EBAAA]/50",
+                                "bg-transparent border-b-2 outline-none px-2 w-[140px] md:w-[200px] transition-colors placeholder:text-gray-300 dark:placeholder:text-[#8EBAAA]/50",
                                 errors.name ? "border-red-400" : "border-gray-200 dark:border-white/20 focus:border-brand-main dark:focus:border-[#2CC082] hover:border-gray-300 dark:hover:border-white/40"
                             )}
                         />
@@ -79,12 +79,12 @@ export default function ContactPage() {
                     {/* Interest Dropdown */}
                     <div className="inline-block relative mr-2 mt-4 md:mt-0">
                         <span className="opacity-50">and I'm looking for </span>
-                        <div className="inline-block relative">
+                        <div className="inline-block relative w-full md:w-auto mt-2 md:mt-0 max-w-full">
                             <select
                                 {...register("interest")}
                                 disabled={isSubmitting}
                                 aria-label="Your Interest"
-                                className="appearance-none bg-transparent border-b-2 border-gray-200 dark:border-white/20 focus:border-brand-main dark:focus:border-[#2CC082] outline-none px-2 pr-8 cursor-pointer hover:border-gray-300 dark:hover:border-white/40 transition-colors text-brand-dark dark:text-[#D1EBE1]"
+                                className="appearance-none bg-transparent border-b-2 border-gray-200 dark:border-white/20 focus:border-brand-main dark:focus:border-[#2CC082] outline-none px-2 pr-8 cursor-pointer hover:border-gray-300 dark:hover:border-white/40 transition-colors text-brand-dark dark:text-[#D1EBE1] max-w-full truncate"
                             >
                                 <option value="collaboration" className="bg-white dark:bg-[#0A1C16]">collaboration</option>
                                 <option value="engineering" className="bg-white dark:bg-[#0A1C16]">engineering</option>
@@ -92,14 +92,14 @@ export default function ContactPage() {
                                 <option value="just to say hi" className="bg-white dark:bg-[#0A1C16]">just to say hi</option>
                             </select>
                         </div>
-                        <span>. </span>
+                        <span className="hidden md:inline">. </span>
                     </div>
 
                     <br className="hidden lg:block" />
 
                     {/* Email Field */}
-                    <div className="inline-block relative mt-4 lg:mt-0">
-                        <span className="opacity-50">You can reach me at </span>
+                    <div className="inline-block relative mt-6 lg:mt-0">
+                        <span className="opacity-50 block md:inline">You can reach me at </span>
                         <input
                             {...register("email")}
                             type="text"
@@ -107,13 +107,13 @@ export default function ContactPage() {
                             aria-label="Your Email"
                             disabled={isSubmitting}
                             className={clsx(
-                                "bg-transparent border-b-2 outline-none px-2 w-[200px] md:w-[250px] transition-colors placeholder:text-gray-300 dark:placeholder:text-[#8EBAAA]/50",
+                                "bg-transparent border-b-2 outline-none px-2 w-[180px] md:w-[250px] transition-colors placeholder:text-gray-300 dark:placeholder:text-[#8EBAAA]/50 mt-2 md:mt-0",
                                 errors.email ? "border-red-400" : "border-gray-200 dark:border-white/20 focus:border-brand-main dark:focus:border-[#2CC082] hover:border-gray-300 dark:hover:border-white/40"
                             )}
                         />
                         {errors.email && <p className="absolute -bottom-6 left-0 text-xs text-red-500 font-mono">{errors.email.message}</p>}
                     </div>
-                    <span>.</span>
+                    <span className="hidden md:inline">.</span>
 
                     {/* Submit Button */}
                     <div className="pt-10 flex justify-center md:justify-end">

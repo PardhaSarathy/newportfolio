@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/Card";
 
 export default function Home() {
   return (
-    <div className="relative space-y-32 py-20">
+    <div className="relative space-y-32 pt-20 pb-32 md:pb-40">
       {/* Background Orbs */}
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-brand-light/40 blur-[120px] pointer-events-none -z-10" />
       <div className="absolute bottom-[20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-emerald-200/20 blur-[120px] pointer-events-none -z-10" />
