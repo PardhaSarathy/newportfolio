@@ -45,18 +45,22 @@ export default function ContactPage() {
     };
 
     return (
-        <div className="min-h-[60vh] flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700">
+        <div className="relative min-h-[60vh] flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700">
 
-            <div className="mb-8 text-center">
+            {/* Ambient Background Glow */}
+            <div className="absolute top-1/4 left-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-brand-light/40 rounded-full blur-[100px] -z-10 animate-pulse pointer-events-none" />
+            <div className="absolute bottom-1/4 right-1/4 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-emerald-200/30 rounded-full blur-[100px] -z-10 animate-pulse pointer-events-none" style={{ animationDelay: '2s' }} />
+
+            <div className="mb-8 text-center relative z-10">
                 <h1 className="text-4xl font-display font-bold text-text-primary">Signal</h1>
                 <p className="text-text-secondary mt-2">Broadcast a message frequency.</p>
             </div>
 
-            <Card className="max-w-2xl w-full !p-10 md:p-14 border-2 border-brand-light shadow-xl bg-white/50 backdrop-blur-sm relative overflow-hidden">
+            <Card className="max-w-2xl w-full !p-10 md:p-14 border-2 border-brand-light dark:border-white/10 shadow-xl bg-white/50 dark:bg-[#0F261E]/80 backdrop-blur-md relative overflow-hidden">
                 <form onSubmit={handleSubmit(onSubmit)} className="text-xl md:text-2xl leading-relaxed text-text-primary font-medium space-y-4">
 
                     {/* Name Field */}
-                    <div className="inline-block relative">
+                    <div className="inline-block relative mr-2">
                         <span className="opacity-50">Hello, my name is </span>
                         <input
                             {...register("name")}
@@ -65,34 +69,36 @@ export default function ContactPage() {
                             aria-label="Your Name"
                             disabled={isSubmitting}
                             className={clsx(
-                                "bg-transparent border-b-2 outline-none px-2 min-w-[200px] transition-colors placeholder:text-gray-300",
-                                errors.name ? "border-red-400" : "border-gray-200 focus:border-brand-main hover:border-gray-300"
+                                "bg-transparent border-b-2 outline-none px-2 w-[160px] md:w-[200px] transition-colors placeholder:text-gray-300 dark:placeholder:text-[#8EBAAA]/50",
+                                errors.name ? "border-red-400" : "border-gray-200 dark:border-white/20 focus:border-brand-main dark:focus:border-[#2CC082] hover:border-gray-300 dark:hover:border-white/40"
                             )}
                         />
                         {errors.name && <p className="absolute -bottom-6 left-0 text-xs text-red-500 font-mono">{errors.name.message}</p>}
                     </div>
 
                     {/* Interest Dropdown */}
-                    <span className="opacity-50"> and I'm looking for </span>
-                    <div className="inline-block relative">
-                        <select
-                            {...register("interest")}
-                            disabled={isSubmitting}
-                            aria-label="Your Interest"
-                            className="appearance-none bg-transparent border-b-2 border-gray-200 focus:border-brand-main outline-none px-2 pr-8 cursor-pointer hover:border-gray-300 transition-colors text-brand-dark"
-                        >
-                            <option value="collaboration">collaboration</option>
-                            <option value="engineering">engineering</option>
-                            <option value="consultation">consultation</option>
-                            <option value="just to say hi">just to say hi</option>
-                        </select>
+                    <div className="inline-block relative mr-2 mt-4 md:mt-0">
+                        <span className="opacity-50">and I'm looking for </span>
+                        <div className="inline-block relative">
+                            <select
+                                {...register("interest")}
+                                disabled={isSubmitting}
+                                aria-label="Your Interest"
+                                className="appearance-none bg-transparent border-b-2 border-gray-200 dark:border-white/20 focus:border-brand-main dark:focus:border-[#2CC082] outline-none px-2 pr-8 cursor-pointer hover:border-gray-300 dark:hover:border-white/40 transition-colors text-brand-dark dark:text-[#D1EBE1]"
+                            >
+                                <option value="collaboration" className="bg-white dark:bg-[#0A1C16]">collaboration</option>
+                                <option value="engineering" className="bg-white dark:bg-[#0A1C16]">engineering</option>
+                                <option value="consultation" className="bg-white dark:bg-[#0A1C16]">consultation</option>
+                                <option value="just to say hi" className="bg-white dark:bg-[#0A1C16]">just to say hi</option>
+                            </select>
+                        </div>
+                        <span>. </span>
                     </div>
-                    <span>. </span>
 
-                    <br className="hidden md:block" />
+                    <br className="hidden lg:block" />
 
                     {/* Email Field */}
-                    <div className="inline-block relative">
+                    <div className="inline-block relative mt-4 lg:mt-0">
                         <span className="opacity-50">You can reach me at </span>
                         <input
                             {...register("email")}
@@ -101,8 +107,8 @@ export default function ContactPage() {
                             aria-label="Your Email"
                             disabled={isSubmitting}
                             className={clsx(
-                                "bg-transparent border-b-2 outline-none px-2 min-w-[250px] transition-colors placeholder:text-gray-300",
-                                errors.email ? "border-red-400" : "border-gray-200 focus:border-brand-main hover:border-gray-300"
+                                "bg-transparent border-b-2 outline-none px-2 w-[200px] md:w-[250px] transition-colors placeholder:text-gray-300 dark:placeholder:text-[#8EBAAA]/50",
+                                errors.email ? "border-red-400" : "border-gray-200 dark:border-white/20 focus:border-brand-main dark:focus:border-[#2CC082] hover:border-gray-300 dark:hover:border-white/40"
                             )}
                         />
                         {errors.email && <p className="absolute -bottom-6 left-0 text-xs text-red-500 font-mono">{errors.email.message}</p>}
@@ -136,10 +142,10 @@ export default function ContactPage() {
                     <a href="mailto:pardhu.karnati2003@gmail.com" className="hover:underline">pardhu.karnati2003@gmail.com</a>
                 </div>
                 <div className="flex gap-4">
-                    <a href="https://www.linkedin.com/in/pardhasaradhireddy" target="_blank" className="p-2 bg-white rounded-full shadow-sm text-text-secondary hover:text-[#0077b5] hover:scale-110 transition-all">
+                    <a href="https://www.linkedin.com/in/pardhasaradhireddy" target="_blank" className="p-2 bg-white dark:bg-white/5 rounded-full shadow-sm text-text-secondary dark:text-[#8EBAAA] hover:text-[#0077b5] dark:hover:text-[#A9F0D4] dark:hover:bg-white/10 hover:scale-110 transition-all">
                         <Linkedin size={20} />
                     </a>
-                    <a href="https://github.com/PardhaSarathy" target="_blank" className="p-2 bg-white rounded-full shadow-sm text-text-secondary hover:text-black hover:scale-110 transition-all">
+                    <a href="https://github.com/PardhaSarathy" target="_blank" className="p-2 bg-white dark:bg-white/5 rounded-full shadow-sm text-text-secondary dark:text-[#8EBAAA] hover:text-black dark:hover:text-white dark:hover:bg-white/10 hover:scale-110 transition-all">
                         <Github size={20} />
                     </a>
                 </div>

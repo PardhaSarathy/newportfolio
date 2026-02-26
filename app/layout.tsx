@@ -14,23 +14,32 @@ export const metadata: Metadata = {
   description: "AI Systems Architect bridging the gap between raw data and human utility.",
 };
 
+import { ThemeProvider } from "@/components/ThemeProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={clsx(manrope.variable, spaceGrotesk.variable, jetbrainsMono.variable)}>
-      <body className="antialiased bg-bg-mist text-text-primary min-h-screen relative overflow-x-hidden selection:bg-brand-main selection:text-white">
-        <AuroraBackground />
+    <html lang="en" className={clsx(manrope.variable, spaceGrotesk.variable, jetbrainsMono.variable)} suppressHydrationWarning>
+      <body className="antialiased bg-bg-mist text-text-primary min-h-screen relative overflow-x-hidden selection:bg-brand-main selection:text-white transition-colors duration-500">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange={false}
+        >
+          <AuroraBackground />
 
-        {/* Main Content Area - padded for bottom dock */}
-        <main className="pb-32 container mx-auto px-4 pt-10 max-w-5xl min-h-[90vh] flex flex-col justify-center">
-          {children}
-        </main>
+          {/* Main Content Area - padded for bottom dock */}
+          <main className="pb-32 container mx-auto px-4 pt-10 max-w-5xl min-h-[90vh] flex flex-col justify-center relative z-10">
+            {children}
+          </main>
 
-        {/* Navigation */}
-        <FloatingDock />
+          {/* Navigation */}
+          <FloatingDock />
+        </ThemeProvider>
       </body>
     </html>
   );

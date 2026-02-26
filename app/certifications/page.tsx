@@ -24,8 +24,8 @@ export default function CertificationsPage() {
 
                 {/* Degree - Row 1 */}
                 <Card className="flex items-center gap-6 group">
-                    <div className="h-16 w-16 bg-gray-100 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-brand-light transition-colors duration-500">
-                        <BookOpen size={28} className="text-gray-500 group-hover:text-brand-dark transition-colors" />
+                    <div className="h-16 w-16 bg-gray-100 dark:bg-white/5 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-brand-light dark:group-hover:bg-brand-light/20 transition-colors duration-500">
+                        <BookOpen size={28} className="text-gray-500 dark:text-gray-400 group-hover:text-brand-dark transition-colors" />
                     </div>
                     <div>
                         <h2 className="text-xl font-bold text-text-primary">B.Tech in Computer Science</h2>
@@ -37,7 +37,7 @@ export default function CertificationsPage() {
                 {/* Certifications - Row 2 Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <Card className="flex items-center gap-4">
-                        <div className="p-2 bg-orange-100 rounded-lg text-orange-600">
+                        <div className="p-2 bg-orange-100 dark:bg-orange-500/20 rounded-lg text-orange-600 dark:text-orange-400">
                             <Award size={24} />
                         </div>
                         <div>
@@ -47,7 +47,7 @@ export default function CertificationsPage() {
                     </Card>
 
                     <Card className="flex items-center gap-4">
-                        <div className="p-2 bg-yellow-100 rounded-lg text-yellow-600">
+                        <div className="p-2 bg-yellow-100 dark:bg-yellow-500/20 rounded-lg text-yellow-600 dark:text-yellow-400">
                             <Award size={24} />
                         </div>
                         <div>

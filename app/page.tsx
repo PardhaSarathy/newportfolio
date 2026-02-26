@@ -7,7 +7,11 @@ import { Card } from "@/components/ui/Card";
 
 export default function Home() {
   return (
-    <div className="space-y-32 py-20">
+    <div className="relative space-y-32 py-20">
+      {/* Background Orbs */}
+      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-brand-light/40 blur-[120px] pointer-events-none -z-10" />
+      <div className="absolute bottom-[20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-emerald-200/20 blur-[120px] pointer-events-none -z-10" />
+
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center text-center space-y-8">
 
@@ -33,7 +37,7 @@ export default function Home() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="space-y-6 max-w-4xl mx-auto"
         >
-          <h1 className="text-6xl md:text-8xl font-display font-bold text-text-primary leading-[1.1] tracking-tight">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-text-primary leading-[1.1] tracking-tighter">
             Hi. I'm Pardhu. <br />
             <span className="text-brand-main/80">A Systems Architect.</span>
           </h1>
@@ -56,27 +60,27 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Project 1 */}
-          <Card className="group cursor-pointer hover:scale-[1.02] transition-transform duration-500 !p-0 overflow-hidden bg-[#E6F0FF] min-h-[400px] flex flex-col">
+          <Card className="group cursor-pointer hover:scale-[1.02] transition-transform duration-500 !p-0 overflow-hidden bg-[#E6F0FF] dark:bg-[#0A1A24] min-h-[400px] flex flex-col">
             <div className="p-10 flex-1 flex flex-col justify-center space-y-4 relative z-10">
               <div className="w-12 h-12 bg-blue-500 rounded-2xl mb-4 shadow-lg shadow-blue-500/20"></div>
-              <h3 className="text-3xl font-bold text-blue-900">Insurance AI Agent</h3>
-              <p className="text-blue-800/70 text-lg leading-relaxed max-w-sm">
+              <h3 className="text-3xl font-bold text-blue-900 dark:text-blue-100">Insurance AI Agent</h3>
+              <p className="text-blue-800/70 dark:text-blue-100/70 text-lg leading-relaxed max-w-sm">
                 Real-time voice agent for automated claims processing using WebRTC.
               </p>
             </div>
-            <div className="h-48 bg-gradient-to-t from-white/40 to-transparent"></div>
+            <div className="h-48 bg-gradient-to-t from-white/40 dark:from-[#0A1A24] to-transparent"></div>
           </Card>
 
           {/* Project 2 */}
-          <Card className="group cursor-pointer hover:scale-[1.02] transition-transform duration-500 !p-0 overflow-hidden bg-[#F0FFE6] min-h-[400px] flex flex-col">
+          <Card className="group cursor-pointer hover:scale-[1.02] transition-transform duration-500 !p-0 overflow-hidden bg-[#F0FFE6] dark:bg-[#042011] min-h-[400px] flex flex-col">
             <div className="p-10 flex-1 flex flex-col justify-center space-y-4 relative z-10">
               <div className="w-12 h-12 bg-green-500 rounded-2xl mb-4 shadow-lg shadow-green-500/20"></div>
-              <h3 className="text-3xl font-bold text-green-900">AI Travel Planner</h3>
-              <p className="text-green-800/70 text-lg leading-relaxed max-w-sm">
+              <h3 className="text-3xl font-bold text-green-900 dark:text-green-100">AI Travel Planner</h3>
+              <p className="text-green-800/70 dark:text-green-100/70 text-lg leading-relaxed max-w-sm">
                 Generative AI itinerary builder for seamless travel experiences.
               </p>
             </div>
-            <div className="h-48 bg-gradient-to-t from-white/40 to-transparent"></div>
+            <div className="h-48 bg-gradient-to-t from-white/40 dark:from-[#042011] to-transparent"></div>
           </Card>
         </div>
       </section>

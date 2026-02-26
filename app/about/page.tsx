@@ -2,102 +2,113 @@
 
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/Card";
-import { ArrowDown } from "lucide-react";
+import Image from "next/image";
 
 export default function AboutPage() {
     return (
         <div className="pb-20">
 
             {/* 1. Hero / Intro Section (Top of Page) */}
-            <section className="min-h-[60vh] flex flex-col items-center justify-center text-center space-y-8 animate-in fade-in zoom-in-95 duration-700">
+            <section className="flex flex-col items-center justify-center space-y-16 pt-24 pb-20 animate-in fade-in zoom-in-95 duration-700">
 
-                {/* Avatar Placeholder */}
-                <div className="relative w-40 h-40 md:w-56 md:h-56 rounded-full bg-gray-200 border-8 border-white shadow-2xl overflow-hidden mb-6">
-                    <div className="absolute inset-0 bg-brand-main/10 flex items-center justify-center text-4xl">👨‍💻</div>
-                    {/* Add real image here later */}
-                </div>
-
-                <h1 className="text-5xl md:text-7xl font-display font-bold text-text-primary">
+                {/* Main Header - Centered */}
+                <h1 className="text-6xl md:text-9xl font-display font-bold text-text-primary tracking-tight text-center">
                     I'm Pardhu.
                 </h1>
 
-                <p className="text-xl md:text-2xl text-text-secondary leading-relaxed max-w-2xl">
-                    An AI Systems Architect passionate about building <br className="hidden md:block" />
-                    <span className="text-brand-main font-bold">autonomous agents</span> and scalable systems.
-                </p>
+                {/* Content Grid: Arch Image (Left) + Text (Right) */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24 items-center max-w-6xl mx-auto px-6">
 
-                <motion.div
-                    animate={{ y: [0, 10, 0] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                    className="pt-12 opacity-50"
-                >
-                    <ArrowDown size={32} />
-                </motion.div>
+                    {/* Left Col: Arch Image */}
+                    <div className="md:col-span-5 flex justify-center md:justify-end">
+                        <div className="relative w-64 h-80 md:w-80 md:h-96 rounded-t-[10rem] rounded-b-[2rem] shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-500 bg-brand-main/5">
+                            <Image
+                                src="/assets/pardhu_new.png"
+                                alt="Pardhu"
+                                fill
+                                className="object-cover"
+                            />
+                        </div>
+                    </div>
+
+                    {/* Right Col: Bio Text */}
+                    <div className="md:col-span-7 space-y-8 text-center md:text-left">
+                        <h2 className="text-3xl md:text-5xl font-display font-bold text-text-primary leading-tight">
+                            I'm an <span className="text-brand-main">AI Systems Architect</span> working remotely from 35°C Hyderabad.
+                        </h2>
+
+                        <div className="space-y-6 text-xl md:text-2xl text-text-secondary leading-relaxed">
+                            <p>
+                                Over the past few years, I've worked in various areas of AI, including LLM orchestration, RAG pipelines, and autonomous agents.
+                            </p>
+                            <p>
+                                I'm proud to have worn many hats.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </section>
 
 
-            {/* 2. Scrollable Content - Timeline & Grid */}
-            <section className="space-y-20 mt-20">
+            {/* 2. Experience Section - Pill Cards */}
+            <section className="space-y-12 mt-10 max-w-4xl mx-auto px-4">
+                <h2 className="text-sm font-bold text-text-secondary tracking-widest uppercase pl-4">Experience</h2>
 
-                {/* Experience Timeline Blocks */}
-                <div className="space-y-12">
-                    <h2 className="text-sm font-bold text-text-secondary tracking-widest uppercase mb-8 border-b border-gray-200 pb-4">Experience</h2>
-
-                    <div className="relative border-l-2 border-brand-light pl-8 space-y-12 ml-4">
-                        {/* Item 1 */}
-                        <div className="relative">
-                            <span className="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-brand-main border-4 border-white shadow-sm"></span>
-                            <h3 className="text-2xl font-bold text-text-primary">Freelance AI Engineer</h3>
-                            <p className="text-brand-main font-mono text-sm mb-2">2024 - Present</p>
-                            <p className="text-text-secondary leading-relaxed max-w-2xl">
-                                Architecting custom voice agents and RAG pipelines for startups. Focusing on latency optimization and reliable tool-use patterns.
-                            </p>
+                <div className="space-y-4">
+                    {/* Item 1 */}
+                    <div className="group relative bg-brand-light/30 dark:bg-[#186E4A] text-brand-dark dark:text-[#D1EBE1] border border-brand-main/10 dark:border-white/10 p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                        <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-2 mb-4">
+                            <h3 className="text-3xl md:text-4xl font-display font-bold">Freelance AI Engineer</h3>
+                            <span className="text-brand-main/80 dark:text-[#A9F0D4] font-mono text-lg">2024 - Present</span>
                         </div>
+                        <p className="text-brand-dark/80 dark:text-[#8EBAAA] text-lg md:text-xl leading-relaxed max-w-2xl">
+                            Architecting custom voice agents and RAG pipelines for startups. Focusing on latency optimization and reliable tool-use patterns.
+                        </p>
+                    </div>
 
-                        {/* Item 2 */}
-                        <div className="relative">
-                            <span className="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-gray-300 border-4 border-white shadow-sm"></span>
-                            <h3 className="text-2xl font-bold text-text-primary">Undergraduate Researcher</h3>
-                            <p className="text-brand-main font-mono text-sm mb-2">2020 - 2024</p>
-                            <p className="text-text-secondary leading-relaxed max-w-2xl">
-                                Specialized in Machine Learning and Data Science. Published papers on predictive healthcare models.
-                            </p>
+                    {/* Item 2 */}
+                    <div className="group relative bg-text-secondary/10 hover:bg-text-secondary/15 dark:bg-white/5 dark:hover:bg-white/10 text-text-primary dark:text-[#D1EBE1] border border-transparent dark:border-white/10 p-8 md:p-12 rounded-[2rem] md:rounded-[3rem] transition-all duration-300">
+                        <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-2 mb-4">
+                            <h3 className="text-3xl md:text-4xl font-display font-bold">Undergraduate Researcher</h3>
+                            <span className="text-text-secondary dark:text-[#8EBAAA] font-mono text-lg">2020 - 2024</span>
                         </div>
+                        <p className="text-text-secondary text-lg md:text-xl leading-relaxed max-w-2xl">
+                            Specialized in Machine Learning and Data Science. Published papers on predictive healthcare models.
+                        </p>
                     </div>
                 </div>
+            </section>
 
 
-                {/* Philosophy Grid (Blocks) */}
-                <div className="space-y-8">
-                    <h2 className="text-sm font-bold text-text-secondary tracking-widest uppercase mb-8 border-b border-gray-200 pb-4">Principles</h2>
+            {/* 3. Philosophy Grid (Blocks) */}
+            <section className="space-y-12 mt-32 max-w-5xl mx-auto px-4">
+                <h2 className="text-sm font-bold text-text-secondary tracking-widest uppercase pl-4">Principles</h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <Card className="bg-[#Fdfcf8] hover:bg-white transition-colors border-none shadow-sm hover:shadow-md">
-                            <span className="text-brand-main font-display font-bold text-xl mb-2 block">01</span>
-                            <h3 className="text-xl font-bold text-text-primary mb-3">System Persistence.</h3>
-                            <p className="text-text-secondary">Building agents that don't just react, but remember and evolve over long-term interactions.</p>
-                        </Card>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <Card className="bg-[#Fdfcf8] dark:bg-[#0A1C16] hover:bg-white dark:hover:bg-[#0F2A21] p-10 rounded-[2.5rem] transition-all duration-300 border-none shadow-sm hover:shadow-lg">
+                        <span className="text-brand-main font-display font-bold text-2xl mb-4 block">01</span>
+                        <h3 className="text-2xl font-bold text-text-primary mb-3">System Persistence.</h3>
+                        <p className="text-text-secondary text-lg leading-relaxed">Building agents that don't just react, but remember and evolve over long-term interactions.</p>
+                    </Card>
 
-                        <Card className="bg-[#Fdfcf8] hover:bg-white transition-colors border-none shadow-sm hover:shadow-md">
-                            <span className="text-brand-main font-display font-bold text-xl mb-2 block">02</span>
-                            <h3 className="text-xl font-bold text-text-primary mb-3">Human Utility.</h3>
-                            <p className="text-text-secondary">AI shouldn't just be smart; it must be useful. Bridging the gap between raw capability and user need.</p>
-                        </Card>
+                    <Card className="bg-[#Fdfcf8] dark:bg-[#0A1C16] hover:bg-white dark:hover:bg-[#0F2A21] p-10 rounded-[2.5rem] transition-all duration-300 border-none shadow-sm hover:shadow-lg">
+                        <span className="text-brand-main font-display font-bold text-2xl mb-4 block">02</span>
+                        <h3 className="text-2xl font-bold text-text-primary mb-3">Human Utility.</h3>
+                        <p className="text-text-secondary text-lg leading-relaxed">AI shouldn't just be smart; it must be useful. Bridging the gap between raw capability and user need.</p>
+                    </Card>
 
-                        <Card className="bg-[#Fdfcf8] hover:bg-white transition-colors border-none shadow-sm hover:shadow-md">
-                            <span className="text-brand-main font-display font-bold text-xl mb-2 block">03</span>
-                            <h3 className="text-xl font-bold text-text-primary mb-3">Latency Matters.</h3>
-                            <p className="text-text-secondary">Optimizing every millisecond in voice pipelines to create creating feeling of natural conversation.</p>
-                        </Card>
+                    <Card className="bg-[#Fdfcf8] dark:bg-[#0A1C16] hover:bg-white dark:hover:bg-[#0F2A21] p-10 rounded-[2.5rem] transition-all duration-300 border-none shadow-sm hover:shadow-lg">
+                        <span className="text-brand-main font-display font-bold text-2xl mb-4 block">03</span>
+                        <h3 className="text-2xl font-bold text-text-primary mb-3">Latency Matters.</h3>
+                        <p className="text-text-secondary text-lg leading-relaxed">Optimizing every millisecond in voice pipelines to create creating feeling of natural conversation.</p>
+                    </Card>
 
-                        <Card className="bg-[#Fdfcf8] hover:bg-white transition-colors border-none shadow-sm hover:shadow-md">
-                            <span className="text-brand-main font-display font-bold text-xl mb-2 block">04</span>
-                            <h3 className="text-xl font-bold text-text-primary mb-3">Clean Code.</h3>
-                            <p className="text-text-secondary">Maintainable, typed, and well-documented architectures that scale without accumulation of debt.</p>
-                        </Card>
-                    </div>
+                    <Card className="bg-[#Fdfcf8] dark:bg-[#0A1C16] hover:bg-white dark:hover:bg-[#0F2A21] p-10 rounded-[2.5rem] transition-all duration-300 border-none shadow-sm hover:shadow-lg">
+                        <span className="text-brand-main font-display font-bold text-2xl mb-4 block">04</span>
+                        <h3 className="text-2xl font-bold text-text-primary mb-3">Clean Code.</h3>
+                        <p className="text-text-secondary text-lg leading-relaxed">Maintainable, typed, and well-documented architectures that scale without accumulation of debt.</p>
+                    </Card>
                 </div>
-
             </section>
         </div>
     );

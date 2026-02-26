@@ -27,7 +27,7 @@ export function Card({ children, className, delay = 0 }: CardProps) {
                 boxShadow: "0 20px 40px -10px rgba(0,0,0,0.1)"
             }}
             className={clsx(
-                "bg-bg-card rounded-3xl p-8 border-2 border-white/60 shadow-lg shadow-gray-200/50 hover:border-white transition-colors",
+                "bg-bg-card rounded-3xl p-8 border-2 border-white/60 dark:border-white/5 shadow-lg shadow-gray-200/50 dark:shadow-black/50 hover:border-white dark:hover:border-white/10 transition-all",
                 className
             )}
         >

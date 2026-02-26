@@ -1,22 +1,74 @@
 @import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
 
 @theme {
   --font-sans: var(--font-manrope);
   --font-display: var(--font-space-grotesk);
   --font-mono: var(--font-jetbrains-mono);
 
-  --color-bg-mist: #EDE7DE;
-  --color-bg-card: #F9F6F1;
-  --color-text-primary: #025A4E;
-  --color-text-secondary: #4A635D;
-  --color-brand-main: #025A4E;
-  --color-brand-light: #BDD4BE;
-  --color-brand-dark: #013830;
-  --color-accent-lime: #D4E6B5;
+  --color-bg-mist: var(--theme-bg-mist);
+  --color-bg-card: var(--theme-bg-card);
+  --color-text-primary: var(--theme-text-primary);
+  --color-text-secondary: var(--theme-text-secondary);
+  --color-brand-main: var(--theme-brand-main);
+  --color-brand-light: var(--theme-brand-light);
+  --color-brand-dark: var(--theme-brand-dark);
+  --color-accent-lime: var(--theme-accent-lime);
+}
+
+:root {
+  /* Light Mode (Morning/Daytime) */
+  --theme-bg-mist: #EDE7DE;
+  --theme-bg-card: #F9F6F1;
+  --theme-text-primary: #025A4E;
+  --theme-text-secondary: #4A635D;
+  --theme-brand-main: #025A4E;
+  --theme-brand-light: #BDD4BE;
+  --theme-brand-dark: #013830;
+  --theme-accent-lime: #D4E6B5;
+}
+
+.dark {
+  /* Deep Tonal Theme (Midnight Forest) */
+  --theme-bg-mist: #0A1C16;
+  --theme-bg-card: #112A22;
+  --theme-text-primary: #D1EBE1;
+  --theme-text-secondary: #8EBAAA;
+  --theme-brand-main: #2CC082;
+  --theme-brand-light: #186E4A;
+  --theme-brand-dark: #A9F0D4;
+  --theme-accent-lime: #23855E;
 }
 
 /* Base Styles */
 body {
   background-color: var(--color-bg-mist);
   color: var(--color-text-primary);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-mist);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-light);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: var(--color-bg-mist);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--color-brand-light);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-main);
 }
