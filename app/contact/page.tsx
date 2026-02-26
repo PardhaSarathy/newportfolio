@@ -57,11 +57,11 @@ export default function ContactPage() {
             </div>
 
             <Card className="max-w-2xl w-full !p-8 md:p-14 border-2 border-brand-light dark:border-white/10 shadow-xl bg-white/50 dark:bg-[#0F261E]/80 backdrop-blur-md relative overflow-hidden">
-                <form onSubmit={handleSubmit(onSubmit)} className="text-xl md:text-2xl leading-relaxed text-text-primary font-medium space-y-4">
+                <form onSubmit={handleSubmit(onSubmit)} className="text-xl md:text-2xl leading-relaxed text-text-primary font-medium flex flex-wrap items-baseline gap-x-2 gap-y-6 md:gap-y-8">
 
                     {/* Name Field */}
-                    <div className="inline-block relative mr-2">
-                        <span className="opacity-50">Hello, my name is </span>
+                    <span className="opacity-50">Hello, my name is</span>
+                    <div className="relative flex-1 min-w-[160px] max-w-full">
                         <input
                             {...register("name")}
                             type="text"
@@ -69,7 +69,7 @@ export default function ContactPage() {
                             aria-label="Your Name"
                             disabled={isSubmitting}
                             className={clsx(
-                                "bg-transparent border-b-2 outline-none px-2 w-[140px] md:w-[200px] transition-colors placeholder:text-gray-300 dark:placeholder:text-[#8EBAAA]/50",
+                                "bg-transparent border-b-2 outline-none px-2 w-full transition-colors placeholder:text-gray-300 dark:placeholder:text-[#8EBAAA]/50",
                                 errors.name ? "border-red-400" : "border-gray-200 dark:border-white/20 focus:border-brand-main dark:focus:border-[#2CC082] hover:border-gray-300 dark:hover:border-white/40"
                             )}
                         />
@@ -77,43 +77,39 @@ export default function ContactPage() {
                     </div>
 
                     {/* Interest Dropdown */}
-                    <div className="inline-block relative mr-2 mt-4 md:mt-0">
-                        <span className="opacity-50">and I'm looking for </span>
-                        <div className="inline-block relative w-full md:w-auto mt-2 md:mt-0 max-w-full">
-                            <select
-                                {...register("interest")}
-                                disabled={isSubmitting}
-                                aria-label="Your Interest"
-                                className="appearance-none bg-transparent border-b-2 border-gray-200 dark:border-white/20 focus:border-brand-main dark:focus:border-[#2CC082] outline-none px-2 pr-8 cursor-pointer hover:border-gray-300 dark:hover:border-white/40 transition-colors text-brand-dark dark:text-[#D1EBE1] max-w-full truncate"
-                            >
-                                <option value="collaboration" className="bg-white dark:bg-[#0A1C16]">collaboration</option>
-                                <option value="engineering" className="bg-white dark:bg-[#0A1C16]">engineering</option>
-                                <option value="consultation" className="bg-white dark:bg-[#0A1C16]">consultation</option>
-                                <option value="just to say hi" className="bg-white dark:bg-[#0A1C16]">just to say hi</option>
-                            </select>
-                        </div>
-                        <span className="hidden md:inline">. </span>
+                    <span className="opacity-50 w-full md:w-auto mt-2 md:mt-0">and I'm looking for</span>
+                    <div className="relative flex-1 min-w-[200px] max-w-full">
+                        <select
+                            {...register("interest")}
+                            disabled={isSubmitting}
+                            aria-label="Your Interest"
+                            className="w-full appearance-none bg-transparent border-b-2 border-gray-200 dark:border-white/20 focus:border-brand-main dark:focus:border-[#2CC082] outline-none px-2 pr-8 cursor-pointer hover:border-gray-300 dark:hover:border-white/40 transition-colors text-brand-dark dark:text-[#D1EBE1]"
+                        >
+                            <option value="collaboration" className="bg-white dark:bg-[#0A1C16]">collaboration</option>
+                            <option value="engineering" className="bg-white dark:bg-[#0A1C16]">engineering</option>
+                            <option value="consultation" className="bg-white dark:bg-[#0A1C16]">consultation</option>
+                            <option value="just to say hi" className="bg-white dark:bg-[#0A1C16]">just to say hi</option>
+                        </select>
                     </div>
-
-                    <br className="hidden lg:block" />
+                    <span>.</span>
 
                     {/* Email Field */}
-                    <div className="inline-block relative mt-6 lg:mt-0">
-                        <span className="opacity-50 block md:inline">You can reach me at </span>
+                    <span className="opacity-50 w-full lg:w-auto lg:ml-2 mt-2 lg:mt-0">You can reach me at</span>
+                    <div className="relative flex-1 min-w-[220px] max-w-full">
                         <input
                             {...register("email")}
                             type="text"
-                            placeholder="your email"
+                            placeholder="your email address"
                             aria-label="Your Email"
                             disabled={isSubmitting}
                             className={clsx(
-                                "bg-transparent border-b-2 outline-none px-2 w-[180px] md:w-[250px] transition-colors placeholder:text-gray-300 dark:placeholder:text-[#8EBAAA]/50 mt-2 md:mt-0",
+                                "bg-transparent border-b-2 outline-none px-2 w-full transition-colors placeholder:text-gray-300 dark:placeholder:text-[#8EBAAA]/50",
                                 errors.email ? "border-red-400" : "border-gray-200 dark:border-white/20 focus:border-brand-main dark:focus:border-[#2CC082] hover:border-gray-300 dark:hover:border-white/40"
                             )}
                         />
                         {errors.email && <p className="absolute -bottom-6 left-0 text-xs text-red-500 font-mono">{errors.email.message}</p>}
                     </div>
-                    <span className="hidden md:inline">.</span>
+                    <span>.</span>
 
                     {/* Submit Button */}
                     <div className="pt-10 flex justify-center md:justify-end">
