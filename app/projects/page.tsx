@@ -142,7 +142,7 @@ export default function ProjectsPage() {
                 </p>
 
                 {/* Categories / Filter Tabs */}
-                <div className="flex flex-wrap justify-center gap-2 mt-8 p-1.5 md:p-2 bg-gray-100/80 dark:bg-white/5 backdrop-blur-sm rounded-[2rem] border border-gray-200/50 dark:border-white/10 max-w-full">
+                <div className="flex justify-start md:justify-center overflow-x-auto no-scrollbar gap-2 mt-8 p-1.5 md:p-2 bg-gray-100/80 dark:bg-white/5 backdrop-blur-sm rounded-[2rem] border border-gray-200/50 dark:border-white/10 max-w-full">
                     {CATEGORIES.map((cat) => (
                         <button
                             key={cat}

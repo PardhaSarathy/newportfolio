@@ -27,7 +27,7 @@ export function FloatingDock() {
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
             onMouseMove={(e) => mouseX.set(e.pageX)}
             onMouseLeave={() => mouseX.set(Infinity)}
-            className="fixed bottom-4 md:bottom-8 inset-x-0 mx-auto w-fit z-50 flex items-end gap-1 md:gap-3 px-2 md:px-4 py-1.5 md:py-3 rounded-full bg-white/80 dark:bg-[#07130F]/90 backdrop-blur-2xl shadow-2xl border border-white/40 dark:border-white/10 h-12 md:h-20 transition-colors duration-500"
+            className="fixed bottom-4 md:bottom-8 inset-x-0 mx-auto w-fit z-50 flex items-end gap-1 md:gap-3 px-2 md:px-4 py-1.5 md:py-3 rounded-full bg-white/80 dark:bg-[#07130F]/90 backdrop-blur-2xl shadow-2xl border border-white/40 dark:border-white/10 h-14 md:h-20 transition-colors duration-500"
         >
             {links.map((link) => (
                 <DockIcon key={link.href} mouseX={mouseX} {...link} />
@@ -60,9 +60,9 @@ function DockIcon({
         return val - bounds.x - bounds.width / 2;
     });
 
-    const widthTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
-    const heightTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
-    const iconScaleTransform = useTransform(distance, [-150, 0, 150], [1, 1.5, 1]);
+    const widthTransform = useTransform(distance, [-150, 0, 150], [40, 64, 40]);
+    const heightTransform = useTransform(distance, [-150, 0, 150], [40, 64, 40]);
+    const iconScaleTransform = useTransform(distance, [-150, 0, 150], [1, 1.25, 1]);
 
     const width = useSpring(widthTransform, { mass: 0.1, stiffness: 150, damping: 12 });
     const height = useSpring(heightTransform, { mass: 0.1, stiffness: 150, damping: 12 });
@@ -116,9 +116,9 @@ function ThemeToggleIcon({ mouseX }: { mouseX: MotionValue }) {
         return val - bounds.x - bounds.width / 2;
     });
 
-    const widthTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
-    const heightTransform = useTransform(distance, [-150, 0, 150], [40, 80, 40]);
-    const iconScaleTransform = useTransform(distance, [-150, 0, 150], [1, 1.5, 1]);
+    const widthTransform = useTransform(distance, [-150, 0, 150], [40, 64, 40]);
+    const heightTransform = useTransform(distance, [-150, 0, 150], [40, 64, 40]);
+    const iconScaleTransform = useTransform(distance, [-150, 0, 150], [1, 1.25, 1]);
 
     const width = useSpring(widthTransform, { mass: 0.1, stiffness: 150, damping: 12 });
     const height = useSpring(heightTransform, { mass: 0.1, stiffness: 150, damping: 12 });
