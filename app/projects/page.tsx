@@ -130,7 +130,7 @@ export default function ProjectsPage() {
     );
 
     return (
-        <div className="min-h-screen pb-20 pt-10 px-4 md:px-8 max-w-7xl mx-auto space-y-12">
+        <div className="min-h-screen pb-32 md:pb-40 pt-10 px-4 md:px-8 max-w-7xl mx-auto space-y-12">
 
             {/* Header */}
             <div className="flex flex-col items-center text-center space-y-6">

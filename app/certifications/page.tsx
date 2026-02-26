@@ -5,7 +5,7 @@ import { BookOpen, Award } from "lucide-react";
 
 export default function CertificationsPage() {
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-5 duration-700">
+        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-5 duration-700 pb-32 md:pb-40">
             <header>
                 <h1 className="text-4xl font-display font-bold text-text-primary">Shelf</h1>
                 <p className="text-text-secondary mt-2">Education, credentials, and continuous learning.</p>
