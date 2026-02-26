@@ -54,15 +54,33 @@ function DockIcon({
     const ref = useRef<HTMLDivElement>(null);
     const pathname = usePathname();
     const isActive = pathname === href;
+    const isMobile = useIsMobile();
 
     const distance = useTransform(mouseX, (val) => {
         const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
         return val - bounds.x - bounds.width / 2;
     });
 
-    const widthTransform = useTransform(distance, [-150, 0, 150], [40, 64, 40]);
-    const heightTransform = useTransform(distance, [-150, 0, 150], [40, 64, 40]);
-    const iconScaleTransform = useTransform(distance, [-150, 0, 150], [1, 1.25, 1]);
+    const widthTransform = useTransform(distance, (val) => {
+        const maxVal = isMobile ? 64 : 80;
+        if (val < -150 || val > 150) return 40;
+        const fraction = 1 - Math.abs(val) / 150;
+        return 40 + fraction * (maxVal - 40);
+    });
+
+    const heightTransform = useTransform(distance, (val) => {
+        const maxVal = isMobile ? 64 : 80;
+        if (val < -150 || val > 150) return 40;
+        const fraction = 1 - Math.abs(val) / 150;
+        return 40 + fraction * (maxVal - 40);
+    });
+
+    const iconScaleTransform = useTransform(distance, (val) => {
+        const maxVal = isMobile ? 1.25 : 1.5;
+        if (val < -150 || val > 150) return 1;
+        const fraction = 1 - Math.abs(val) / 150;
+        return 1 + fraction * (maxVal - 1);
+    });
 
     const width = useSpring(widthTransform, { mass: 0.1, stiffness: 150, damping: 12 });
     const height = useSpring(heightTransform, { mass: 0.1, stiffness: 150, damping: 12 });
@@ -106,6 +124,7 @@ function ThemeToggleIcon({ mouseX }: { mouseX: MotionValue }) {
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
     const ref = useRef<HTMLButtonElement>(null);
+    const isMobile = useIsMobile();
 
     useEffect(() => {
         setMounted(true);
@@ -116,9 +135,26 @@ function ThemeToggleIcon({ mouseX }: { mouseX: MotionValue }) {
         return val - bounds.x - bounds.width / 2;
     });
 
-    const widthTransform = useTransform(distance, [-150, 0, 150], [40, 64, 40]);
-    const heightTransform = useTransform(distance, [-150, 0, 150], [40, 64, 40]);
-    const iconScaleTransform = useTransform(distance, [-150, 0, 150], [1, 1.25, 1]);
+    const widthTransform = useTransform(distance, (val) => {
+        const maxVal = isMobile ? 64 : 80;
+        if (val < -150 || val > 150) return 40;
+        const fraction = 1 - Math.abs(val) / 150;
+        return 40 + fraction * (maxVal - 40);
+    });
+
+    const heightTransform = useTransform(distance, (val) => {
+        const maxVal = isMobile ? 64 : 80;
+        if (val < -150 || val > 150) return 40;
+        const fraction = 1 - Math.abs(val) / 150;
+        return 40 + fraction * (maxVal - 40);
+    });
+
+    const iconScaleTransform = useTransform(distance, (val) => {
+        const maxVal = isMobile ? 1.25 : 1.5;
+        if (val < -150 || val > 150) return 1;
+        const fraction = 1 - Math.abs(val) / 150;
+        return 1 + fraction * (maxVal - 1);
+    });
 
     const width = useSpring(widthTransform, { mass: 0.1, stiffness: 150, damping: 12 });
     const height = useSpring(heightTransform, { mass: 0.1, stiffness: 150, damping: 12 });
@@ -152,4 +188,15 @@ function ThemeToggleIcon({ mouseX }: { mouseX: MotionValue }) {
             </motion.span>
         </button>
     );
+}
+
+function useIsMobile() {
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth < 768);
+        check();
+        window.addEventListener("resize", check);
+        return () => window.removeEventListener("resize", check);
+    }, []);
+    return isMobile;
 }

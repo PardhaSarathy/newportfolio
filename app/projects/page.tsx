@@ -141,23 +141,23 @@ export default function ProjectsPage() {
                     Engineering intelligence into software. From autonomous agents to scalable web systems.
                 </p>
 
-                {/* Categories / Filter Tabs */}
-                <div className="flex justify-start md:justify-center overflow-x-auto no-scrollbar gap-2 mt-8 p-1.5 md:p-2 bg-gray-100/80 dark:bg-white/5 backdrop-blur-sm rounded-[2rem] border border-gray-200/50 dark:border-white/10 max-w-full">
+                {/* Categories / Filter Tabs - Premium Segmented Control */}
+                <div className="flex md:flex-wrap justify-start md:justify-center overflow-x-auto no-scrollbar gap-2 md:gap-3 mt-10 p-1.5 md:p-2 bg-gray-100/80 dark:bg-[#0F261E]/60 backdrop-blur-xl rounded-[2.5rem] md:rounded-full border border-gray-200/50 dark:border-white/10 w-max max-w-[95vw] shadow-sm mx-auto">
                     {CATEGORIES.map((cat) => (
                         <button
                             key={cat}
                             onClick={() => setActiveCategory(cat)}
                             className={cn(
-                                "px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 relative",
+                                "px-5 md:px-7 py-2.5 md:py-3 rounded-full text-sm md:text-base font-semibold transition-all duration-300 relative whitespace-nowrap",
                                 activeCategory === cat
-                                    ? "text-white"
-                                    : "text-text-secondary hover:text-text-primary hover:bg-white/50"
+                                    ? "text-white dark:text-[#0A1C16]"
+                                    : "text-text-secondary hover:text-text-primary hover:bg-white/50 dark:hover:bg-white/10"
                             )}
                         >
                             {activeCategory === cat && (
                                 <motion.div
                                     layoutId="activeTab"
-                                    className="absolute inset-0 bg-text-primary rounded-full shadow-md"
+                                    className="absolute inset-0 bg-brand-main dark:bg-[#A9F0D4] rounded-full shadow-md"
                                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                                 />
                             )}
