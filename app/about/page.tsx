@@ -12,7 +12,7 @@ export default function AboutPage() {
             <section className="flex flex-col items-center justify-center space-y-16 pt-24 pb-20 animate-in fade-in zoom-in-95 duration-700">
 
                 {/* Main Header - Centered */}
-                <h1 className="text-6xl md:text-9xl font-display font-bold text-text-primary tracking-tight text-center">
+                <h1 className="text-5xl sm:text-6xl md:text-9xl font-display font-bold text-text-primary tracking-tight text-center">
                     I'm Pardhu.
                 </h1>
 
@@ -33,8 +33,8 @@ export default function AboutPage() {
 
                     {/* Right Col: Bio Text */}
                     <div className="md:col-span-7 space-y-8 text-center md:text-left">
-                        <h2 className="text-3xl md:text-5xl font-display font-bold text-text-primary leading-tight">
-                            I'm an <span className="text-brand-main">AI Systems Architect</span> working remotely from 35°C Hyderabad.
+                        <h2 className="text-3xl md:text-5xl font-display font-bold text-text-primary leading-tight break-words">
+                            I'm an <span className="text-brand-main">AI Systems Architect</span> working remotely from <br className="block md:hidden" />35°C Hyderabad.
                         </h2>
 
                         <div className="space-y-6 text-xl md:text-2xl text-text-secondary leading-relaxed">
