@@ -21,13 +21,20 @@ export default function AboutPage() {
 
                     {/* Left Col: Arch Image */}
                     <div className="md:col-span-5 flex justify-center md:justify-end">
-                        <div className="relative w-64 h-80 md:w-80 md:h-96 rounded-t-[10rem] rounded-b-[2rem] shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-500 bg-brand-main/5">
-                            <Image
-                                src="/assets/pardhu_new.png"
-                                alt="Pardhu"
-                                fill
-                                className="object-cover"
-                            />
+                        {/* Glow wrapper */}
+                        <div className="relative w-64 h-80 md:w-80 md:h-96 transform hover:scale-105 transition-transform duration-500 group">
+                            {/* Ambient background glow */}
+                            <div className="absolute inset-2 bg-brand-light/30 dark:bg-brand-main/20 blur-2xl rounded-t-[10rem] rounded-b-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
+                            {/* Image Container with Inner Glow */}
+                            <div className="relative w-full h-full rounded-t-[10rem] rounded-b-[2rem] shadow-2xl overflow-hidden bg-brand-main/5 ring-1 ring-white/10 dark:ring-white/5 backdrop-blur-sm">
+                                <Image
+                                    src="/assets/pardhu_new.png"
+                                    alt="Pardhu"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
                         </div>
                     </div>
 
