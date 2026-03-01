@@ -138,10 +138,10 @@ export default function ContactPage() {
                     <a href="mailto:pardhu.karnati2003@gmail.com" className="hover:underline">pardhu.karnati2003@gmail.com</a>
                 </div>
                 <div className="flex gap-4">
-                    <a href="https://www.linkedin.com/in/pardhasaradhireddy" target="_blank" className="p-2 bg-white dark:bg-white/5 rounded-full shadow-sm text-text-secondary dark:text-[#8EBAAA] hover:text-[#0077b5] dark:hover:text-[#A9F0D4] dark:hover:bg-white/10 hover:scale-110 transition-all">
+                    <a href="https://www.linkedin.com/in/pardhasaradhireddy" target="_blank" className="p-2 bg-white dark:bg-white/5 rounded-full shadow-sm text-text-secondary dark:text-[#8EBAAA] hover:text-[#0077b5] dark:hover:text-[#A9F0D4] dark:hover:bg-white/10 hover:scale-110 active:scale-95 transition-all">
                         <Linkedin size={20} />
                     </a>
-                    <a href="https://github.com/PardhaSarathy" target="_blank" className="p-2 bg-white dark:bg-white/5 rounded-full shadow-sm text-text-secondary dark:text-[#8EBAAA] hover:text-black dark:hover:text-white dark:hover:bg-white/10 hover:scale-110 transition-all">
+                    <a href="https://github.com/PardhaSarathy" target="_blank" className="p-2 bg-white dark:bg-white/5 rounded-full shadow-sm text-text-secondary dark:text-[#8EBAAA] hover:text-brand-main dark:hover:text-[#A9F0D4] dark:hover:bg-white/10 hover:scale-110 active:scale-95 transition-all">
                         <Github size={20} />
                     </a>
                 </div>

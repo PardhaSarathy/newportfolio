@@ -28,7 +28,7 @@ export default function CertificationsPage() {
                 <div className="grid gap-6">
 
                     {/* Degree - Row 1 */}
-                    <Card className="flex items-center gap-6 group">
+                    <Card className="flex items-center gap-6 group hover:shadow-md hover:border-brand-main/20 dark:hover:border-white/10 transition-all">
                         <div className="h-16 w-16 bg-gray-100 dark:bg-white/5 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-brand-light dark:group-hover:bg-brand-light/20 transition-colors duration-500">
                             <BookOpen size={28} className="text-gray-500 dark:text-gray-400 group-hover:text-brand-dark transition-colors" />
                         </div>
@@ -41,7 +41,7 @@ export default function CertificationsPage() {
 
                     {/* Certifications - Row 2 Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <Card className="flex items-center gap-4 group cursor-pointer" onClick={() => setSelectedCertificate({ url: "/certificates/gen-ai-study-jams-2024.jpeg", alt: "Gen AI Study Jams 2024" })}>
+                        <Card className="flex items-center gap-4 group cursor-pointer hover:shadow-md hover:border-brand-main/20 dark:hover:border-white/10 transition-all" onClick={() => setSelectedCertificate({ url: "/certificates/gen-ai-study-jams-2024.jpeg", alt: "Gen AI Study Jams 2024" })}>
                             <div className="p-2 bg-green-100 dark:bg-green-500/20 rounded-lg text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform">
                                 <Award size={24} />
                             </div>
@@ -51,7 +51,7 @@ export default function CertificationsPage() {
                             </div>
                         </Card>
 
-                        <Card className="flex items-center gap-4 group cursor-pointer" onClick={() => setSelectedCertificate({ url: "/certificates/CDAC.jpeg", alt: "CDAC Certificate" })}>
+                        <Card className="flex items-center gap-4 group cursor-pointer hover:shadow-md hover:border-brand-main/20 dark:hover:border-white/10 transition-all" onClick={() => setSelectedCertificate({ url: "/certificates/CDAC.jpeg", alt: "CDAC Certificate" })}>
                             <div className="p-2 bg-blue-100 dark:bg-blue-500/20 rounded-lg text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
                                 <Award size={24} />
                             </div>
@@ -61,7 +61,7 @@ export default function CertificationsPage() {
                             </div>
                         </Card>
 
-                        <Card className="flex items-center gap-4 group cursor-pointer" onClick={() => setSelectedCertificate({ url: "/certificates/Deep_Learning.jpeg", alt: "Deep Learning Certificate" })}>
+                        <Card className="flex items-center gap-4 group cursor-pointer hover:shadow-md hover:border-brand-main/20 dark:hover:border-white/10 transition-all" onClick={() => setSelectedCertificate({ url: "/certificates/Deep_Learning.jpeg", alt: "Deep Learning Certificate" })}>
                             <div className="p-2 bg-purple-100 dark:bg-purple-500/20 rounded-lg text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform">
                                 <Award size={24} />
                             </div>
@@ -71,7 +71,7 @@ export default function CertificationsPage() {
                             </div>
                         </Card>
 
-                        <Card className="flex items-center gap-4 group">
+                        <Card className="flex items-center gap-4 group hover:shadow-md hover:border-brand-main/20 dark:hover:border-white/10 transition-all">
                             <div className="p-2 bg-orange-100 dark:bg-orange-500/20 rounded-lg text-orange-600 dark:text-orange-400">
                                 <Award size={24} />
                             </div>
@@ -81,7 +81,7 @@ export default function CertificationsPage() {
                             </div>
                         </Card>
 
-                        <Card className="flex items-center gap-4 group">
+                        <Card className="flex items-center gap-4 group hover:shadow-md hover:border-brand-main/20 dark:hover:border-white/10 transition-all">
                             <div className="p-2 bg-yellow-100 dark:bg-yellow-500/20 rounded-lg text-yellow-600 dark:text-yellow-400">
                                 <Award size={24} />
                             </div>
@@ -95,7 +95,7 @@ export default function CertificationsPage() {
                     {/* Specializations & Bootcamps */}
                     <h2 className="text-2xl font-bold text-text-primary mt-12 mb-6">Specializations & Bootcamps</h2>
 
-                    <Card className="flex flex-col md:flex-row gap-6 p-6 group cursor-pointer" onClick={() => setSelectedCertificate({ url: "/certificates/mathworks-final-1.jpg", alt: "MATLAB Onramp Certificate" })}>
+                    <Card className="flex flex-col md:flex-row gap-6 p-6 group cursor-pointer hover:shadow-lg hover:border-brand-main/20 dark:hover:border-white/10 transition-all" onClick={() => setSelectedCertificate({ url: "/certificates/mathworks-final-1.jpg", alt: "MATLAB Onramp Certificate" })}>
                         <div className="flex-shrink-0 flex items-center justify-center h-16 w-16 bg-blue-100 dark:bg-blue-500/20 rounded-2xl text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
                             <Award size={32} />
                         </div>

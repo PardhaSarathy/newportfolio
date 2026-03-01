@@ -210,7 +210,7 @@ export default function ProjectsPage() {
                                         </div>
                                         {/* Link arrow appears on hover */}
                                         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
-                                            <ArrowUpRight className="text-gray-400" />
+                                            <ArrowUpRight className="text-gray-400 group-hover:text-brand-main dark:group-hover:text-[#A9F0D4] transition-colors" />
                                         </div>
                                     </div>
 
@@ -241,7 +241,7 @@ export default function ProjectsPage() {
                                                 href={link.url}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="flex items-center gap-2 text-sm font-bold text-text-primary hover:text-brand-main transition-colors"
+                                                className="flex items-center gap-2 text-sm font-bold text-text-primary hover:text-brand-main dark:hover:text-[#A9F0D4] transition-colors"
                                             >
                                                 {link.icon && <link.icon size={16} />}
                                                 {link.label}
@@ -251,7 +251,7 @@ export default function ProjectsPage() {
                                 </div>
 
                                 {/* Background Decoration */}
-                                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-gray-50 to-transparent rounded-bl-[10rem] -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-gray-50 dark:from-white/5 to-transparent rounded-bl-[10rem] -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
                             </Card>
                         </motion.div>
                     ))}

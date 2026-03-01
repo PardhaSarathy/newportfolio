@@ -61,7 +61,7 @@ export default function Home() {
               href="https://github.com/PardhaSarathy"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 text-text-secondary hover:text-brand-main dark:hover:text-[#A9F0D4] transition-colors rounded-full hover:bg-brand-main/10"
+              className="p-3 text-text-secondary hover:text-brand-main dark:hover:text-[#A9F0D4] transition-all rounded-full hover:bg-brand-main/10 active:scale-95"
               aria-label="GitHub Profile"
             >
               <Github size={24} />
@@ -71,7 +71,7 @@ export default function Home() {
               href="https://www.linkedin.com/in/pardhasaradhireddy/"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 text-text-secondary hover:text-brand-main dark:hover:text-[#A9F0D4] transition-colors rounded-full hover:bg-brand-main/10"
+              className="p-3 text-text-secondary hover:text-brand-main dark:hover:text-[#A9F0D4] transition-all rounded-full hover:bg-brand-main/10 active:scale-95"
               aria-label="LinkedIn Profile"
             >
               <Linkedin size={24} />
