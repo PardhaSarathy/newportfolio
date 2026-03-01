@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, FileText, Github, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
 
@@ -45,6 +45,38 @@ export default function Home() {
           <p className="text-xl md:text-2xl text-text-secondary font-medium leading-relaxed max-w-2xl mx-auto">
             I dismantle complex data problems and rebuild them as intelligent, human-centric systems.
           </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-6">
+            <a
+              href="/assets/Karnati_Reddy_Updated_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex items-center gap-2 px-6 py-3 rounded-full bg-brand-main text-white font-bold text-sm hover:bg-brand-main/90 transition-all shadow-md shadow-brand-main/20 hover:shadow-lg hover:shadow-brand-main/40 active:scale-[0.98]"
+            >
+              <FileText size={18} />
+              <span>Resume</span>
+            </a>
+
+            <a
+              href="https://github.com/PardhaSarathy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 text-text-secondary hover:text-brand-main dark:hover:text-[#A9F0D4] transition-colors rounded-full hover:bg-brand-main/10"
+              aria-label="GitHub Profile"
+            >
+              <Github size={24} />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/pardhasaradhireddy/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-3 text-text-secondary hover:text-brand-main dark:hover:text-[#A9F0D4] transition-colors rounded-full hover:bg-brand-main/10"
+              aria-label="LinkedIn Profile"
+            >
+              <Linkedin size={24} />
+            </a>
+          </div>
         </motion.div>
 
       </section>
