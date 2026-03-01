@@ -77,6 +77,32 @@ export default function Home() {
               <Linkedin size={24} />
             </a>
           </div>
+
+          {/* Static Core Expertise Tags - Mobile Safe */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="pt-10 md:pt-12 flex flex-col items-center gap-5"
+          >
+            <p className="text-xs font-bold text-brand-main/60 dark:text-[#8EBAAA] tracking-[0.2em] uppercase">Core Expertise</p>
+            <div className="flex flex-wrap justify-center gap-2 md:gap-3 max-w-2xl px-2">
+              {[
+                "Large Language Models",
+                "RAG Systems",
+                "Multi-Agent Workflows",
+                "Computer Vision & OCR",
+                "WebRTC & Infra"
+              ].map((skill) => (
+                <span
+                  key={skill}
+                  className="px-4 py-2 rounded-xl bg-brand-main/5 dark:bg-white/5 border border-brand-main/10 dark:border-white/10 text-brand-dark dark:text-[#D1EBE1] text-xs md:text-sm font-semibold transition-colors hover:bg-brand-main/10 dark:hover:bg-white/10 cursor-default"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </motion.div>
         </motion.div>
 
       </section>
