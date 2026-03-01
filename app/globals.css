@@ -14,8 +14,6 @@
   --color-brand-light: var(--theme-brand-light);
   --color-brand-dark: var(--theme-brand-dark);
   --color-accent-lime: var(--theme-accent-lime);
-
-  --animate-marquee: marquee 30s linear infinite;
 }
 
 :root {
@@ -73,20 +71,4 @@ body {
 
 .dark ::-webkit-scrollbar-thumb:hover {
   background: var(--color-brand-main);
-}
-
-/* Custom Animations */
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.fade-edges {
-  mask-image: linear-gradient(to right, transparent, black 30px, black calc(100% - 30px), transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 30px, black calc(100% - 30px), transparent);
 }

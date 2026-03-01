@@ -35,7 +35,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="space-y-6 max-w-4xl mx-auto px-4 md:px-0"
+          className="space-y-6 max-w-4xl mx-auto"
         >
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-text-primary leading-[1.1] tracking-tighter">
             Hi. I'm Pardhu. <br />
@@ -76,40 +76,6 @@ export default function Home() {
             >
               <Linkedin size={24} />
             </a>
-          </div>
-
-          {/* AI Skills Auto-scrolling Marquee - Strict Mobile Bounds / Full Bleed */}
-          <div className="w-full overflow-hidden flex justify-center">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 1 }}
-              className="mt-12 md:mt-16 w-full max-w-5xl overflow-hidden relative fade-edges"
-            >
-              <div className="flex w-max animate-marquee gap-3 md:gap-8 hover:[animation-play-state:paused] cursor-default">
-                {[
-                  "Large Language Models (LLMs)",
-                  "Retrieval-Augmented Generation (RAG)",
-                  "Multi-Agent Workflows",
-                  "Multimodal Agents (Voice)",
-                  "Vision & OCR",
-                  "Prompt Engineering",
-                  "Large Language Models (LLMs)",
-                  "Retrieval-Augmented Generation (RAG)",
-                  "Multi-Agent Workflows",
-                  "Multimodal Agents (Voice)",
-                  "Vision & OCR",
-                  "Prompt Engineering"
-                ].map((skill, index) => (
-                  <span
-                    key={index}
-                    className="px-4 py-1.5 md:px-5 md:py-2.5 rounded-full border border-gray-200/50 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-sm text-text-primary dark:text-[#A9F0D4] whitespace-nowrap text-xs md:text-sm font-bold shadow-sm"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
           </div>
         </motion.div>
 
