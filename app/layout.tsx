@@ -39,7 +39,7 @@ export default function RootLayout({
           <AuroraBackground />
 
           {/* Main Content Area - padded for bottom dock */}
-          <main className="pb-32 container mx-auto px-0 md:px-4 pt-10 max-w-5xl min-h-[90vh] flex flex-col justify-center relative z-10">
+          <main className="pb-32 container mx-auto px-4 pt-10 max-w-5xl min-h-[90vh] flex flex-col justify-center relative z-10">
             {children}
           </main>
 
