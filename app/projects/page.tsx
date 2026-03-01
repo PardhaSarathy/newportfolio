@@ -142,28 +142,45 @@ export default function ProjectsPage() {
                 </p>
 
                 {/* Categories / Filter Tabs - Premium Segmented Control */}
-                <div className="flex md:flex-wrap justify-start md:justify-center overflow-x-auto no-scrollbar gap-2 md:gap-3 mt-10 p-1.5 md:p-2 bg-gray-100/80 dark:bg-[#0F261E]/60 backdrop-blur-xl rounded-[2.5rem] md:rounded-full border border-gray-200/50 dark:border-white/10 w-max max-w-[95vw] shadow-sm mx-auto">
-                    {CATEGORIES.map((cat) => (
-                        <button
-                            key={cat}
-                            onClick={() => setActiveCategory(cat)}
-                            className={cn(
-                                "px-5 md:px-7 py-2.5 md:py-3 rounded-full text-sm md:text-base font-semibold transition-all duration-300 relative whitespace-nowrap",
-                                activeCategory === cat
-                                    ? "text-white dark:text-[#0A1C16]"
-                                    : "text-text-secondary hover:text-text-primary hover:bg-white/50 dark:hover:bg-white/10"
-                            )}
-                        >
-                            {activeCategory === cat && (
-                                <motion.div
-                                    layoutId="activeTab"
-                                    className="absolute inset-0 bg-brand-main dark:bg-[#A9F0D4] rounded-full shadow-md"
-                                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                                />
-                            )}
-                            <span className="relative z-10">{cat}</span>
-                        </button>
-                    ))}
+                <div className="sticky top-24 z-50 flex md:flex-wrap justify-start md:justify-center overflow-x-auto no-scrollbar gap-2 md:gap-3 mt-10 p-1.5 md:p-2 bg-gray-100/80 dark:bg-[#0F261E]/80 backdrop-blur-xl rounded-[2.5rem] md:rounded-full border border-gray-200/50 dark:border-white/10 w-max max-w-[95vw] shadow-sm md:shadow-md mx-auto">
+                    {CATEGORIES.map((cat) => {
+                        // Dynamically calculate the count for each category
+                        const count = cat === "All"
+                            ? PROJECTS.length
+                            : PROJECTS.filter(p => p.category.includes(cat)).length;
+
+                        return (
+                            <button
+                                key={cat}
+                                onClick={() => setActiveCategory(cat)}
+                                className={cn(
+                                    "flex items-center gap-2 px-5 md:px-7 py-2.5 md:py-3 rounded-full text-sm md:text-base font-semibold transition-all duration-300 relative whitespace-nowrap active:scale-[0.97]",
+                                    activeCategory === cat
+                                        ? "text-white dark:text-[#0A1C16]"
+                                        : "text-text-secondary hover:text-text-primary hover:bg-white/50 dark:hover:bg-white/10"
+                                )}
+                            >
+                                {activeCategory === cat && (
+                                    <motion.div
+                                        layoutId="activeTab"
+                                        className="absolute inset-0 bg-brand-main dark:bg-[#A9F0D4] rounded-full shadow-md"
+                                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                                    />
+                                )}
+                                <span className="relative z-10">{cat}</span>
+
+                                {/* Dynamic Item Count Badge */}
+                                <span className={cn(
+                                    "relative z-10 text-[0.65rem] md:text-xs font-bold px-2 py-0.5 rounded-full transition-colors",
+                                    activeCategory === cat
+                                        ? "bg-white/20 dark:bg-black/10 text-white dark:text-[#0A1C16]"
+                                        : "bg-gray-200/70 dark:bg-white/10 text-gray-500 dark:text-gray-400 group-hover:bg-gray-300/50"
+                                )}>
+                                    {count}
+                                </span>
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
 
@@ -183,7 +200,7 @@ export default function ProjectsPage() {
                             transition={{ duration: 0.3 }}
                             className={cn("h-full", project.bentoClass)}
                         >
-                            <Card className="h-full group flex flex-col justify-between p-8 bg-white dark:bg-[#0F261E] hover:bg-gray-50/80 dark:hover:bg-[#153026] border border-gray-100 dark:border-white/5 hover:border-gray-200 dark:hover:border-white/10 shadow-sm hover:shadow-xl transition-all duration-500 rounded-[2rem] relative overflow-hidden">
+                            <Card className="h-full group flex flex-col justify-between p-8 bg-white dark:bg-[#0F261E] hover:bg-gray-50/80 dark:hover:bg-[#153026] border border-gray-100 dark:border-white/5 hover:border-gray-200 dark:hover:border-white/10 shadow-md shadow-gray-200/50 dark:shadow-none hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-none transition-all duration-500 rounded-[2rem] relative overflow-hidden">
 
                                 {/* Top Content */}
                                 <div className="space-y-6 relative z-10">

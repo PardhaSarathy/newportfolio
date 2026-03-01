@@ -27,7 +27,7 @@ export function FloatingDock() {
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
             onMouseMove={(e) => mouseX.set(e.pageX)}
             onMouseLeave={() => mouseX.set(Infinity)}
-            className="fixed bottom-4 md:bottom-8 inset-x-0 mx-auto w-fit z-50 flex items-end gap-1 md:gap-3 px-2 md:px-4 py-1.5 md:py-3 rounded-full bg-white/80 dark:bg-[#07130F]/90 backdrop-blur-2xl shadow-2xl border border-white/40 dark:border-white/10 h-14 md:h-20 transition-colors duration-500"
+            className="fixed bottom-4 md:bottom-8 inset-x-0 mx-auto w-fit z-50 flex items-end gap-1 md:gap-3 px-2 md:px-4 py-1.5 md:py-3 rounded-full bg-white/30 dark:bg-[#0A1C16]/60 backdrop-blur-2xl shadow-[0_0_35px_rgba(2,90,78,0.6)] dark:shadow-[0_0_25px_rgba(169,240,212,0.3)] border border-white/50 dark:border-[#A9F0D4]/20 h-14 md:h-20 transition-all duration-500"
         >
             {links.map((link) => (
                 <DockIcon key={link.href} mouseX={mouseX} {...link} />
@@ -99,8 +99,8 @@ function DockIcon({
                 className={clsx(
                     "flex items-center justify-center rounded-full transition-colors duration-200",
                     isActive
-                        ? "bg-brand-light text-brand-main dark:bg-[#186E4A] dark:text-[#A9F0D4] shadow-inner border border-brand-main/20 dark:border-white/10"
-                        : "bg-gray-100/50 dark:bg-white/5 text-text-secondary hover:bg-white dark:hover:bg-white/10 border border-transparent dark:text-[#8EBAAA]"
+                        ? "bg-brand-light text-brand-main dark:bg-[#186E4A] dark:text-[#A9F0D4] shadow-inner dark:shadow-inner border border-brand-main/40 dark:border-white/10 shadow-[0_0_15px_rgba(2,90,78,0.4)] dark:shadow-none"
+                        : "bg-gray-100/50 dark:bg-white/5 text-text-secondary hover:bg-white dark:hover:bg-white/10 border border-brand-main/20 dark:border-transparent shadow-[0_0_10px_rgba(2,90,78,0.2)] dark:shadow-none hover:shadow-[0_0_15px_rgba(2,90,78,0.3)] dark:hover:shadow-none hover:border-brand-main/40 dark:hover:border-transparent dark:text-[#8EBAAA]"
                 )}
             >
                 <motion.div style={{ scale: iconScale }} className="flex items-center justify-center">
@@ -172,7 +172,7 @@ function ThemeToggleIcon({ mouseX }: { mouseX: MotionValue }) {
         >
             <motion.div
                 style={{ width, height }}
-                className="flex items-center justify-center rounded-full transition-colors duration-200 bg-gray-100/50 dark:bg-white/5 text-text-secondary hover:bg-white dark:hover:bg-white/10 border border-transparent dark:text-[#8EBAAA]"
+                className="flex items-center justify-center rounded-full transition-colors duration-200 bg-gray-100/50 dark:bg-white/5 text-text-secondary hover:bg-white dark:hover:bg-white/10 border border-brand-main/20 dark:border-transparent shadow-[0_0_10px_rgba(2,90,78,0.2)] dark:shadow-none hover:shadow-[0_0_15px_rgba(2,90,78,0.3)] dark:hover:shadow-none hover:border-brand-main/40 dark:hover:border-transparent dark:text-[#8EBAAA]"
             >
                 <motion.div style={{ scale: iconScale }} className="flex items-center justify-center">
                     <Icon className="w-5 h-5" />
