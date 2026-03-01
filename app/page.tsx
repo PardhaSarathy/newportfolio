@@ -35,7 +35,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="space-y-6 max-w-4xl mx-auto"
+          className="space-y-6 max-w-4xl mx-auto px-4 md:px-0"
         >
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-text-primary leading-[1.1] tracking-tighter">
             Hi. I'm Pardhu. <br />
@@ -79,7 +79,7 @@ export default function Home() {
           </div>
 
           {/* AI Skills Auto-scrolling Marquee - Strict Mobile Bounds / Full Bleed */}
-          <div className="w-[calc(100%+2rem)] -ml-4 md:ml-0 md:w-full overflow-hidden flex justify-center">
+          <div className="w-full overflow-hidden flex justify-center">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
