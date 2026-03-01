@@ -29,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={clsx(manrope.variable, spaceGrotesk.variable, jetbrainsMono.variable, "overflow-x-hidden")} suppressHydrationWarning>
-      <body className="antialiased bg-bg-mist text-text-primary min-h-screen relative overflow-x-hidden selection:bg-brand-main selection:text-white transition-colors duration-500">
+      <body className="antialiased bg-bg-mist text-text-primary min-h-screen relative overflow-x-hidden max-w-[100vw] w-full selection:bg-brand-main selection:text-white transition-colors duration-500">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

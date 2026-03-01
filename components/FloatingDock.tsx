@@ -22,12 +22,9 @@ export function FloatingDock() {
     return (
         <motion.nav
             aria-label="Main Navigation"
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 260, damping: 20 }}
             onMouseMove={(e) => mouseX.set(e.pageX)}
             onMouseLeave={() => mouseX.set(Infinity)}
-            className="fixed bottom-4 md:bottom-8 inset-x-0 mx-auto w-fit z-50 flex items-end gap-1 md:gap-3 px-2 md:px-4 py-1.5 md:py-3 rounded-full bg-white/30 dark:bg-[#0A1C16]/60 backdrop-blur-2xl shadow-[0_0_35px_rgba(2,90,78,0.6)] dark:shadow-[0_0_25px_rgba(169,240,212,0.3)] border border-white/50 dark:border-[#A9F0D4]/20 h-14 md:h-20 transition-all duration-500"
+            className="fixed bottom-4 md:bottom-8 inset-x-0 mx-auto w-max max-w-[calc(100vw-1rem)] md:w-fit z-50 flex items-end justify-center gap-1 md:gap-3 px-2 md:px-4 py-1.5 md:py-3 rounded-full bg-white/30 dark:bg-[#0A1C16]/60 backdrop-blur-2xl shadow-[0_0_35px_rgba(2,90,78,0.6)] dark:shadow-[0_0_25px_rgba(169,240,212,0.3)] border border-white/50 dark:border-[#A9F0D4]/20 h-14 md:h-20 transition-all duration-500"
         >
             {links.map((link) => (
                 <DockIcon key={link.href} mouseX={mouseX} {...link} />

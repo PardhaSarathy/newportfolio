@@ -20,17 +20,28 @@ export function CertificateModal({ isOpen, onClose, imageUrl, altText = "Certifi
         setMounted(true);
     }, []);
 
-    // Prevent scrolling when modal is open
+    // Handle browser back button / mobile swipe-back gesture
     useEffect(() => {
         if (isOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
+            // Push a temporary state to the history stack when the modal opens
+            window.history.pushState({ isModalOpen: true }, "");
+
+            // Listen for the user hitting the back button or swiping back
+            const handlePopState = () => {
+                onClose(); // Close the modal instead of navigating across pages
+            };
+
+            window.addEventListener("popstate", handlePopState);
+
+            return () => {
+                window.removeEventListener("popstate", handlePopState);
+                // If the modal was closed via 'X' or clicking the backdrop, clean up the history
+                if (window.history.state?.isModalOpen) {
+                    window.history.back();
+                }
+            };
         }
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
-    }, [isOpen]);
+    }, [isOpen, onClose]);
 
     // Handle escape key
     useEffect(() => {
