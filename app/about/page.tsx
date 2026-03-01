@@ -87,7 +87,105 @@ export default function AboutPage() {
             </section>
 
 
-            {/* 3. Philosophy Grid (Blocks) */}
+            {/* 3. Technical Arsenal (Bento Grid) */}
+            <section className="space-y-12 mt-32 max-w-5xl mx-auto px-4">
+                <h2 className="text-sm font-bold text-text-secondary tracking-widest uppercase pl-4">Technical Arsenal</h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
+                    {/* 1. AI & Agentic Systems (Spans full width) */}
+                    <Card className="md:col-span-12 bg-white dark:bg-[#0A1C16] border border-brand-main/20 dark:border-[#A9F0D4]/20 p-8 md:p-10 rounded-[2rem] shadow-lg shadow-brand-main/5 relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-gradient-to-br from-brand-main/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <h3 className="text-2xl md:text-3xl font-bold text-text-primary mb-6 relative z-10 flex items-center gap-3">
+                            <span className="text-brand-main">01.</span> AI & Agentic Systems
+                        </h3>
+                        <div className="flex flex-wrap gap-2 md:gap-3 relative z-10">
+                            {[
+                                "Large Language Models (LLMs)",
+                                "Retrieval-Augmented Generation (RAG)",
+                                "Multi-Agent Workflows",
+                                "Multimodal Agents (Voice, Vision, Text)",
+                                "Computer Vision & OCR",
+                                "Agentic AI & Prompt Engineering"
+                            ].map(skill => (
+                                <span key={skill} className="px-4 py-2 bg-brand-light/30 dark:bg-[#186E4A]/40 text-brand-dark dark:text-[#A9F0D4] font-semibold text-sm rounded-xl border border-brand-main/10 dark:border-brand-main/30">
+                                    {skill}
+                                </span>
+                            ))}
+                        </div>
+                    </Card>
+
+                    {/* 2. Real-Time Communication & Infrastructure (Spans 7 cols) */}
+                    <Card className="md:col-span-7 bg-[#Fdfcf8] dark:bg-[#0F2A21] border-none p-8 rounded-[2rem] shadow-sm hover:shadow-md transition-shadow">
+                        <h3 className="text-xl font-bold text-text-primary mb-6 flex items-center gap-3">
+                            <span className="text-text-secondary">02.</span> Infrastructure & Deployment
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                            {[
+                                "WebRTC", "LiveKit", "Docker", "Kubernetes",
+                                "System Architecture & Deployment", "Workflow Automation (n8n)",
+                                "Complex API Integrations"
+                            ].map(skill => (
+                                <span key={skill} className="px-3 py-1.5 bg-white/60 dark:bg-black/20 text-text-secondary dark:text-[#D1EBE1] text-sm font-medium rounded-lg border border-gray-200 dark:border-white/5">
+                                    {skill}
+                                </span>
+                            ))}
+                        </div>
+                    </Card>
+
+                    {/* 3. Backend & Data Engineering (Spans 5 cols) */}
+                    <Card className="md:col-span-5 bg-[#Fdfcf8] dark:bg-[#0F2A21] border-none p-8 rounded-[2rem] shadow-sm hover:shadow-md transition-shadow">
+                        <h3 className="text-xl font-bold text-text-primary mb-6 flex items-center gap-3">
+                            <span className="text-text-secondary">03.</span> Backend & Data
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                            {[
+                                "Python (Advanced)", "Node.js & Express",
+                                "SQL", "Vector Databases"
+                            ].map(skill => (
+                                <span key={skill} className="px-3 py-1.5 bg-white/60 dark:bg-black/20 text-text-secondary dark:text-[#D1EBE1] text-sm font-medium rounded-lg border border-gray-200 dark:border-white/5">
+                                    {skill}
+                                </span>
+                            ))}
+                        </div>
+                    </Card>
+
+                    {/* 4. Frontend Development (Spans 6 cols) */}
+                    <Card className="md:col-span-6 bg-[#Fdfcf8] dark:bg-[#0F2A21] border-none p-8 rounded-[2rem] shadow-sm hover:shadow-md transition-shadow">
+                        <h3 className="text-xl font-bold text-text-primary mb-6 flex items-center gap-3">
+                            <span className="text-text-secondary">04.</span> Frontend
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                            {[
+                                "ReactJS", "JavaScript", "HTML5 & CSS3"
+                            ].map(skill => (
+                                <span key={skill} className="px-3 py-1.5 bg-white/60 dark:bg-black/20 text-text-secondary dark:text-[#D1EBE1] text-sm font-medium rounded-lg border border-gray-200 dark:border-white/5">
+                                    {skill}
+                                </span>
+                            ))}
+                        </div>
+                    </Card>
+
+                    {/* 5. Core Programming & Tools (Spans 6 cols) */}
+                    <Card className="md:col-span-6 bg-[#Fdfcf8] dark:bg-[#0F2A21] border-none p-8 rounded-[2rem] shadow-sm hover:shadow-md transition-shadow">
+                        <h3 className="text-xl font-bold text-text-primary mb-6 flex items-center gap-3">
+                            <span className="text-text-secondary">05.</span> Core Foundations
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                            {[
+                                "C", "Git & Version Control",
+                                "Linux OS", "Problem Solving & DSA"
+                            ].map(skill => (
+                                <span key={skill} className="px-3 py-1.5 bg-white/60 dark:bg-black/20 text-text-secondary dark:text-[#D1EBE1] text-sm font-medium rounded-lg border border-gray-200 dark:border-white/5">
+                                    {skill}
+                                </span>
+                            ))}
+                        </div>
+                    </Card>
+                </div>
+            </section>
+
+
+            {/* 4. Philosophy Grid (Blocks) */}
             <section className="space-y-12 mt-32 max-w-5xl mx-auto px-4">
                 <h2 className="text-sm font-bold text-text-secondary tracking-widest uppercase pl-4">Principles</h2>
 

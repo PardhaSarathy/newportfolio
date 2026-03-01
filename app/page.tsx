@@ -77,6 +77,38 @@ export default function Home() {
               <Linkedin size={24} />
             </a>
           </div>
+
+          {/* AI Skills Auto-scrolling Marquee */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 1 }}
+            className="mt-16 w-full max-w-5xl mx-auto overflow-hidden relative fade-edges"
+          >
+            <div className="flex w-max animate-marquee gap-4 md:gap-8 hover:[animation-play-state:paused] cursor-default">
+              {[
+                "Large Language Models (LLMs)",
+                "Retrieval-Augmented Generation (RAG)",
+                "Multi-Agent Workflows",
+                "Multimodal Agents (Voice)",
+                "Vision & OCR",
+                "Prompt Engineering",
+                "Large Language Models (LLMs)",
+                "Retrieval-Augmented Generation (RAG)",
+                "Multi-Agent Workflows",
+                "Multimodal Agents (Voice)",
+                "Vision & OCR",
+                "Prompt Engineering"
+              ].map((skill, index) => (
+                <span
+                  key={index}
+                  className="px-5 py-2.5 rounded-full border border-gray-200/50 dark:border-white/10 bg-white/40 dark:bg-white/5 backdrop-blur-sm text-text-primary dark:text-[#A9F0D4] whitespace-nowrap text-sm font-bold shadow-sm"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </motion.div>
         </motion.div>
 
       </section>
