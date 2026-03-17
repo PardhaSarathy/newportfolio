@@ -106,13 +106,11 @@ function DockIcon({
             </motion.div>
 
             {/* Tooltip */}
-            <motion.span
-                initial={{ opacity: 0, y: 10 }}
-                whileHover={{ opacity: 1, y: 0 }}
-                className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1 bg-brand-dark dark:bg-black text-white text-xs font-semibold rounded-lg opacity-0 pointer-events-none whitespace-nowrap shadow-xl z-50 hidden group-hover:block transition-colors duration-500"
+            <span
+                className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1 bg-black dark:bg-white text-white dark:text-black text-xs font-semibold rounded-md opacity-0 pointer-events-none whitespace-nowrap shadow-xl z-[999] transition-all duration-150 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0"
             >
                 {label}
-            </motion.span>
+            </span>
         </Link>
     );
 }
@@ -176,13 +174,12 @@ function ThemeToggleIcon({ mouseX }: { mouseX: MotionValue }) {
                 </motion.div>
             </motion.div>
 
-            <motion.span
-                initial={{ opacity: 0, y: 10 }}
-                whileHover={{ opacity: 1, y: 0 }}
-                className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1 bg-brand-dark dark:bg-black text-white text-xs font-semibold rounded-lg opacity-0 pointer-events-none whitespace-nowrap shadow-xl z-50 hidden group-hover:block transition-colors duration-500"
+            {/* Tooltip */}
+            <span
+                className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1 bg-black dark:bg-white text-white dark:text-black text-xs font-semibold rounded-md opacity-0 pointer-events-none whitespace-nowrap shadow-xl z-[999] transition-all duration-150 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0"
             >
                 {mounted && isDark ? "Light Mode" : "Dark Mode"}
-            </motion.span>
+            </span>
         </button>
     );
 }
