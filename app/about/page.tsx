@@ -1,4 +1,5 @@
 import { Card } from "@/components/ui/Card";
+import { RESUME_URL } from "@/lib/site";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -111,7 +112,7 @@ export default function AboutPage() {
                 Explore my work <ArrowUpRight size={16} aria-hidden />
               </Link>
               <a
-                href="/assets/Karnati_Reddy_Updated_Resume.pdf"
+                href={RESUME_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-hairline bg-bg-card/60 text-sm font-bold text-text-primary hover:bg-brand-main/10 transition-colors"

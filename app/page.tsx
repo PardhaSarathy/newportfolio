@@ -5,6 +5,7 @@ import { ArrowUpRight, FileText, Github, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { ProjectSummaryCard } from "@/components/ProjectSummaryCard";
 import { FEATURED_PROJECTS } from "@/lib/projects";
+import { RESUME_URL } from "@/lib/site";
 
 const CORE_EXPERTISE = [
   "Large Language Models",
@@ -67,7 +68,7 @@ export default function Home() {
               View my work <ArrowUpRight size={18} aria-hidden />
             </a>
             <a
-              href="/assets/Pardhasaradhi_Karnati_ResumeM.pdf"
+              href={RESUME_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex min-h-12 items-center gap-2 px-5 py-3 rounded-full border border-hairline bg-bg-card/60 text-text-primary font-bold text-sm hover:bg-surface-sunken transition-colors"

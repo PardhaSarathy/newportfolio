@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 export const SITE_URL = "https://pardhukarnati.vercel.app";
+export const RESUME_URL = "/assets/Pardhasaradhi_Karnati_ResumeM.pdf";
 export const SITE_NAME = "Pardhu | Full Stack AI Engineer";
 export const SITE_DESCRIPTION =
   "Pardhu Karnati is a Full Stack AI Engineer building voice, vision, retrieval systems, and full-stack products end to end.";
