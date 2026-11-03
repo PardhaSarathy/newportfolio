@@ -67,7 +67,7 @@ export default function Home() {
               View my work <ArrowUpRight size={18} aria-hidden />
             </a>
             <a
-              href="/assets/Karnati_Reddy_Updated_Resume.pdf"
+              href="/assets/Pardhasaradhi_Karnati_ResumeM.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex min-h-12 items-center gap-2 px-5 py-3 rounded-full border border-hairline bg-bg-card/60 text-text-primary font-bold text-sm hover:bg-surface-sunken transition-colors"
