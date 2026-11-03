@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Card } from "@/components/ui/Card";
-import { accentOf, STATUS_LABEL, type Project } from "@/lib/projects";
+import { accentOf, STATUS_LABEL, LAYER_LABEL, type Project } from "@/lib/projects";
 import { cn } from "@/lib/utils";
+import { ProjectPreview } from "@/components/ProjectPreview";
 
 const summaries: Record<string, string> = {
   "production-voice-agent":
@@ -31,10 +32,12 @@ export function ProjectSummaryCard({
   project,
   delay = 0,
   wide = false,
+  showPreview = false,
 }: {
   project: Project;
   delay?: number;
   wide?: boolean;
+  showPreview?: boolean;
 }) {
   const accent = accentOf(project);
   const stack = project.stack;
@@ -50,19 +53,21 @@ export function ProjectSummaryCard({
         ].filter((tag): tag is string => !!tag),
       ),
     ].slice(0, 3);
+  const displayTags = tags.length ? tags : project.layers.map((layer) => LAYER_LABEL[layer]);
   const metric = project.metrics?.[0];
 
   return (
     <Card
       delay={delay}
       className={cn(
-        "relative group h-full p-6 md:p-8 border border-hairline hover:border-brand-main/30 rounded-[2rem]",
+        "relative group h-full p-6 md:p-8 border border-hairline hover:border-brand-main/30 rounded-[2rem] flex flex-col",
         wide && "md:col-span-2",
       )}
     >
+      {showPreview && <div className="mb-6"><ProjectPreview slug={project.slug} compact /></div>}
       <div
         className={cn(
-          "flex flex-col h-full",
+          "flex flex-col flex-1",
           wide && "md:grid md:grid-cols-[1.2fr_1fr] md:gap-10",
         )}
       >
@@ -78,7 +83,7 @@ export function ProjectSummaryCard({
             </span>
             <span
               className={cn(
-                "rounded-full px-3 py-1 text-[11px] font-bold ring-1",
+                "rounded-full px-3 py-1 text-xs font-bold ring-1",
                 statusStyle[project.status],
               )}
             >
@@ -118,19 +123,19 @@ export function ProjectSummaryCard({
               <span className="font-bold text-text-primary">
                 {project.components.length} connected surfaces
               </span>
-              <span className="block text-xs text-text-muted mt-1">
+              <span className="block text-[13px] leading-relaxed text-text-muted mt-1">
                 {project.components
                   .map((component) => component.name)
                   .join(" · ")}
               </span>
             </p>
           ) : null}
-          {tags.length > 0 && (
+          {displayTags.length > 0 && (
             <ul
-              aria-label="Selected technologies"
+              aria-label={tags.length ? "Selected technologies" : "Engineering layers"}
               className="flex flex-wrap gap-2 mb-5"
             >
-              {tags.map((tag) => (
+              {displayTags.map((tag) => (
                 <li
                   key={tag}
                   className="px-2.5 py-1 rounded-lg bg-surface-sunken text-text-secondary text-xs font-semibold border border-hairline"

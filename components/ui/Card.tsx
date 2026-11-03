@@ -38,10 +38,7 @@ export function Card({
       whileHover={
         reduceMotion || !hoverEffect
           ? undefined
-          : {
-              y: -8,
-              boxShadow: "0 20px 40px -10px rgba(0,0,0,0.1)",
-            }
+          : { y: -4 }
       }
       onClick={onClick}
       // Clickable cards are divs, so give them real keyboard semantics.
@@ -56,7 +53,7 @@ export function Card({
         },
       })}
       className={cn(
-        "bg-bg-card rounded-3xl p-8 border-2 border-white/60 dark:border-white/5 shadow-lg shadow-black/5 dark:shadow-black/50 hover:border-white dark:hover:border-white/10 transition-all",
+        "bg-bg-card rounded-3xl p-8 border-2 border-white/60 dark:border-white/5 shadow-lg shadow-black/5 dark:shadow-black/30 hover:border-white dark:hover:border-white/10 transition-colors duration-200",
         onClick &&
           "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-main focus-visible:ring-offset-2 focus-visible:ring-offset-bg-mist",
         className,

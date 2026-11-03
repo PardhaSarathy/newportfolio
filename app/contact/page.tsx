@@ -40,7 +40,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 const FIELD_BASE =
-  "bg-transparent border-b-2 outline-none px-2 w-full transition-colors placeholder:text-text-muted";
+  "min-h-12 bg-transparent border-b-2 outline-none px-2 py-2 w-full rounded-t-lg transition-colors placeholder:text-text-muted focus:bg-surface-sunken";
 
 export default function ContactPage() {
   const reduceMotion = useReducedMotion();
@@ -107,7 +107,7 @@ export default function ContactPage() {
         <button
           type="button"
           onClick={copyEmail}
-          className="inline-flex shrink-0 items-center gap-2 px-4 py-2.5 rounded-full border border-hairline text-sm font-semibold text-brand-main hover:bg-brand-main/10 focus-visible:outline-2 focus-visible:outline-brand-main focus-visible:outline-offset-4 transition-colors"
+          className="inline-flex min-h-11 shrink-0 items-center gap-2 px-4 py-2.5 rounded-full border border-hairline text-sm font-semibold text-brand-main hover:bg-brand-main/10 focus-visible:outline-2 focus-visible:outline-brand-main focus-visible:outline-offset-4 transition-colors"
         >
           {copyStatus === "copied" ? (
             <Check size={16} aria-hidden />
@@ -153,7 +153,7 @@ export default function ContactPage() {
                 FIELD_BASE,
                 errors.name
                   ? "border-red-500"
-                  : "border-hairline focus:border-brand-main hover:border-brand-main/50",
+                  : "border-field-border focus:border-brand-main hover:border-brand-main/70",
               )}
             />
             {errors.name && (
@@ -177,7 +177,7 @@ export default function ContactPage() {
                 id="interest"
                 className={clsx(
                   FIELD_BASE,
-                  "appearance-none pr-8 cursor-pointer border-hairline focus:border-brand-main hover:border-brand-main/50",
+                  "appearance-none pr-8 cursor-pointer border-field-border focus:border-brand-main hover:border-brand-main/70",
                 )}
               >
                 {INTERESTS.map((option) => (
@@ -217,7 +217,7 @@ export default function ContactPage() {
                 FIELD_BASE,
                 errors.email
                   ? "border-red-500"
-                  : "border-hairline focus:border-brand-main hover:border-brand-main/50",
+                  : "border-field-border focus:border-brand-main hover:border-brand-main/70",
               )}
             />
             {errors.email && (
@@ -243,10 +243,10 @@ export default function ContactPage() {
               aria-invalid={!!errors.message}
               aria-describedby={errors.message ? "message-error" : undefined}
               className={clsx(
-                "bg-transparent border-2 rounded-2xl outline-none p-3 w-full text-base transition-colors resize-y placeholder:text-text-muted",
+                "bg-transparent border-2 rounded-2xl outline-none p-3 w-full text-base transition-colors resize-y placeholder:text-text-muted focus:bg-surface-sunken",
                 errors.message
                   ? "border-red-500"
-                  : "border-hairline focus:border-brand-main hover:border-brand-main/50",
+                  : "border-field-border focus:border-brand-main hover:border-brand-main/70",
               )}
             />
             {errors.message && (
@@ -294,7 +294,7 @@ export default function ContactPage() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn Profile"
-            className="p-2 bg-bg-card rounded-full shadow-sm text-text-secondary hover:text-brand-main hover:scale-110 active:scale-95 transition-all"
+            className="p-3 bg-bg-card rounded-full shadow-sm text-text-secondary hover:text-brand-main hover:scale-110 active:scale-95 transition-[color,transform]"
           >
             <Linkedin size={20} />
           </a>
@@ -303,7 +303,7 @@ export default function ContactPage() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub Profile"
-            className="p-2 bg-bg-card rounded-full shadow-sm text-text-secondary hover:text-brand-main hover:scale-110 active:scale-95 transition-all"
+            className="p-3 bg-bg-card rounded-full shadow-sm text-text-secondary hover:text-brand-main hover:scale-110 active:scale-95 transition-[color,transform]"
           >
             <Github size={20} />
           </a>

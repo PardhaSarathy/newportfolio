@@ -111,7 +111,7 @@ export function ProjectSectionNav({ sections }: { sections: Section[] }) {
               }
             }}
             className={cn(
-              "shrink-0 rounded-full px-4 md:px-5 py-2.5 text-xs md:text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-brand-main focus-visible:-outline-offset-2",
+              "flex min-h-11 items-center justify-center shrink-0 rounded-full px-4 md:px-5 py-2.5 text-[13px] md:text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-brand-main focus-visible:-outline-offset-2",
               active === section.id
                 ? "bg-brand-main text-white dark:text-[#052018]"
                 : "text-text-secondary hover:bg-surface-sunken hover:text-text-primary",

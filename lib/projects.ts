@@ -168,8 +168,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "local-voice-agent",
     title: "Local Voice Agent",
-    // hook: TBD — should lead with the self-hosted angle, since running a
-    // voice pipeline without cloud inference is the differentiator.
+    hook: "A self-hosted voice-agent experiment exploring a local speech and conversation pipeline.",
     status: "in-progress",
     layers: ["model", "serving", "infra"],
     // stack: TBD — which STT, LLM and TTS models; serving runtime; target hardware.
@@ -179,8 +178,7 @@ export const PROJECTS: Project[] = [
     proofNote: "Recorded video/audio — live hosting is too costly to leave up.",
     role: "Solo",
     icon: Mic,
-    // Not featured and not wide yet: with no hook written, a large card on the
-    // home page renders as a bare title. Restore both once the hook exists.
+    // Keep this experiment out of featured work until a fuller case study exists.
   },
   {
     slug: "production-voice-agent",

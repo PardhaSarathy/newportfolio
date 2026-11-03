@@ -174,12 +174,12 @@ export default function CertificationsPage() {
               </Card>
             ))}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div className="flex flex-wrap gap-5">
             {otherCredentials.map((cert) => (
               <Card
                 key={cert.title}
                 hoverEffect={false}
-                className="flex items-center gap-4 border border-hairline p-6"
+                className="flex w-full sm:w-auto items-center gap-4 border border-hairline p-5 sm:pr-12"
               >
                 <span
                   className={cn(

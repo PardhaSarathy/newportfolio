@@ -39,6 +39,34 @@ export function FloatingDock() {
   const gesture = useRef(new DockGesture());
   const releaseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  useEffect(() => {
+    let frame = 0;
+    const keepFocusVisible = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const focused = document.activeElement;
+        if (!(focused instanceof HTMLElement) || !focused.closest("main")) return;
+        const dock = document.querySelector<HTMLElement>('[aria-label="Main Navigation"]');
+        if (!dock) return;
+        const rect = focused.getBoundingClientRect();
+        const viewport = window.visualViewport;
+        const visibleBottom = (viewport?.height ?? window.innerHeight) + (viewport?.offsetTop ?? 0);
+        const safeBottom = Math.min(visibleBottom, dock.getBoundingClientRect().top) - 24;
+        const safeTop = (viewport?.offsetTop ?? 0) + 24;
+        if (rect.bottom > safeBottom) {
+          window.scrollBy({ top: Math.min(rect.bottom - safeBottom, rect.top - safeTop), behavior: "instant" });
+        }
+      });
+    };
+    document.addEventListener("focusin", keepFocusVisible);
+    window.visualViewport?.addEventListener("resize", keepFocusVisible);
+    return () => {
+      cancelAnimationFrame(frame);
+      document.removeEventListener("focusin", keepFocusVisible);
+      window.visualViewport?.removeEventListener("resize", keepFocusVisible);
+    };
+  }, []);
+
   function clearReleaseTimer() {
     if (releaseTimer.current !== null) clearTimeout(releaseTimer.current);
     releaseTimer.current = null;
@@ -120,7 +148,7 @@ export function FloatingDock() {
         }
       }}
       style={{ touchAction: "pan-y pinch-zoom" }}
-      className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] md:bottom-8 inset-x-0 mx-auto w-max max-w-[calc(100vw-1rem)] md:w-fit z-50 flex items-end justify-center gap-0.5 md:gap-3 px-2 md:px-4 py-1.5 md:py-3 rounded-full bg-white/30 dark:bg-[#0A1C16]/60 backdrop-blur-2xl shadow-[0_0_35px_rgba(2,90,78,0.6)] dark:shadow-[0_0_25px_rgba(169,240,212,0.3)] border border-white/50 dark:border-[#A9F0D4]/20 h-16 md:h-20 transition-colors duration-200"
+      className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] md:bottom-8 inset-x-0 mx-auto w-max max-w-[calc(100vw-1rem)] md:w-fit z-50 flex items-end justify-center gap-0.5 md:gap-3 px-2 md:px-4 py-1.5 md:py-3 rounded-full bg-white/50 dark:bg-[#0A1C16]/60 backdrop-blur-2xl shadow-[0_8px_28px_rgba(2,90,78,0.18)] dark:shadow-[0_0_25px_rgba(169,240,212,0.3)] border border-white/60 dark:border-[#A9F0D4]/20 h-16 md:h-20 transition-colors duration-200"
     >
       {links.map((link) => (
         <DockIcon
@@ -233,7 +261,7 @@ function DockIcon({
     <Link
       href={href}
       ref={ref}
-      className="relative group"
+      className="relative group rounded-full"
       aria-label={label}
       aria-current={isActive ? "page" : undefined}
     >
@@ -289,7 +317,7 @@ function ThemeToggleIcon({
     <button
       ref={ref}
       onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-      className="relative group cursor-pointer"
+      className="relative group cursor-pointer rounded-full"
       aria-label="Toggle colour theme"
     >
       <motion.div

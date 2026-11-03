@@ -11,6 +11,7 @@ import {
   LAYERS,
   LAYER_LABEL,
   type Layer,
+  type Project,
 } from "@/lib/projects";
 
 type Filter = "All" | Layer;
@@ -155,7 +156,7 @@ function ProjectsContent({
               ·
             </span>
             {activeFilter === "All"
-              ? "Featured first"
+              ? "Live projects first"
               : LAYER_LABEL[activeFilter]}
           </p>
           {activeFilter !== "All" && (
@@ -170,29 +171,47 @@ function ProjectsContent({
             </button>
           )}
         </div>
-        {/* Projects Grid */}
-        <motion.div
-          id="project-results"
-          layout={!reduceMotion}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          <AnimatePresence mode="popLayout">
-            {filtered.map((project) => (
-              <motion.div
-                key={project.slug}
-                layout={!reduceMotion}
-                initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: reduceMotion ? 0 : 0.2 }}
-                className="h-full"
-              >
-                <ProjectSummaryCard project={project} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        <div id="project-results" className="space-y-12">
+          <ProjectGroup
+            title="Live projects"
+            projects={filtered.filter((project) => project.status === "live")}
+            live
+            reduceMotion={!!reduceMotion}
+          />
+          <ProjectGroup
+            title="Case studies & experiments"
+            projects={filtered.filter((project) => project.status !== "live")}
+            reduceMotion={!!reduceMotion}
+          />
+        </div>
       </div>
     </div>
+  );
+}
+
+
+function ProjectGroup({ title, projects, live = false, reduceMotion }: {
+  title: string;
+  projects: Project[];
+  live?: boolean;
+  reduceMotion: boolean;
+}) {
+  if (!projects.length) return null;
+  return (
+    <section aria-label={title} className="space-y-5">
+      <h2 className="text-xl font-display font-bold text-text-primary">{title}</h2>
+      <motion.div layout={!reduceMotion} className={cn("grid grid-cols-1 md:grid-cols-2 gap-6", !live && "lg:grid-cols-3")}>
+        <AnimatePresence mode="popLayout">
+          {projects.map((project) => (
+            <motion.div key={project.slug} layout={!reduceMotion}
+              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+              transition={{ duration: reduceMotion ? 0 : 0.2 }} className="h-full">
+              <ProjectSummaryCard project={project} showPreview={live} />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </motion.div>
+    </section>
   );
 }

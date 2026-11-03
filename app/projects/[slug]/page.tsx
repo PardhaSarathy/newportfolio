@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 import { createPageMetadata } from "@/lib/site";
 import { ProjectSectionNav } from "@/components/ProjectSectionNav";
 import { ProjectSystemMap, hasSystemMap } from "@/components/ProjectSystemMap";
+import { ProjectPreview, hasProjectPreview } from "@/components/ProjectPreview";
 
 export function generateStaticParams() {
   return PUBLISHED_PROJECTS.map((project) => ({ slug: project.slug }));
@@ -76,7 +77,7 @@ export default async function ProjectPage({
   ];
 
   return (
-    <article className="relative w-full max-w-5xl mx-auto px-4 pb-24 space-y-12 md:space-y-16">
+    <article className="case-study relative flex flex-col gap-12 md:gap-16 w-full max-w-5xl mx-auto px-4 pb-24">
       <Link
         href="/projects"
         className="inline-flex items-center gap-2 text-sm font-semibold text-text-secondary hover:text-brand-main transition-colors rounded-lg focus-visible:outline-2 focus-visible:outline-brand-main focus-visible:outline-offset-4"
@@ -84,10 +85,10 @@ export default async function ProjectPage({
         <ArrowLeft size={16} aria-hidden /> Back to projects
       </Link>
 
-      <header className="flex flex-col items-center text-center gap-6 max-w-4xl mx-auto">
+      <header className="case-hero flex flex-col items-center text-center gap-6 max-w-4xl mx-auto">
         <div
           className={cn(
-            "w-20 h-20 rounded-3xl flex items-center justify-center shadow-lg shadow-black/5",
+            "case-hero-icon w-20 h-20 rounded-3xl flex items-center justify-center shadow-lg shadow-black/5",
             accent.tile,
           )}
         >
@@ -165,6 +166,8 @@ export default async function ProjectPage({
           </p>
         </div>
       </div>
+
+      {hasProjectPreview(slug) && <ProjectPreview slug={slug} />}
 
       {project.metrics && (
         <section

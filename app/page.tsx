@@ -19,13 +19,13 @@ const CORE_EXPERTISE = [
 export default function Home() {
   const reduceMotion = useReducedMotion();
   return (
-    <div className="relative w-full max-w-5xl mx-auto px-4 space-y-20 md:space-y-28 pt-8 md:pt-16 pb-24">
+    <div className="home-page relative w-full max-w-5xl mx-auto px-4 pt-8 md:pt-16 pb-24">
       {/* Background Orbs */}
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-brand-light/40 blur-[120px] pointer-events-none -z-10" />
       <div className="absolute bottom-[20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-brand-main/10 blur-[120px] pointer-events-none -z-10" />
 
       {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center text-center space-y-8">
+      <section className="home-hero flex flex-col items-center text-center gap-8">
         {/* Availability Badge */}
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 20 }}
@@ -49,7 +49,7 @@ export default function Home() {
             duration: reduceMotion ? 0 : 0.6,
             delay: reduceMotion ? 0 : 0.1,
           }}
-          className="space-y-6 max-w-4xl mx-auto"
+          className="home-introduction flex flex-col gap-6 max-w-4xl mx-auto"
         >
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-text-primary leading-[1.1] tracking-tighter">
             Hi. I&apos;m Pardhu. <br />
@@ -63,7 +63,7 @@ export default function Home() {
             {PROFILE.summary}
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-3 md:pt-6">
+          <div className="home-actions flex flex-wrap items-center justify-center gap-4 pt-3 md:pt-6">
             <a
               href="#selected-work"
               className="inline-flex min-h-12 items-center justify-center gap-2 px-6 py-3 rounded-full bg-brand-main text-white dark:text-[#052018] font-bold text-sm hover:bg-brand-main/90 transition-colors shadow-md shadow-brand-main/20"
@@ -85,7 +85,7 @@ export default function Home() {
                 href="https://github.com/PardhaSarathy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 text-text-secondary hover:text-brand-main transition-all rounded-full hover:bg-brand-main/10 active:scale-95"
+                className="p-3 text-text-secondary hover:text-brand-main transition-[color,background-color,transform] rounded-full hover:bg-brand-main/10 active:scale-95"
                 aria-label="GitHub Profile"
               >
                 <Github size={24} />
@@ -95,46 +95,46 @@ export default function Home() {
                 href="https://www.linkedin.com/in/pardhasaradhireddy/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 text-text-secondary hover:text-brand-main transition-all rounded-full hover:bg-brand-main/10 active:scale-95"
+                className="p-3 text-text-secondary hover:text-brand-main transition-[color,background-color,transform] rounded-full hover:bg-brand-main/10 active:scale-95"
                 aria-label="LinkedIn Profile"
               >
                 <Linkedin size={24} />
               </a>
             </div>
           </div>
-
-          {/* Static Core Expertise Tags - Mobile Safe */}
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: reduceMotion ? 0 : 0.25,
-              duration: reduceMotion ? 0 : 0.6,
-            }}
-            className="pt-6 md:pt-12 flex flex-col items-center gap-5"
-          >
-            <p className="text-xs font-bold text-text-muted tracking-[0.2em] uppercase">
-              Core Expertise
-            </p>
-            <div className="flex flex-wrap justify-center gap-2 md:gap-3 max-w-2xl px-2">
-              {CORE_EXPERTISE.map((skill) => (
-                <span
-                  key={skill}
-                  className="px-4 py-2 rounded-xl bg-surface-sunken border border-hairline text-text-primary text-xs md:text-sm font-semibold transition-colors hover:bg-brand-main/10 cursor-default"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </motion.div>
         </motion.div>
       </section>
+
+      {/* Expertise starts beyond the dock's initial resting area. */}
+      <motion.div
+        initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{
+          delay: reduceMotion ? 0 : 0.25,
+          duration: reduceMotion ? 0 : 0.6,
+        }}
+        className="mt-12 flex flex-col items-center gap-5"
+      >
+        <p className="text-xs font-bold text-text-muted tracking-[0.2em] uppercase">
+          Core Expertise
+        </p>
+        <div className="flex flex-wrap justify-center gap-2 md:gap-3 max-w-2xl px-2">
+          {CORE_EXPERTISE.map((skill) => (
+            <span
+              key={skill}
+              className="px-4 py-2 rounded-xl bg-surface-sunken border border-hairline text-text-primary text-xs md:text-sm font-semibold transition-colors hover:bg-brand-main/10 cursor-default"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </motion.div>
 
       {/* Selected Works Section */}
       <section
         id="selected-work"
         aria-labelledby="selected-work-heading"
-        className="space-y-10 scroll-mt-8"
+        className="mt-20 md:mt-28 space-y-10 scroll-mt-8"
       >
         <div className="flex items-end justify-between gap-4">
           <h2

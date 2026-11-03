@@ -86,7 +86,7 @@ const principles = [
 export default function AboutPage() {
   return (
     <div className="w-full max-w-5xl mx-auto px-4 pb-24 space-y-20 md:space-y-24">
-      <section className="space-y-10 md:space-y-14 pt-8 md:pt-12">
+      <section className="profile-intro flex flex-col gap-10 md:gap-14 pt-8 md:pt-12">
         <h1 className="text-5xl sm:text-6xl md:text-7xl font-display font-bold text-text-primary tracking-tight text-center">
           I&apos;m Pardhu.
         </h1>
@@ -106,7 +106,7 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
-          <div className="md:col-span-7 space-y-5 md:space-y-6 text-center md:text-left">
+          <div className="profile-copy md:col-span-7 flex flex-col gap-5 md:gap-6 text-center md:text-left">
             <p className="text-xs font-bold text-text-muted uppercase tracking-[0.18em]">
               Based in {PROFILE.location}
             </p>
@@ -225,7 +225,7 @@ export default function AboutPage() {
                 <BrainCircuit size={23} aria-hidden />
               </span>
               <div>
-                <p className="text-[10px] font-bold tracking-widest uppercase text-text-muted mb-1">
+                <p className="text-xs font-bold tracking-widest uppercase text-text-muted mb-1">
                   Applied specialism
                 </p>
                 <h3 className="text-xl md:text-2xl font-bold text-text-primary">

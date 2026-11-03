@@ -151,7 +151,7 @@ export function ProjectSystemMap({ slug }: { slug: string }) {
   const map = maps[slug];
   if (!map) return null;
   return (
-    <div className="rounded-3xl border border-brand-main/20 bg-bg-card/80 p-5 md:p-8 space-y-7 shadow-lg shadow-brand-main/5">
+    <div className="rounded-3xl border border-brand-main/20 bg-bg-card/80 p-4 md:p-8 space-y-6 md:space-y-7 shadow-lg shadow-brand-main/5">
       <p className="text-sm text-text-secondary leading-relaxed max-w-3xl">
         {map.intro}
       </p>
@@ -166,17 +166,17 @@ export function ProjectSystemMap({ slug }: { slug: string }) {
           >
             {path.nodes.map((node, index) => (
               <li key={node.title} className="relative">
-                <div className="h-full rounded-2xl border border-hairline bg-surface-sunken p-5 flex flex-col items-start gap-3">
-                  <span className="inline-flex items-center gap-2 text-brand-main">
+                <div className="h-full rounded-2xl border border-hairline bg-surface-sunken p-4 md:p-5 grid grid-cols-[auto_1fr] sm:flex sm:flex-col items-start gap-x-3 gap-y-1.5 sm:gap-3">
+                  <span className="row-span-2 inline-flex sm:flex-col md:flex-row items-center gap-2 text-brand-main pt-0.5 sm:pt-0">
                     <node.icon size={21} strokeWidth={1.5} aria-hidden />
-                    <span className="text-[10px] font-mono text-text-muted">
+                    <span className="text-xs font-mono text-text-muted">
                       0{index + 1}
                     </span>
                   </span>
                   <h4 className="font-bold text-text-primary text-sm">
                     {node.title}
                   </h4>
-                  <p className="text-xs leading-relaxed text-text-secondary">
+                  <p className="text-[13px] leading-relaxed text-text-secondary">
                     {node.detail}
                   </p>
                 </div>
@@ -199,7 +199,7 @@ export function ProjectSystemMap({ slug }: { slug: string }) {
           </ol>
         </div>
       ))}
-      <p className="text-[11px] text-text-muted leading-relaxed border-t border-hairline pt-4">
+      <p className="text-xs text-text-muted leading-relaxed border-t border-hairline pt-4">
         Simplified system map. Implementation details are explained below.
       </p>
     </div>

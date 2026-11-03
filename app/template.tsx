@@ -1,17 +1,18 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export default function Template({ children }: { children: React.ReactNode }) {
+    const reduceMotion = useReducedMotion();
     return (
         // No `filter` here on purpose. Framer leaves `filter: blur(0px)` on the
         // element after the intro, and any filter value creates a containing
         // block that permanently breaks `position: sticky` for everything
         // inside — which is what stopped the /projects filter bar from sticking.
         <motion.div
-            initial={{ y: 15, opacity: 0 }}
+            initial={reduceMotion ? false : { y: 15, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ ease: "easeOut", duration: 0.5 }}
+            transition={{ ease: [0.16, 1, 0.3, 1], duration: reduceMotion ? 0 : 0.4 }}
         >
             {children}
         </motion.div>
