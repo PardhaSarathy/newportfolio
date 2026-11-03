@@ -1,27 +1,36 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, FileText, Github, Linkedin } from "lucide-react";
 import Link from "next/link";
-import { Card } from "@/components/ui/Card";
+import { ProjectSummaryCard } from "@/components/ProjectSummaryCard";
+import { FEATURED_PROJECTS } from "@/lib/projects";
+
+const CORE_EXPERTISE = [
+  "Large Language Models",
+  "RAG Systems",
+  "Multi-Agent Workflows",
+  "Computer Vision & OCR",
+  "WebRTC & Infra",
+];
 
 export default function Home() {
+  const reduceMotion = useReducedMotion();
   return (
-    <div className="relative space-y-32 pt-20 pb-32 md:pb-40">
+    <div className="relative w-full max-w-5xl mx-auto px-4 space-y-20 md:space-y-28 pt-8 md:pt-16 pb-24">
       {/* Background Orbs */}
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-brand-light/40 blur-[120px] pointer-events-none -z-10" />
-      <div className="absolute bottom-[20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-emerald-200/20 blur-[120px] pointer-events-none -z-10" />
+      <div className="absolute bottom-[20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-brand-main/10 blur-[120px] pointer-events-none -z-10" />
 
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center text-center space-y-8">
-
         {/* Availability Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: reduceMotion ? 0 : 0.6 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/40 backdrop-blur-md rounded-full text-brand-dark font-bold text-xs uppercase tracking-widest border border-white/20 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-bg-card/70 dark:bg-white/5 backdrop-blur-md rounded-full text-text-primary font-bold text-xs uppercase tracking-widest border border-hairline shadow-sm">
             <span className="flex h-2 w-2 relative">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-main opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-main"></span>
@@ -32,71 +41,82 @@ export default function Home() {
 
         {/* Introduction */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{
+            duration: reduceMotion ? 0 : 0.6,
+            delay: reduceMotion ? 0 : 0.1,
+          }}
           className="space-y-6 max-w-4xl mx-auto"
         >
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-text-primary leading-[1.1] tracking-tighter">
-            Hi. I'm Pardhu. <br />
-            <span className="text-brand-main/80">A Systems Architect.</span>
+            Hi. I&apos;m Pardhu. <br />
+            <span className="text-brand-main">A Full Stack AI Engineer.</span>
           </h1>
 
           <p className="text-xl md:text-2xl text-text-secondary font-medium leading-relaxed max-w-2xl mx-auto">
-            I dismantle complex data problems and rebuild them as intelligent, human-centric systems.
+            I ship voice, vision and retrieval systems end to end — model to
+            backend to product, without a handoff.
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-6">
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-3 md:pt-6">
+            <a
+              href="#selected-work"
+              className="inline-flex min-h-12 items-center justify-center gap-2 px-6 py-3 rounded-full bg-brand-main text-white dark:text-[#052018] font-bold text-sm hover:bg-brand-main/90 transition-colors shadow-md shadow-brand-main/20"
+            >
+              View my work <ArrowUpRight size={18} aria-hidden />
+            </a>
             <a
               href="/assets/Karnati_Reddy_Updated_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 px-6 py-3 rounded-full bg-brand-main text-white font-bold text-sm hover:bg-brand-main/90 transition-all shadow-md shadow-brand-main/20 hover:shadow-lg hover:shadow-brand-main/40 active:scale-[0.98]"
+              className="group flex min-h-12 items-center gap-2 px-5 py-3 rounded-full border border-hairline bg-bg-card/60 text-text-primary font-bold text-sm hover:bg-surface-sunken transition-colors"
             >
               <FileText size={18} />
               <span>Resume</span>
             </a>
 
-            <a
-              href="https://github.com/PardhaSarathy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 text-text-secondary hover:text-brand-main dark:hover:text-[#A9F0D4] transition-all rounded-full hover:bg-brand-main/10 active:scale-95"
-              aria-label="GitHub Profile"
-            >
-              <Github size={24} />
-            </a>
+            <div className="flex w-full sm:w-auto items-center justify-center gap-2">
+              <a
+                href="https://github.com/PardhaSarathy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 text-text-secondary hover:text-brand-main transition-all rounded-full hover:bg-brand-main/10 active:scale-95"
+                aria-label="GitHub Profile"
+              >
+                <Github size={24} />
+              </a>
 
-            <a
-              href="https://www.linkedin.com/in/pardhasaradhireddy/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 text-text-secondary hover:text-brand-main dark:hover:text-[#A9F0D4] transition-all rounded-full hover:bg-brand-main/10 active:scale-95"
-              aria-label="LinkedIn Profile"
-            >
-              <Linkedin size={24} />
-            </a>
+              <a
+                href="https://www.linkedin.com/in/pardhasaradhireddy/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 text-text-secondary hover:text-brand-main transition-all rounded-full hover:bg-brand-main/10 active:scale-95"
+                aria-label="LinkedIn Profile"
+              >
+                <Linkedin size={24} />
+              </a>
+            </div>
           </div>
 
           {/* Static Core Expertise Tags - Mobile Safe */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            className="pt-10 md:pt-12 flex flex-col items-center gap-5"
+            transition={{
+              delay: reduceMotion ? 0 : 0.25,
+              duration: reduceMotion ? 0 : 0.6,
+            }}
+            className="pt-6 md:pt-12 flex flex-col items-center gap-5"
           >
-            <p className="text-xs font-bold text-brand-main/60 dark:text-[#8EBAAA] tracking-[0.2em] uppercase">Core Expertise</p>
+            <p className="text-xs font-bold text-text-muted tracking-[0.2em] uppercase">
+              Core Expertise
+            </p>
             <div className="flex flex-wrap justify-center gap-2 md:gap-3 max-w-2xl px-2">
-              {[
-                "Large Language Models",
-                "RAG Systems",
-                "Multi-Agent Workflows",
-                "Computer Vision & OCR",
-                "WebRTC & Infra"
-              ].map((skill) => (
+              {CORE_EXPERTISE.map((skill) => (
                 <span
                   key={skill}
-                  className="px-4 py-2 rounded-xl bg-brand-main/5 dark:bg-white/5 border border-brand-main/10 dark:border-white/10 text-brand-dark dark:text-[#D1EBE1] text-xs md:text-sm font-semibold transition-colors hover:bg-brand-main/10 dark:hover:bg-white/10 cursor-default"
+                  className="px-4 py-2 rounded-xl bg-surface-sunken border border-hairline text-text-primary text-xs md:text-sm font-semibold transition-colors hover:bg-brand-main/10 cursor-default"
                 >
                   {skill}
                 </span>
@@ -104,42 +124,41 @@ export default function Home() {
             </div>
           </motion.div>
         </motion.div>
-
       </section>
 
       {/* Selected Works Section */}
-      <section className="space-y-10">
-        <div className="flex items-end justify-between px-4">
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-text-primary">Selected Work</h2>
-          <Link href="/projects" className="text-brand-main font-bold hover:underline flex items-center gap-1">
+      <section
+        id="selected-work"
+        aria-labelledby="selected-work-heading"
+        className="space-y-10 scroll-mt-8"
+      >
+        <div className="flex items-end justify-between gap-4">
+          <h2
+            id="selected-work-heading"
+            className="text-3xl md:text-4xl font-display font-bold text-text-primary"
+          >
+            Selected Work
+          </h2>
+          <Link
+            href="/projects"
+            className="text-brand-main font-bold hover:underline flex items-center gap-1 shrink-0"
+          >
             View all <ArrowUpRight size={18} />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Project 1 */}
-          <Card className="group cursor-pointer hover:scale-[1.02] transition-transform duration-500 !p-0 overflow-hidden bg-[#E6F0FF] dark:bg-[#0A1A24] min-h-[400px] flex flex-col">
-            <div className="p-10 flex-1 flex flex-col justify-center space-y-4 relative z-10">
-              <div className="w-12 h-12 bg-blue-500 rounded-2xl mb-4 shadow-lg shadow-blue-500/20"></div>
-              <h3 className="text-3xl font-bold text-blue-900 dark:text-blue-100">Insurance AI Agent</h3>
-              <p className="text-blue-800/70 dark:text-blue-100/70 text-lg leading-relaxed max-w-sm">
-                Real-time voice agent for automated claims processing using WebRTC.
-              </p>
-            </div>
-            <div className="h-48 bg-gradient-to-t from-white/40 dark:from-[#0A1A24] to-transparent"></div>
-          </Card>
-
-          {/* Project 2 */}
-          <Card className="group cursor-pointer hover:scale-[1.02] transition-transform duration-500 !p-0 overflow-hidden bg-[#F0FFE6] dark:bg-[#042011] min-h-[400px] flex flex-col">
-            <div className="p-10 flex-1 flex flex-col justify-center space-y-4 relative z-10">
-              <div className="w-12 h-12 bg-green-500 rounded-2xl mb-4 shadow-lg shadow-green-500/20"></div>
-              <h3 className="text-3xl font-bold text-green-900 dark:text-green-100">AI Travel Planner</h3>
-              <p className="text-green-800/70 dark:text-green-100/70 text-lg leading-relaxed max-w-sm">
-                Generative AI itinerary builder for seamless travel experiences.
-              </p>
-            </div>
-            <div className="h-48 bg-gradient-to-t from-white/40 dark:from-[#042011] to-transparent"></div>
-          </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {FEATURED_PROJECTS.map((project, index) => (
+            <ProjectSummaryCard
+              key={project.slug}
+              project={project}
+              delay={index * 0.06}
+              wide={
+                FEATURED_PROJECTS.length % 2 === 1 &&
+                index === FEATURED_PROJECTS.length - 1
+              }
+            />
+          ))}
         </div>
       </section>
     </div>

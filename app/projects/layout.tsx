@@ -1,10 +1,8 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { metadataForPage } from "@/lib/site";
 
-export const metadata: Metadata = {
-    title: "Lab | Pardhu",
-    description: "Showcase of AI projects, machine learning models, and full-stack applications.",
-};
+export const metadata: Metadata = metadataForPage("/projects");
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-    return children;
+  return children;
 }

@@ -10,41 +10,104 @@
   --color-bg-card: var(--theme-bg-card);
   --color-text-primary: var(--theme-text-primary);
   --color-text-secondary: var(--theme-text-secondary);
+  --color-text-muted: var(--theme-text-muted);
   --color-brand-main: var(--theme-brand-main);
   --color-brand-light: var(--theme-brand-light);
   --color-brand-dark: var(--theme-brand-dark);
   --color-accent-lime: var(--theme-accent-lime);
+
+  /* Semantic accents — one hue per engineering layer, tuned per theme */
+  --color-accent-model: var(--theme-accent-model);
+  --color-accent-serving: var(--theme-accent-serving);
+  --color-accent-infra: var(--theme-accent-infra);
+  --color-accent-product: var(--theme-accent-product);
+
+  --color-hairline: var(--theme-hairline);
+  --color-surface-sunken: var(--theme-surface-sunken);
 }
 
 :root {
   /* Light Mode (Morning/Daytime) */
-  --theme-bg-mist: #EDE7DE;
-  --theme-bg-card: #F9F6F1;
-  --theme-text-primary: #025A4E;
-  --theme-text-secondary: #4A635D;
-  --theme-brand-main: #025A4E;
-  --theme-brand-light: #BDD4BE;
+  --theme-bg-mist: #ede7de;
+  --theme-bg-card: #f9f6f1;
+  --theme-text-primary: #025a4e;
+  --theme-text-secondary: #40584f;
+  --theme-text-muted: #52655e;
+  --theme-brand-main: #025a4e;
+  --theme-brand-light: #bdd4be;
   --theme-brand-dark: #013830;
-  --theme-accent-lime: #D4E6B5;
+  --theme-accent-lime: #d4e6b5;
+
+  --theme-accent-model: #0b6b52;
+  --theme-accent-serving: #1f6376;
+  --theme-accent-infra: #8f5a0f;
+  --theme-accent-product: #6b3f8f;
+
+  --theme-hairline: rgba(2, 90, 78, 0.14);
+  --theme-surface-sunken: rgba(2, 90, 78, 0.06);
 }
 
 .dark {
   /* Deep Tonal Theme (Midnight Forest) */
-  --theme-bg-mist: #0A1C16;
-  --theme-bg-card: #112A22;
-  --theme-text-primary: #D1EBE1;
-  --theme-text-secondary: #8EBAAA;
-  --theme-brand-main: #2CC082;
-  --theme-brand-light: #186E4A;
-  --theme-brand-dark: #A9F0D4;
-  --theme-accent-lime: #23855E;
+  --theme-bg-mist: #0a1c16;
+  --theme-bg-card: #112a22;
+  --theme-text-primary: #d1ebe1;
+  --theme-text-secondary: #9cc7b7;
+  --theme-text-muted: #7fa898;
+  --theme-brand-main: #2cc082;
+  --theme-brand-light: #186e4a;
+  --theme-brand-dark: #a9f0d4;
+  --theme-accent-lime: #23855e;
+
+  --theme-accent-model: #3dd9a0;
+  --theme-accent-serving: #5cbfd8;
+  --theme-accent-infra: #e5b454;
+  --theme-accent-product: #c08fe8;
+
+  --theme-hairline: rgba(169, 240, 212, 0.14);
+  --theme-surface-sunken: rgba(255, 255, 255, 0.05);
 }
 
 /* Base Styles */
 body {
   background-color: var(--color-bg-mist);
   color: var(--color-text-primary);
-  transition: background-color 0.5s ease, color 0.5s ease;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
+}
+
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid var(--color-brand-main);
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+  transform: translateY(calc(-100% - 2rem));
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--color-hairline);
+  border-radius: 999px;
+  background: var(--color-bg-card);
+  color: var(--color-text-primary);
+  font-weight: 700;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* Used by the horizontally scrolling filter bar on /projects */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Custom Scrollbar */
@@ -71,4 +134,17 @@ body {
 
 .dark ::-webkit-scrollbar-thumb:hover {
   background: var(--color-brand-main);
+}
+
+/* Respect users who ask for less motion: the aurora orbs and dock springs
+   are decorative, so drop them rather than animate at reduced amplitude. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

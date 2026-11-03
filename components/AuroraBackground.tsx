@@ -1,8 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 export function AuroraBackground() {
+    const reduceMotion = useReducedMotion();
     return (
         <div className="absolute top-0 left-0 w-full h-[800px] z-[-1] overflow-hidden pointer-events-none">
             {/* Gradient Mask to fade into background color */}
@@ -10,7 +11,7 @@ export function AuroraBackground() {
 
             {/* Orb 1 - Top Left (Deep Green) */}
             <motion.div
-                animate={{
+                animate={reduceMotion ? undefined : {
                     x: [-50, 50, -50],
                     y: [-20, 20, -20],
                     scale: [1, 1.1, 1],
@@ -25,7 +26,7 @@ export function AuroraBackground() {
 
             {/* Orb 2 - Right (Mint) */}
             <motion.div
-                animate={{
+                animate={reduceMotion ? undefined : {
                     x: [20, -20, 20],
                     y: [20, -20, 20],
                     scale: [1, 1.2, 1],
@@ -40,7 +41,7 @@ export function AuroraBackground() {
 
             {/* Orb 3 - Middle Center (Lime Accent) */}
             <motion.div
-                animate={{
+                animate={reduceMotion ? undefined : {
                     x: [-30, 30, -30],
                     y: [-30, 30, -30],
                     opacity: [0.4, 0.7, 0.4],

@@ -1,196 +1,337 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform, MotionValue } from "framer-motion";
-import { Home, User, FlaskConical, Library, Mail, LucideIcon, Moon, Sun } from "lucide-react";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  MotionValue,
+  useReducedMotion,
+} from "framer-motion";
+import {
+  Home,
+  User,
+  FlaskConical,
+  Library,
+  Mail,
+  LucideIcon,
+  Moon,
+  Sun,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { clsx } from "clsx";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, type PointerEvent } from "react";
 import { useTheme } from "next-themes";
+import { DockGesture } from "@/lib/dock-gesture";
 
 const links = [
-    { href: "/", icon: Home, label: "Home" },
-    { href: "/about", icon: User, label: "Profile" },
-    { href: "/projects", icon: FlaskConical, label: "Lab" },
-    { href: "/certifications", icon: Library, label: "Shelf" },
-    { href: "/contact", icon: Mail, label: "Signal" },
+  { href: "/", icon: Home, label: "Home" },
+  { href: "/about", icon: User, label: "Profile" },
+  { href: "/projects", icon: FlaskConical, label: "Lab" },
+  { href: "/certifications", icon: Library, label: "Shelf" },
+  { href: "/contact", icon: Mail, label: "Signal" },
 ];
 
 export function FloatingDock() {
-    const mouseX = useMotionValue(Infinity);
+  const mouseX = useMotionValue(Infinity);
+  const touchMode = useMotionValue(0);
+  const gesture = useRef(new DockGesture());
+  const releaseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    return (
-        <motion.nav
-            aria-label="Main Navigation"
-            onMouseMove={(e) => mouseX.set(e.pageX)}
-            onMouseLeave={() => mouseX.set(Infinity)}
-            className="fixed bottom-4 md:bottom-8 inset-x-0 mx-auto w-max max-w-[calc(100vw-1rem)] md:w-fit z-50 flex items-end justify-center gap-1 md:gap-3 px-2 md:px-4 py-1.5 md:py-3 rounded-full bg-white/30 dark:bg-[#0A1C16]/60 backdrop-blur-2xl shadow-[0_0_35px_rgba(2,90,78,0.6)] dark:shadow-[0_0_25px_rgba(169,240,212,0.3)] border border-white/50 dark:border-[#A9F0D4]/20 h-14 md:h-20 transition-all duration-500"
-        >
-            {links.map((link) => (
-                <DockIcon key={link.href} mouseX={mouseX} {...link} />
-            ))}
+  function clearReleaseTimer() {
+    if (releaseTimer.current !== null) clearTimeout(releaseTimer.current);
+    releaseTimer.current = null;
+  }
 
-            <div className="w-[1px] h-10 bg-gray-200 dark:bg-gray-800 self-center mx-1 transition-colors duration-500" />
+  function pointerDown(event: PointerEvent<HTMLElement>) {
+    if (!event.isPrimary) return;
+    clearReleaseTimer();
+    touchMode.set(event.pointerType === "mouse" ? 0 : 1);
+    mouseX.set(event.clientX);
+    if (event.pointerType === "mouse") gesture.current.cancel();
+    else gesture.current.begin(event.pointerId, event.clientX, event.clientY);
+  }
 
-            <ThemeToggleIcon mouseX={mouseX} />
-        </motion.nav>
-    );
+  function pointerMove(event: PointerEvent<HTMLElement>) {
+    if (!event.isPrimary) return;
+    if (event.pointerType === "mouse") {
+      touchMode.set(0);
+      mouseX.set(event.clientX);
+    } else if (
+      gesture.current.move(event.pointerId, event.clientX, event.clientY)
+    ) {
+      const bounds = event.currentTarget.getBoundingClientRect();
+      // A finger can leave the dock while its original link retains capture.
+      const nearDock =
+        event.clientY >= bounds.top - 32 && event.clientY <= bounds.bottom + 32;
+      mouseX.set(nearDock ? event.clientX : Infinity);
+    }
+  }
+
+  function pointerUp(event: PointerEvent<HTMLElement>) {
+    if (event.pointerType === "mouse" || !gesture.current.end(event.pointerId))
+      return;
+    // Let a quick tap register visually; navigation itself is never delayed.
+    clearReleaseTimer();
+    releaseTimer.current = setTimeout(() => {
+      mouseX.set(Infinity);
+      releaseTimer.current = null;
+    }, 120);
+  }
+
+  function cancelTouch(event: PointerEvent<HTMLElement>) {
+    if (!event.isPrimary) return;
+    clearReleaseTimer();
+    gesture.current.cancel();
+    mouseX.set(Infinity);
+  }
+
+  useEffect(() => {
+    const reset = () => {
+      if (releaseTimer.current !== null) clearTimeout(releaseTimer.current);
+      releaseTimer.current = null;
+      gesture.current.cancel();
+      mouseX.set(Infinity);
+    };
+    window.addEventListener("blur", reset);
+    document.addEventListener("visibilitychange", reset);
+    return () => {
+      reset();
+      window.removeEventListener("blur", reset);
+      document.removeEventListener("visibilitychange", reset);
+    };
+  }, [mouseX]);
+
+  return (
+    <motion.nav
+      aria-label="Main Navigation"
+      onPointerDown={pointerDown}
+      onPointerMove={pointerMove}
+      onPointerUp={pointerUp}
+      onPointerCancel={cancelTouch}
+      onPointerLeave={(event) => {
+        if (event.pointerType === "mouse") mouseX.set(Infinity);
+      }}
+      onClickCapture={(event) => {
+        if (gesture.current.consumeClick(event.detail)) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+      }}
+      style={{ touchAction: "pan-y pinch-zoom" }}
+      className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] md:bottom-8 inset-x-0 mx-auto w-max max-w-[calc(100vw-1rem)] md:w-fit z-50 flex items-end justify-center gap-0.5 md:gap-3 px-2 md:px-4 py-1.5 md:py-3 rounded-full bg-white/30 dark:bg-[#0A1C16]/60 backdrop-blur-2xl shadow-[0_0_35px_rgba(2,90,78,0.6)] dark:shadow-[0_0_25px_rgba(169,240,212,0.3)] border border-white/50 dark:border-[#A9F0D4]/20 h-16 md:h-20 transition-colors duration-200"
+    >
+      {links.map((link) => (
+        <DockIcon
+          key={link.href}
+          mouseX={mouseX}
+          touchMode={touchMode}
+          {...link}
+        />
+      ))}
+
+      <div className="w-px h-10 bg-hairline self-center mx-1 transition-colors duration-500" />
+
+      <ThemeToggleIcon mouseX={mouseX} touchMode={touchMode} />
+    </motion.nav>
+  );
 }
+
+const SPRING = { mass: 0.1, stiffness: 150, damping: 12 };
+const RANGE = 150;
+
+/** Shared macOS-style magnification for every dock item. */
+function useMagnification(
+  mouseX: MotionValue,
+  touchMode: MotionValue<number>,
+  ref: React.RefObject<HTMLElement | null>,
+) {
+  const canMagnify = useCanMagnify();
+  const reduceMotion = useReducedMotion();
+
+  const distance = useTransform(mouseX, (val) => {
+    const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
+    return val - bounds.x - bounds.width / 2;
+  });
+
+  const size = useTransform([distance, touchMode], ([value, touch]) => {
+    const val = value as number;
+    const max = 80;
+    if (
+      touch === 1 ||
+      !canMagnify ||
+      reduceMotion ||
+      val < -RANGE ||
+      val > RANGE
+    )
+      return 44;
+    return 44 + (1 - Math.abs(val) / RANGE) * (max - 44);
+  });
+
+  // Touch keeps 44px hit areas fixed; transform the circles above those areas.
+  // This gives the wave room to move without widening the dock off-screen.
+  const touchInfluence = useTransform(
+    [distance, touchMode],
+    ([value, touch]) => {
+      if (reduceMotion || (touch !== 1 && canMagnify)) return 0;
+      return Math.max(0, 1 - Math.abs(value as number) / 90);
+    },
+  );
+  const lift = useTransform(touchInfluence, (value) => -12 * value);
+  const tileScale = useTransform(touchInfluence, (value) => 1 + 0.25 * value);
+
+  const scale = useTransform([distance, touchMode], ([value, touch]) => {
+    const val = value as number;
+    if (reduceMotion) return 1;
+    if (touch === 1 || !canMagnify)
+      return 1 + Math.max(0, 1 - Math.abs(val) / 90) * 0.1;
+    const max = 1.5;
+    if (val < -RANGE || val > RANGE) return 1;
+    return 1 + (1 - Math.abs(val) / RANGE) * (max - 1);
+  });
+
+  return {
+    width: useSpring(size, SPRING),
+    height: useSpring(size, SPRING),
+    iconScale: useSpring(scale, SPRING),
+    y: useSpring(lift, SPRING),
+    tileScale: useSpring(tileScale, SPRING),
+  };
+}
+
+const TOOLTIP_CLASS =
+  "absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1 bg-brand-dark dark:bg-[#D1EBE1] text-white dark:text-[#0A1C16] text-xs font-semibold rounded-md opacity-0 pointer-events-none whitespace-nowrap shadow-xl z-[999] transition-[opacity,transform] duration-150 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 group-focus-visible:opacity-100 group-focus-visible:translate-y-0";
+
+const IDLE_ICON_CLASS =
+  "bg-bg-card/50 dark:bg-white/5 text-text-secondary hover:bg-bg-card dark:hover:bg-white/10 border border-brand-main/20 dark:border-transparent shadow-[0_0_10px_rgba(2,90,78,0.2)] dark:shadow-none hover:shadow-[0_0_15px_rgba(2,90,78,0.3)] dark:hover:shadow-none hover:border-brand-main/40 dark:hover:border-transparent dark:text-[#8EBAAA]";
 
 function DockIcon({
-    mouseX,
-    icon: Icon,
-    href,
-    label,
+  mouseX,
+  touchMode,
+  icon: Icon,
+  href,
+  label,
 }: {
-    mouseX: MotionValue;
-    icon: LucideIcon;
-    href: string;
-    label: string;
+  mouseX: MotionValue;
+  touchMode: MotionValue<number>;
+  icon: LucideIcon;
+  href: string;
+  label: string;
 }) {
-    const ref = useRef<HTMLDivElement>(null);
-    const pathname = usePathname();
-    const isActive = pathname === href;
-    const isMobile = useIsMobile();
+  const ref = useRef<HTMLAnchorElement>(null);
+  const pathname = usePathname();
+  const isActive =
+    pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
+  const { width, height, iconScale, y, tileScale } = useMagnification(
+    mouseX,
+    touchMode,
+    ref,
+  );
 
-    const distance = useTransform(mouseX, (val) => {
-        const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
-        return val - bounds.x - bounds.width / 2;
-    });
-
-    const widthTransform = useTransform(distance, (val) => {
-        const maxVal = isMobile ? 64 : 80;
-        if (val < -150 || val > 150) return 40;
-        const fraction = 1 - Math.abs(val) / 150;
-        return 40 + fraction * (maxVal - 40);
-    });
-
-    const heightTransform = useTransform(distance, (val) => {
-        const maxVal = isMobile ? 64 : 80;
-        if (val < -150 || val > 150) return 40;
-        const fraction = 1 - Math.abs(val) / 150;
-        return 40 + fraction * (maxVal - 40);
-    });
-
-    const iconScaleTransform = useTransform(distance, (val) => {
-        const maxVal = isMobile ? 1.25 : 1.5;
-        if (val < -150 || val > 150) return 1;
-        const fraction = 1 - Math.abs(val) / 150;
-        return 1 + fraction * (maxVal - 1);
-    });
-
-    const width = useSpring(widthTransform, { mass: 0.1, stiffness: 150, damping: 12 });
-    const height = useSpring(heightTransform, { mass: 0.1, stiffness: 150, damping: 12 });
-    const iconScale = useSpring(iconScaleTransform, { mass: 0.1, stiffness: 150, damping: 12 });
-
-    return (
-        <Link
-            href={href}
-            className="relative group"
-            aria-label={label}
-            aria-current={isActive ? "page" : undefined}
+  return (
+    <Link
+      href={href}
+      ref={ref}
+      className="relative group"
+      aria-label={label}
+      aria-current={isActive ? "page" : undefined}
+    >
+      <motion.div
+        style={{
+          width,
+          height,
+          y,
+          scale: tileScale,
+          transformOrigin: "50% 100%",
+        }}
+        className={clsx(
+          "flex items-center justify-center rounded-full transition-colors duration-200",
+          isActive
+            ? "bg-brand-light text-brand-main dark:bg-[#186E4A] dark:text-[#A9F0D4] shadow-inner dark:shadow-inner border border-brand-main/40 dark:border-white/10 shadow-[0_0_15px_rgba(2,90,78,0.4)] dark:shadow-none"
+            : IDLE_ICON_CLASS,
+        )}
+      >
+        <motion.div
+          style={{ scale: iconScale }}
+          className="flex items-center justify-center"
         >
-            <motion.div
-                ref={ref}
-                style={{ width, height }}
-                className={clsx(
-                    "flex items-center justify-center rounded-full transition-colors duration-200",
-                    isActive
-                        ? "bg-brand-light text-brand-main dark:bg-[#186E4A] dark:text-[#A9F0D4] shadow-inner dark:shadow-inner border border-brand-main/40 dark:border-white/10 shadow-[0_0_15px_rgba(2,90,78,0.4)] dark:shadow-none"
-                        : "bg-gray-100/50 dark:bg-white/5 text-text-secondary hover:bg-white dark:hover:bg-white/10 border border-brand-main/20 dark:border-transparent shadow-[0_0_10px_rgba(2,90,78,0.2)] dark:shadow-none hover:shadow-[0_0_15px_rgba(2,90,78,0.3)] dark:hover:shadow-none hover:border-brand-main/40 dark:hover:border-transparent dark:text-[#8EBAAA]"
-                )}
-            >
-                <motion.div style={{ scale: iconScale }} className="flex items-center justify-center">
-                    <Icon className="w-5 h-5" />
-                </motion.div>
-            </motion.div>
+          <Icon className="w-5 h-5" />
+        </motion.div>
+      </motion.div>
 
-            {/* Tooltip */}
-            <span
-                className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1 bg-black dark:bg-white text-white dark:text-black text-xs font-semibold rounded-md opacity-0 pointer-events-none whitespace-nowrap shadow-xl z-[999] transition-all duration-150 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0"
-            >
-                {label}
-            </span>
-        </Link>
-    );
+      <span className={TOOLTIP_CLASS}>{label}</span>
+    </Link>
+  );
 }
 
-function ThemeToggleIcon({ mouseX }: { mouseX: MotionValue }) {
-    const { theme, setTheme } = useTheme();
-    const [mounted, setMounted] = useState(false);
-    const ref = useRef<HTMLButtonElement>(null);
-    const isMobile = useIsMobile();
+function ThemeToggleIcon({
+  mouseX,
+  touchMode,
+}: {
+  mouseX: MotionValue;
+  touchMode: MotionValue<number>;
+}) {
+  // resolvedTheme, not theme: `theme` can be "system", which made the toggle
+  // report light while the page was actually rendering dark.
+  const { resolvedTheme, setTheme } = useTheme();
+  const ref = useRef<HTMLButtonElement>(null);
+  const { width, height, iconScale, y, tileScale } = useMagnification(
+    mouseX,
+    touchMode,
+    ref,
+  );
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    const distance = useTransform(mouseX, (val) => {
-        const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
-        return val - bounds.x - bounds.width / 2;
-    });
-
-    const widthTransform = useTransform(distance, (val) => {
-        const maxVal = isMobile ? 64 : 80;
-        if (val < -150 || val > 150) return 40;
-        const fraction = 1 - Math.abs(val) / 150;
-        return 40 + fraction * (maxVal - 40);
-    });
-
-    const heightTransform = useTransform(distance, (val) => {
-        const maxVal = isMobile ? 64 : 80;
-        if (val < -150 || val > 150) return 40;
-        const fraction = 1 - Math.abs(val) / 150;
-        return 40 + fraction * (maxVal - 40);
-    });
-
-    const iconScaleTransform = useTransform(distance, (val) => {
-        const maxVal = isMobile ? 1.25 : 1.5;
-        if (val < -150 || val > 150) return 1;
-        const fraction = 1 - Math.abs(val) / 150;
-        return 1 + fraction * (maxVal - 1);
-    });
-
-    const width = useSpring(widthTransform, { mass: 0.1, stiffness: 150, damping: 12 });
-    const height = useSpring(heightTransform, { mass: 0.1, stiffness: 150, damping: 12 });
-    const iconScale = useSpring(iconScaleTransform, { mass: 0.1, stiffness: 150, damping: 12 });
-
-    const isDark = theme === "dark";
-    const Icon = mounted && isDark ? Sun : Moon;
-
-    return (
-        <button
-            ref={ref}
-            onClick={() => setTheme(isDark ? "light" : "dark")}
-            className="relative group cursor-pointer"
-            aria-label="Toggle Theme"
+  // Which icon to show is decided by CSS off the `.dark` class rather than by
+  // a mounted flag. resolvedTheme is undefined on the first client render, so
+  // a JS-driven icon flashes the wrong glyph before hydration settles.
+  return (
+    <button
+      ref={ref}
+      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      className="relative group cursor-pointer"
+      aria-label="Toggle colour theme"
+    >
+      <motion.div
+        style={{
+          width,
+          height,
+          y,
+          scale: tileScale,
+          transformOrigin: "50% 100%",
+        }}
+        className={clsx(
+          "flex items-center justify-center rounded-full transition-colors duration-200",
+          IDLE_ICON_CLASS,
+        )}
+      >
+        <motion.div
+          style={{ scale: iconScale }}
+          className="flex items-center justify-center"
         >
-            <motion.div
-                style={{ width, height }}
-                className="flex items-center justify-center rounded-full transition-colors duration-200 bg-gray-100/50 dark:bg-white/5 text-text-secondary hover:bg-white dark:hover:bg-white/10 border border-brand-main/20 dark:border-transparent shadow-[0_0_10px_rgba(2,90,78,0.2)] dark:shadow-none hover:shadow-[0_0_15px_rgba(2,90,78,0.3)] dark:hover:shadow-none hover:border-brand-main/40 dark:hover:border-transparent dark:text-[#8EBAAA]"
-            >
-                <motion.div style={{ scale: iconScale }} className="flex items-center justify-center">
-                    <Icon className="w-5 h-5" />
-                </motion.div>
-            </motion.div>
+          <Sun className="w-5 h-5 hidden dark:block" />
+          <Moon className="w-5 h-5 block dark:hidden" />
+        </motion.div>
+      </motion.div>
 
-            {/* Tooltip */}
-            <span
-                className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1 bg-black dark:bg-white text-white dark:text-black text-xs font-semibold rounded-md opacity-0 pointer-events-none whitespace-nowrap shadow-xl z-[999] transition-all duration-150 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0"
-            >
-                {mounted && isDark ? "Light Mode" : "Dark Mode"}
-            </span>
-        </button>
-    );
+      <span className={TOOLTIP_CLASS}>
+        <span className="hidden dark:inline">Light Mode</span>
+        <span className="inline dark:hidden">Dark Mode</span>
+      </span>
+    </button>
+  );
 }
 
-function useIsMobile() {
-    const [isMobile, setIsMobile] = useState(false);
-    useEffect(() => {
-        const check = () => setIsMobile(window.innerWidth < 768);
-        check();
-        window.addEventListener("resize", check);
-        return () => window.removeEventListener("resize", check);
-    }, []);
-    return isMobile;
+function useCanMagnify() {
+  const [canMagnify, setCanMagnify] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia(
+      "(min-width: 768px) and (hover: hover) and (pointer: fine)",
+    );
+    const sync = () => setCanMagnify(media.matches);
+    sync();
+    media.addEventListener("change", sync);
+    return () => media.removeEventListener("change", sync);
+  }, []);
+  return canMagnify;
 }

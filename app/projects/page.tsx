@@ -1,263 +1,196 @@
 "use client";
 
-import { useState } from "react";
-import { Card } from "@/components/ui/Card";
-import { ArrowUpRight, Github, Layout, Map, Stethoscope, MessageSquare, ListTodo, Utensils, Network } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Suspense, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ProjectSummaryCard } from "@/components/ProjectSummaryCard";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import {
+  PUBLISHED_PROJECTS,
+  LAYERS,
+  LAYER_LABEL,
+  type Layer,
+} from "@/lib/projects";
 
-// --- Data ---
-type Category = "All" | "AI Agents" | "Machine Learning" | "Web Apps";
+type Filter = "All" | Layer;
 
-interface Project {
-    id: string;
-    title: string;
-    description: string;
-    category: Category[];
-    tech: string[];
-    links: { label: string; url: string; icon?: React.ElementType }[];
-    visualColor: string;
-    icon: React.ElementType;
-    bentoClass?: string;
-}
-
-const PROJECTS: Project[] = [
-    {
-        id: "insurance-agent",
-        title: "Real-Time Insurance AI",
-        description: "Voice-first AI system handling autonomous KYC verification and claims validation with low-latency WebRTC pipelines.",
-        category: ["AI Agents", "Web Apps"],
-        tech: ["Python", "LiveKit", "WebRTC"],
-        links: [
-            { label: "View Architecture", url: "#" } // Placeholder
-        ],
-        visualColor: "bg-blue-500",
-        icon: Network,
-        bentoClass: "md:col-span-2 lg:col-span-2"
-    },
-    {
-        id: "travel-planner",
-        title: "AI Travel Planner",
-        description: "Intelligent travel companion that generates personalized itineraries using Generative AI.",
-        category: ["AI Agents", "Web Apps"],
-        tech: ["React", "LangChain", "GenAI"],
-        links: [
-            { label: "Live Demo", url: "https://pardhu-travelplanner.vercel.app/" },
-            { label: "Code", url: "https://github.com/PardhaSarathy/FINAL_PROJECT.git", icon: Github }
-        ],
-        visualColor: "bg-emerald-500",
-        icon: Map,
-        bentoClass: "col-span-1 lg:col-span-1"
-    },
-    {
-        id: "fitvisor",
-        title: "FitVisor Stroke Risk",
-        description: "Machine Learning model predicting stroke likelihood based on health parameters.",
-        category: ["Machine Learning"],
-        tech: ["ML", "Python", "Streamlit"],
-        links: [
-            { label: "View App", url: "https://fitvisor.streamlit.app/" },
-            { label: "Code", url: "https://github.com/PardhaSarathy/fitvisor-app.git", icon: Github }
-        ],
-        visualColor: "bg-rose-500",
-        icon: Stethoscope,
-        bentoClass: "col-span-1 lg:col-span-1"
-    },
-    {
-        id: "genai-chatbot",
-        title: "GenAI Chatbot",
-        description: "Interactive conversational agent powered by large language models.",
-        category: ["AI Agents"],
-        tech: ["LLM", "React"],
-        links: [
-            { label: "View App", url: "https://pardhugenai.ccbp.tech/" },
-            { label: "Code", url: "https://github.com/PardhaSarathy/genAI_ChatBot.git", icon: Github }
-        ],
-        visualColor: "bg-violet-500",
-        icon: MessageSquare,
-        bentoClass: "md:col-span-2 lg:col-span-2"
-    },
-    {
-        id: "avoi-site",
-        title: "AVOI Company Site",
-        description: "High-performance frontend architecture for an AI startup. Focusing on SEO and premium aesthetics.",
-        category: ["Web Apps"],
-        tech: ["Next.js", "Tailwind", "Framer"],
-        links: [
-            { label: "View Site", url: "https://avoi.in/" }
-        ],
-        visualColor: "bg-teal-600",
-        icon: Layout,
-        bentoClass: "md:col-span-2 lg:col-span-2"
-    },
-    {
-        id: "food-munch",
-        title: "Food Munch",
-        description: "Responsive food ordering platform UI.",
-        category: ["Web Apps"],
-        tech: ["HTML", "CSS", "Bootstrap"],
-        links: [
-            { label: "View App", url: "https://parthasaradhi.ccbp.tech/" },
-            { label: "Code", url: "https://github.com/PardhaSarathy/FoodMunch.git", icon: Github }
-        ],
-        visualColor: "bg-orange-500",
-        icon: Utensils,
-        bentoClass: "col-span-1 lg:col-span-1"
-    },
-    {
-        id: "smart-todo",
-        title: "Smart Todo List",
-        description: "Dynamic task management application with persistent storage.",
-        category: ["Web Apps"],
-        tech: ["JavaScript", "DOM"],
-        links: [
-            { label: "View App", url: "https://pardhasaradhi7.ccbp.tech/" },
-            { label: "Code", url: "https://github.com/PardhaSarathy/TODO.git", icon: Github }
-        ],
-        visualColor: "bg-yellow-500",
-        icon: ListTodo,
-        bentoClass: "col-span-1 lg:col-span-1"
-    }
-];
-
-const CATEGORIES: Category[] = ["All", "AI Agents", "Machine Learning", "Web Apps"];
+const FILTERS: Filter[] = ["All", ...LAYERS];
+const BROWSE_PROJECTS = [...PUBLISHED_PROJECTS].sort(
+  (a, b) => Number(!!b.featured) - Number(!!a.featured),
+);
 
 export default function ProjectsPage() {
-    const [activeCategory, setActiveCategory] = useState<Category>("All");
+  return (
+    <Suspense fallback={<ProjectsContent activeFilter="All" />}>
+      <FilteredProjects />
+    </Suspense>
+  );
+}
 
-    const filteredProjects = PROJECTS.filter(project =>
-        activeCategory === "All" || project.category.includes(activeCategory)
-    );
+function FilteredProjects() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const requestedLayer = searchParams.get("layer");
+  const activeFilter: Filter = LAYERS.includes(requestedLayer as Layer)
+    ? (requestedLayer as Layer)
+    : "All";
 
-    return (
-        <div className="min-h-screen pb-32 md:pb-40 pt-10 px-4 md:px-8 max-w-7xl mx-auto space-y-12">
+  function selectFilter(filter: Filter) {
+    const params = new URLSearchParams(searchParams.toString());
+    if (filter === "All") params.delete("layer");
+    else params.set("layer", filter);
+    const query = params.toString();
+    router.replace(query ? `/projects?${query}` : "/projects", {
+      scroll: false,
+    });
+  }
 
-            {/* Header */}
-            <div className="flex flex-col items-center text-center space-y-6">
-                <h1 className="text-5xl md:text-7xl font-display font-bold text-text-primary">
-                    Selected Works.
-                </h1>
-                <p className="text-xl text-text-secondary max-w-2xl leading-relaxed">
-                    Engineering intelligence into software. From autonomous agents to scalable web systems.
-                </p>
+  return (
+    <ProjectsContent
+      activeFilter={activeFilter}
+      onFilterChange={selectFilter}
+    />
+  );
+}
 
-                {/* Categories / Filter Tabs - Premium Segmented Control */}
-                <div className="sticky top-24 z-50 flex md:flex-wrap justify-start md:justify-center overflow-x-auto no-scrollbar gap-2 md:gap-3 mt-10 p-1.5 md:p-2 bg-gray-100/80 dark:bg-[#0F261E]/80 backdrop-blur-xl rounded-[2.5rem] md:rounded-full border border-gray-200/50 dark:border-white/10 w-max max-w-[95vw] shadow-sm md:shadow-md mx-auto">
-                    {CATEGORIES.map((cat) => {
-                        // Dynamically calculate the count for each category
-                        const count = cat === "All"
-                            ? PROJECTS.length
-                            : PROJECTS.filter(p => p.category.includes(cat)).length;
+function ProjectsContent({
+  activeFilter,
+  onFilterChange,
+}: {
+  activeFilter: Filter;
+  onFilterChange?: (filter: Filter) => void;
+}) {
+  const reduceMotion = useReducedMotion();
+  const allFilterRef = useRef<HTMLButtonElement>(null);
+  const filtered = BROWSE_PROJECTS.filter(
+    (p) => activeFilter === "All" || p.layers.includes(activeFilter),
+  );
 
-                        return (
-                            <button
-                                key={cat}
-                                onClick={() => setActiveCategory(cat)}
-                                className={cn(
-                                    "flex items-center gap-2 px-5 md:px-7 py-2.5 md:py-3 rounded-full text-sm md:text-base font-semibold transition-all duration-300 relative whitespace-nowrap active:scale-[0.97]",
-                                    activeCategory === cat
-                                        ? "text-white dark:text-[#0A1C16]"
-                                        : "text-text-secondary hover:text-text-primary hover:bg-white/50 dark:hover:bg-white/10"
-                                )}
-                            >
-                                {activeCategory === cat && (
-                                    <motion.div
-                                        layoutId="activeTab"
-                                        className="absolute inset-0 bg-brand-main dark:bg-[#A9F0D4] rounded-full shadow-md"
-                                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                                    />
-                                )}
-                                <span className="relative z-10">{cat}</span>
+  return (
+    <div className="w-full max-w-7xl mx-auto px-4 md:px-8 pb-24 space-y-12">
+      {/* Header */}
+      <div className="flex flex-col items-center text-center space-y-6">
+        <h1 className="text-5xl md:text-7xl font-display font-bold text-text-primary">
+          Selected Works.
+        </h1>
+        <p className="text-xl text-text-secondary max-w-2xl leading-relaxed">
+          Voice, vision and retrieval systems taken from model to backend to
+          shipped product. Filter by the layer each one proves.
+        </p>
+      </div>
 
-                                {/* Dynamic Item Count Badge */}
-                                <span className={cn(
-                                    "relative z-10 text-[0.65rem] md:text-xs font-bold px-2 py-0.5 rounded-full transition-colors",
-                                    activeCategory === cat
-                                        ? "bg-white/20 dark:bg-black/10 text-white dark:text-[#0A1C16]"
-                                        : "bg-gray-200/70 dark:bg-white/10 text-gray-500 dark:text-gray-400 group-hover:bg-gray-300/50"
-                                )}>
-                                    {count}
-                                </span>
-                            </button>
-                        );
-                    })}
-                </div>
-            </div>
+      {/*
+              Sticky filter bar. Direct child of the page container rather than
+              nested in the centered header — inside the header it scrolled away
+              with its parent and never actually stuck.
+            */}
+      <div className="sticky top-4 z-40 flex justify-center">
+        <div
+          role="group"
+          aria-label="Filter projects by engineering layer"
+          className="flex flex-wrap sm:flex-nowrap justify-center gap-1 md:gap-2 p-1.5 md:p-2 bg-bg-card/90 backdrop-blur-xl rounded-3xl sm:rounded-full border border-hairline w-max max-w-full shadow-lg shadow-black/5 dark:shadow-black/30"
+        >
+          {FILTERS.map((f) => {
+            const count =
+              f === "All"
+                ? PUBLISHED_PROJECTS.length
+                : PUBLISHED_PROJECTS.filter((p) => p.layers.includes(f)).length;
+            const isActive = activeFilter === f;
 
-            {/* Projects Grid */}
-            <motion.div
-                layout
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
-                <AnimatePresence mode="popLayout">
-                    {filteredProjects.map((project) => (
-                        <motion.div
-                            key={project.id}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.9 }}
-                            layout
-                            transition={{ duration: 0.3 }}
-                            className={cn("h-full", project.bentoClass)}
-                        >
-                            <Card className="h-full group flex flex-col justify-between p-8 bg-white dark:bg-[#0F261E] hover:bg-gray-50/80 dark:hover:bg-[#153026] border border-gray-100 dark:border-white/5 hover:border-gray-200 dark:hover:border-white/10 shadow-md shadow-gray-200/50 dark:shadow-none hover:shadow-xl hover:shadow-gray-200/50 dark:hover:shadow-none transition-all duration-500 rounded-[2rem] relative overflow-hidden">
-
-                                {/* Top Content */}
-                                <div className="space-y-6 relative z-10">
-                                    <div className="flex justify-between items-start">
-                                        <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg", project.visualColor)}>
-                                            <project.icon size={28} />
-                                        </div>
-                                        {/* Link arrow appears on hover */}
-                                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
-                                            <ArrowUpRight className="text-gray-400 group-hover:text-brand-main dark:group-hover:text-[#A9F0D4] transition-colors" />
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <h3 className="text-2xl font-bold text-text-primary mb-3">
-                                            {project.title}
-                                        </h3>
-                                        <p className="text-text-secondary text-base leading-relaxed">
-                                            {project.description}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Bottom Tech & Links */}
-                                <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col gap-4 relative z-10">
-                                    <div className="flex flex-wrap gap-2">
-                                        {project.tech.map(t => (
-                                            <span key={t} className="px-2.5 py-1 bg-gray-100/80 text-gray-500 text-[0.65rem] font-bold rounded-md uppercase tracking-[0.15em]">
-                                                {t}
-                                            </span>
-                                        ))}
-                                    </div>
-
-                                    <div className="flex gap-4">
-                                        {project.links.map((link, idx) => (
-                                            <a
-                                                key={idx}
-                                                href={link.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="flex items-center gap-2 text-sm font-bold text-text-primary hover:text-brand-main dark:hover:text-[#A9F0D4] transition-colors"
-                                            >
-                                                {link.icon && <link.icon size={16} />}
-                                                {link.label}
-                                            </a>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {/* Background Decoration */}
-                                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-gray-50 dark:from-white/5 to-transparent rounded-bl-[10rem] -z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-                            </Card>
-                        </motion.div>
-                    ))}
-                </AnimatePresence>
-            </motion.div>
-
+            return (
+              <button
+                key={f}
+                ref={f === "All" ? allFilterRef : undefined}
+                onClick={() => onFilterChange?.(f)}
+                aria-controls="project-results"
+                aria-pressed={isActive}
+                className={cn(
+                  "flex min-h-11 items-center gap-2 px-2 sm:px-3 md:px-6 py-2.5 rounded-full text-sm md:text-base font-semibold transition-colors duration-200 relative whitespace-nowrap",
+                  isActive
+                    ? "text-white dark:text-[#052018]"
+                    : "text-text-secondary hover:text-text-primary hover:bg-surface-sunken",
+                )}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute inset-0 bg-brand-main rounded-full shadow-md"
+                    transition={{ duration: reduceMotion ? 0 : 0.2 }}
+                  />
+                )}
+                <span className="relative z-10">
+                  {f === "All" ? "All" : LAYER_LABEL[f]}
+                </span>
+                <span
+                  className={cn(
+                    "relative z-10 text-xs font-bold px-2 py-0.5 rounded-full transition-colors",
+                    isActive
+                      ? "bg-black/15 dark:bg-black/10"
+                      : "bg-surface-sunken text-text-muted",
+                  )}
+                >
+                  {count}
+                </span>
+              </button>
+            );
+          })}
         </div>
-    );
+      </div>
+
+      {/* Keep the result count visible without moving keyboard focus. */}
+      <div className="space-y-5">
+        <div className="flex items-center justify-between gap-4 min-h-11">
+          <p
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+            className="text-sm text-text-secondary"
+          >
+            <span className="font-semibold text-text-primary">
+              {filtered.length} projects
+            </span>
+            <span aria-hidden className="mx-2 text-text-muted">
+              ·
+            </span>
+            {activeFilter === "All"
+              ? "Featured first"
+              : LAYER_LABEL[activeFilter]}
+          </p>
+          {activeFilter !== "All" && (
+            <button
+              onClick={() => {
+                onFilterChange?.("All");
+                allFilterRef.current?.focus();
+              }}
+              className="min-h-11 rounded-lg px-2 text-sm font-semibold text-brand-main hover:underline"
+            >
+              Show all
+            </button>
+          )}
+        </div>
+        {/* Projects Grid */}
+        <motion.div
+          id="project-results"
+          layout={!reduceMotion}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          <AnimatePresence mode="popLayout">
+            {filtered.map((project) => (
+              <motion.div
+                key={project.slug}
+                layout={!reduceMotion}
+                initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: reduceMotion ? 0 : 0.2 }}
+                className="h-full"
+              >
+                <ProjectSummaryCard project={project} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+      </div>
+    </div>
+  );
 }

@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "brand:icons": "node scripts/generate-icons.mjs",
+    "check:metadata": "node scripts/check-metadata.mjs",
+    "test:dock": "node --experimental-strip-types --test scripts/dock-gesture.test.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

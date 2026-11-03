@@ -1,4 +1,14 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Pardhu Karnati’s portfolio, built with Next.js, React, Tailwind CSS, and Framer Motion.
+
+## Branding and sharing
+
+Page titles, descriptions, canonical URLs, and the production domain live in `lib/site.ts`. Project content lives in `lib/projects.ts`. The sitemap and sharing previews include published projects automatically.
+
+`app/share/[slug]/route.tsx` generates a distinct 1200×630 preview for each page and published project. Preview the homepage image at `/share/home` and a project image at `/share/project-mr-rider`.
+
+Edit `app/icon.svg` to update the PK monogram, then run `npm run brand:icons` to regenerate the favicon and Apple icon. The generator uses the Sharp package installed with Next.js.
+
+To check the production metadata, run `npm run build`, start the production server with `npm run start -- --port 3001`, then run `npm run check:metadata` in another terminal. To check another server, use `npm run check:metadata -- https://your-domain.example`.
 
 ## Getting Started
 

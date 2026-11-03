@@ -1,152 +1,313 @@
 "use client";
 
+import { useState } from "react";
 import { Card } from "@/components/ui/Card";
-import { Send, Mail, Linkedin, Github, Loader2 } from "lucide-react";
-import { motion } from "framer-motion";
+import {
+  Copy,
+  Check,
+  ArrowUpRight,
+  Mail,
+  Linkedin,
+  Github,
+  ChevronDown,
+} from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { clsx } from "clsx";
-import { useState } from "react";
 
-// Zod Schema (Strict Validation)
+const EMAIL = "pardhu.karnati2003@gmail.com";
+
+const INTERESTS = [
+  "collaboration",
+  "engineering",
+  "consultation",
+  "just to say hi",
+] as const;
+
 const formSchema = z.object({
-    name: z.string().min(2, { message: "Name is required" }),
-    interest: z.enum(["collaboration", "engineering", "consultation", "just to say hi"]),
-    email: z.string().email({ message: "Invalid email address" }),
+  name: z.string().trim().min(2, { message: "Name is required" }),
+  interest: z.enum(INTERESTS),
+  email: z.string().trim().email({ message: "Invalid email address" }),
+  message: z
+    .string()
+    .trim()
+    .min(10, { message: "A little more detail, please" }),
 });
 
+type FormValues = z.infer<typeof formSchema>;
+
+const FIELD_BASE =
+  "bg-transparent border-b-2 outline-none px-2 w-full transition-colors placeholder:text-text-muted";
+
 export default function ContactPage() {
-    const [isSubmitting, setIsSubmitting] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "error">(
+    "idle",
+  );
+  const [draftReady, setDraftReady] = useState(false);
+  async function copyEmail() {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setCopyStatus("copied");
+    } catch {
+      setCopyStatus("error");
+    }
+  }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { interest: "collaboration" },
+  });
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            interest: "collaboration"
-        }
-    });
+  // Static site: hand off to the user's mail client. No artificial delay —
+  // the spinner used to imply a send that never happened.
+  const onSubmit = (data: FormValues) => {
+    const subject = `Signal from ${data.name}: ${data.interest}`;
+    const body = `${data.message}\n\n—\n${data.name}\n${data.email}`;
+    setDraftReady(true);
+    window.location.assign(
+      `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
+    );
+  };
 
-    const onSubmit = async (data: z.infer<typeof formSchema>) => {
-        setIsSubmitting(true);
-        // Simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
+  return (
+    <div className="relative w-full max-w-3xl mx-auto px-4 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700 pb-24">
+      {/* Ambient Background Glow */}
+      <div className="absolute top-1/4 left-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-brand-light/40 rounded-full blur-[100px] -z-10 pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-brand-main/15 rounded-full blur-[100px] -z-10 pointer-events-none" />
 
-        console.log("Form Data:", data);
-        const subject = `Signal from ${data.name}: ${data.interest}`;
-        const body = `Name: ${data.name}\nInterest: ${data.interest}\nEmail: ${data.email}`;
-        // Fallback to mailto for this static demo
-        window.location.href = `mailto:pardhu.karnati2003@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      <div className="mb-8 text-center relative z-10">
+        <h1 className="text-4xl font-display font-bold text-text-primary">
+          Signal
+        </h1>
+        <p className="text-text-secondary mt-2">
+          A project, an opportunity, or just a hello.
+        </p>
+      </div>
 
-        setIsSubmitting(false);
-    };
-
-    return (
-        <div className="relative min-h-[60vh] flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-700 pb-32 md:pb-40">
-
-            {/* Ambient Background Glow */}
-            <div className="absolute top-1/4 left-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-brand-light/40 rounded-full blur-[100px] -z-10 animate-pulse pointer-events-none" />
-            <div className="absolute bottom-1/4 right-1/4 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-emerald-200/30 rounded-full blur-[100px] -z-10 animate-pulse pointer-events-none" style={{ animationDelay: '2s' }} />
-
-            <div className="mb-8 text-center relative z-10">
-                <h1 className="text-4xl font-display font-bold text-text-primary">Signal</h1>
-                <p className="text-text-secondary mt-2">Broadcast a message frequency.</p>
-            </div>
-
-            <Card className="max-w-2xl w-full !p-8 md:p-14 border-2 border-brand-light dark:border-white/10 shadow-xl bg-white/50 dark:bg-[#0F261E]/80 backdrop-blur-md relative overflow-hidden">
-                <form onSubmit={handleSubmit(onSubmit)} className="text-xl md:text-2xl leading-relaxed text-text-primary font-medium flex flex-wrap items-baseline gap-x-2 gap-y-6 md:gap-y-8">
-
-                    {/* Name Field */}
-                    <span className="opacity-50">Hello, my name is</span>
-                    <div className="relative flex-1 min-w-[160px] max-w-full">
-                        <input
-                            {...register("name")}
-                            type="text"
-                            placeholder="your name"
-                            aria-label="Your Name"
-                            disabled={isSubmitting}
-                            className={clsx(
-                                "bg-transparent border-b-2 outline-none px-2 w-full transition-colors placeholder:text-gray-300 dark:placeholder:text-[#8EBAAA]/50",
-                                errors.name ? "border-red-400" : "border-gray-200 dark:border-white/20 focus:border-brand-main dark:focus:border-[#2CC082] hover:border-gray-300 dark:hover:border-white/40"
-                            )}
-                        />
-                        {errors.name && <p className="absolute -bottom-6 left-0 text-xs text-red-500 font-mono">{errors.name.message}</p>}
-                    </div>
-
-                    {/* Interest Dropdown */}
-                    <span className="opacity-50 w-full md:w-auto mt-2 md:mt-0">and I'm looking for</span>
-                    <div className="relative flex-1 min-w-[200px] max-w-full">
-                        <select
-                            {...register("interest")}
-                            disabled={isSubmitting}
-                            aria-label="Your Interest"
-                            className="w-full appearance-none bg-transparent border-b-2 border-gray-200 dark:border-white/20 focus:border-brand-main dark:focus:border-[#2CC082] outline-none px-2 pr-8 cursor-pointer hover:border-gray-300 dark:hover:border-white/40 transition-colors text-brand-dark dark:text-[#D1EBE1]"
-                        >
-                            <option value="collaboration" className="bg-white dark:bg-[#0A1C16]">collaboration</option>
-                            <option value="engineering" className="bg-white dark:bg-[#0A1C16]">engineering</option>
-                            <option value="consultation" className="bg-white dark:bg-[#0A1C16]">consultation</option>
-                            <option value="just to say hi" className="bg-white dark:bg-[#0A1C16]">just to say hi</option>
-                        </select>
-                    </div>
-                    <span>.</span>
-
-                    {/* Email Field */}
-                    <span className="opacity-50 w-full lg:w-auto lg:ml-2 mt-2 lg:mt-0">You can reach me at</span>
-                    <div className="relative flex-1 min-w-[220px] max-w-full">
-                        <input
-                            {...register("email")}
-                            type="text"
-                            placeholder="your email address"
-                            aria-label="Your Email"
-                            disabled={isSubmitting}
-                            className={clsx(
-                                "bg-transparent border-b-2 outline-none px-2 w-full transition-colors placeholder:text-gray-300 dark:placeholder:text-[#8EBAAA]/50",
-                                errors.email ? "border-red-400" : "border-gray-200 dark:border-white/20 focus:border-brand-main dark:focus:border-[#2CC082] hover:border-gray-300 dark:hover:border-white/40"
-                            )}
-                        />
-                        {errors.email && <p className="absolute -bottom-6 left-0 text-xs text-red-500 font-mono">{errors.email.message}</p>}
-                    </div>
-                    <span>.</span>
-
-                    {/* Submit Button */}
-                    <div className="pt-10 flex justify-center md:justify-end">
-                        <motion.button
-                            type="submit"
-                            disabled={isSubmitting}
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className={clsx(
-                                "flex items-center gap-2 px-8 py-3 bg-brand-main text-white rounded-full font-bold text-lg shadow-lg shadow-brand-main/30 transition-all",
-                                isSubmitting ? "opacity-70 cursor-not-allowed" : "hover:shadow-brand-main/50"
-                            )}
-                        >
-                            {isSubmitting ? <Loader2 className="animate-spin relative" size={24} /> : (
-                                <>Send Signal <Send size={20} /></>
-                            )}
-                        </motion.button>
-                    </div>
-                </form>
-            </Card>
-
-            {/* Footer Connections */}
-            <div className="mt-12 flex flex-col items-center gap-4">
-                <div className="flex items-center gap-2 text-text-secondary opacity-60 hover:opacity-100 transition-opacity">
-                    <Mail size={16} />
-                    <a href="mailto:pardhu.karnati2003@gmail.com" className="hover:underline">pardhu.karnati2003@gmail.com</a>
-                </div>
-                <div className="flex gap-4">
-                    <a href="https://www.linkedin.com/in/pardhasaradhireddy" target="_blank" className="p-2 bg-white dark:bg-white/5 rounded-full shadow-sm text-text-secondary dark:text-[#8EBAAA] hover:text-[#0077b5] dark:hover:text-[#A9F0D4] dark:hover:bg-white/10 hover:scale-110 active:scale-95 transition-all">
-                        <Linkedin size={20} />
-                    </a>
-                    <a href="https://github.com/PardhaSarathy" target="_blank" className="p-2 bg-white dark:bg-white/5 rounded-full shadow-sm text-text-secondary dark:text-[#8EBAAA] hover:text-brand-main dark:hover:text-[#A9F0D4] dark:hover:bg-white/10 hover:scale-110 active:scale-95 transition-all">
-                        <Github size={20} />
-                    </a>
-                </div>
-            </div>
-
+      <div className="w-full mb-8 px-5 py-5 rounded-2xl bg-bg-card/70 border border-hairline flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="min-w-0 text-center sm:text-left">
+          <p className="text-xs text-text-muted font-bold uppercase tracking-wider mb-2">
+            Prefer a direct email?
+          </p>
+          <a
+            href={`mailto:${EMAIL}`}
+            className="inline-flex items-center gap-2 text-sm sm:text-base text-text-primary font-semibold hover:text-brand-main transition-colors break-all"
+          >
+            <Mail size={17} className="shrink-0" aria-hidden />
+            {EMAIL}
+          </a>
         </div>
-    )
+        <button
+          type="button"
+          onClick={copyEmail}
+          className="inline-flex shrink-0 items-center gap-2 px-4 py-2.5 rounded-full border border-hairline text-sm font-semibold text-brand-main hover:bg-brand-main/10 focus-visible:outline-2 focus-visible:outline-brand-main focus-visible:outline-offset-4 transition-colors"
+        >
+          {copyStatus === "copied" ? (
+            <Check size={16} aria-hidden />
+          ) : (
+            <Copy size={16} aria-hidden />
+          )}
+          {copyStatus === "copied" ? "Copied" : "Copy email"}
+        </button>
+      </div>
+      <p role="status" className="sr-only">
+        {copyStatus === "copied" ? "Email address copied to clipboard." : ""}
+      </p>
+      {copyStatus === "error" && (
+        <p role="status" className="text-sm text-text-secondary mb-6">
+          Select and copy the email address above, or tap it to open your email
+          app.
+        </p>
+      )}
+
+      <Card
+        hoverEffect={false}
+        className="w-full p-8 md:p-12 border-2 border-hairline shadow-xl bg-bg-card/80 backdrop-blur-md relative overflow-hidden"
+      >
+        <form
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}
+          className="text-lg md:text-xl leading-relaxed text-text-primary font-medium space-y-8"
+        >
+          {/* Name */}
+          <div className="space-y-2">
+            <label htmlFor="name" className="block text-text-secondary">
+              Hello, my name is
+            </label>
+            <input
+              {...register("name")}
+              id="name"
+              type="text"
+              placeholder="your name"
+              autoComplete="name"
+              aria-invalid={!!errors.name}
+              aria-describedby={errors.name ? "name-error" : undefined}
+              className={clsx(
+                FIELD_BASE,
+                errors.name
+                  ? "border-red-500"
+                  : "border-hairline focus:border-brand-main hover:border-brand-main/50",
+              )}
+            />
+            {errors.name && (
+              <p
+                id="name-error"
+                className="text-xs text-red-700 dark:text-red-300 font-mono"
+              >
+                {errors.name.message}
+              </p>
+            )}
+          </div>
+
+          {/* Interest */}
+          <div className="space-y-2">
+            <label htmlFor="interest" className="block text-text-secondary">
+              and I&apos;m looking for
+            </label>
+            <div className="relative">
+              <select
+                {...register("interest")}
+                id="interest"
+                className={clsx(
+                  FIELD_BASE,
+                  "appearance-none pr-8 cursor-pointer border-hairline focus:border-brand-main hover:border-brand-main/50",
+                )}
+              >
+                {INTERESTS.map((option) => (
+                  <option
+                    key={option}
+                    value={option}
+                    className="bg-bg-card text-text-primary"
+                  >
+                    {option}
+                  </option>
+                ))}
+              </select>
+              {/* The select is appearance-none; without this there was no
+                                affordance at all and it read as a text input. */}
+              <ChevronDown
+                size={20}
+                aria-hidden
+                className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-text-secondary"
+              />
+            </div>
+          </div>
+
+          {/* Email */}
+          <div className="space-y-2">
+            <label htmlFor="email" className="block text-text-secondary">
+              You can reach me at
+            </label>
+            <input
+              {...register("email")}
+              id="email"
+              type="email"
+              placeholder="your email address"
+              autoComplete="email"
+              aria-invalid={!!errors.email}
+              aria-describedby={errors.email ? "email-error" : undefined}
+              className={clsx(
+                FIELD_BASE,
+                errors.email
+                  ? "border-red-500"
+                  : "border-hairline focus:border-brand-main hover:border-brand-main/50",
+              )}
+            />
+            {errors.email && (
+              <p
+                id="email-error"
+                className="text-xs text-red-700 dark:text-red-300 font-mono"
+              >
+                {errors.email.message}
+              </p>
+            )}
+          </div>
+
+          {/* Message */}
+          <div className="space-y-2">
+            <label htmlFor="message" className="block text-text-secondary">
+              Here&apos;s what I have in mind
+            </label>
+            <textarea
+              {...register("message")}
+              id="message"
+              rows={4}
+              placeholder="a few lines about your project, timeline, or question"
+              aria-invalid={!!errors.message}
+              aria-describedby={errors.message ? "message-error" : undefined}
+              className={clsx(
+                "bg-transparent border-2 rounded-2xl outline-none p-3 w-full text-base transition-colors resize-y placeholder:text-text-muted",
+                errors.message
+                  ? "border-red-500"
+                  : "border-hairline focus:border-brand-main hover:border-brand-main/50",
+              )}
+            />
+            {errors.message && (
+              <p
+                id="message-error"
+                className="text-xs text-red-700 dark:text-red-300 font-mono"
+              >
+                {errors.message.message}
+              </p>
+            )}
+          </div>
+
+          <div className="flex justify-center md:justify-end pt-2">
+            <motion.button
+              type="submit"
+              disabled={isSubmitting}
+              whileHover={reduceMotion ? undefined : { scale: 1.03 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.97 }}
+              className="flex items-center gap-2 px-8 py-3 bg-brand-main text-white dark:text-[#052018] rounded-full font-bold text-lg shadow-lg shadow-brand-main/30 hover:shadow-brand-main/50 transition-shadow disabled:opacity-70"
+            >
+              Compose email <ArrowUpRight size={20} aria-hidden />
+            </motion.button>
+          </div>
+
+          <p className="text-sm text-text-muted text-center md:text-right">
+            Opens an email draft. Review it before sending.
+          </p>
+          <p
+            role="status"
+            className="text-sm text-text-secondary leading-relaxed"
+          >
+            {draftReady
+              ? "Your email app will open with a draft. If it doesn’t open, use the direct email address above."
+              : ""}
+          </p>
+        </form>
+      </Card>
+
+      {/* Footer Connections */}
+      <div className="mt-12 flex flex-col items-center gap-4">
+        <p className="text-sm text-text-muted">Or find me here</p>
+        <div className="flex gap-4">
+          <a
+            href="https://www.linkedin.com/in/pardhasaradhireddy"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn Profile"
+            className="p-2 bg-bg-card rounded-full shadow-sm text-text-secondary hover:text-brand-main hover:scale-110 active:scale-95 transition-all"
+          >
+            <Linkedin size={20} />
+          </a>
+          <a
+            href="https://github.com/PardhaSarathy"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub Profile"
+            className="p-2 bg-bg-card rounded-full shadow-sm text-text-secondary hover:text-brand-main hover:scale-110 active:scale-95 transition-all"
+          >
+            <Github size={20} />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
 }
