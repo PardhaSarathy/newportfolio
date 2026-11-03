@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { PROFILE } from "@/lib/profile";
 
 export const SITE_URL = "https://pardhukarnati.vercel.app";
 export const RESUME_URL = "/assets/Pardhasaradhi_Karnati_ResumeM.pdf";
-export const SITE_NAME = "Pardhu | Full Stack AI Engineer";
+export const SITE_NAME = `Pardhu | ${PROFILE.role}`;
 export const SITE_DESCRIPTION =
-  "Pardhu Karnati is a Full Stack AI Engineer building voice, vision, retrieval systems, and full-stack products end to end.";
+  "Pardhu Karnati is a Software Engineer building full-stack web platforms, Flutter mobile apps, and applied AI systems from design to production.";
 
 export const SITE_PAGES = [
   {
@@ -13,31 +14,31 @@ export const SITE_PAGES = [
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
     previewTitle: "Pardhu Karnati.",
-    label: "FULL STACK AI ENGINEER",
+    label: "SOFTWARE ENGINEER",
     previewDescription:
-      "Voice, vision & retrieval. Model to backend to product.",
+      "Full-stack product engineering. Applied AI. Design to production.",
   },
   {
     path: "/about",
     imageKey: "profile",
     title: "Profile | Pardhu",
     description:
-      "Meet Pardhu Karnati, a Full Stack AI Engineer in Hyderabad. Explore his approach to AI, real-time systems, infrastructure, and product engineering.",
+      "Meet Pardhu Karnati, a Software Engineer in Hyderabad. Explore his experience at Dr. Swift Diagnostics and HCL, full-stack product work, and applied AI.",
     previewTitle: "The person behind the work.",
     label: "PROFILE",
     previewDescription:
-      "Pardhu Karnati. Full Stack AI Engineer, based in Hyderabad, India.",
+      "Pardhu Karnati. Software Engineer, based in Hyderabad, India.",
   },
   {
     path: "/projects",
     imageKey: "work",
     title: "Lab | Pardhu",
     description:
-      "Explore Pardhu’s AI and full-stack engineering projects, including voice agents, Dr.Swift Diagnostics, Mr. Sales, and Mr. Rider.",
+      "Explore Pardhu’s AI and full-stack engineering projects, including Dr.Swift Diagnostics, Mr. Sales, Mr. Rider, Cleocure, and production AI agents.",
     previewTitle: "Ideas into working systems.",
     label: "SELECTED WORK",
     previewDescription:
-      "Voice agents, connected platforms, and the engineering behind them.",
+      "Web platforms, mobile products, applied AI, and the engineering behind them.",
   },
   {
     path: "/certifications",

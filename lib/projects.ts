@@ -38,7 +38,7 @@ import {
 /** Which layer of the stack a project demonstrates. */
 export type Layer = "model" | "serving" | "infra" | "product";
 
-export type Status = "shipped" | "in-progress" | "case-study-only";
+export type Status = "live" | "shipped" | "in-progress" | "case-study-only";
 
 export const LAYERS: readonly Layer[] = [
   "model",
@@ -55,6 +55,7 @@ export const LAYER_LABEL: Record<Layer, string> = {
 };
 
 export const STATUS_LABEL: Record<Status, string> = {
+  live: "Live",
   shipped: "Shipped",
   "in-progress": "In progress",
   "case-study-only": "Case study",
@@ -138,6 +139,7 @@ export interface Project {
   note?: string;
   icon: LucideIcon;
   featured?: boolean;
+  featuredOrder?: number;
   wide?: boolean;
   /** Withheld from the public site until it has real content. */
   draft?: boolean;
@@ -209,6 +211,7 @@ export const PROJECTS: Project[] = [
       "generically as 'a spa chain' until naming is cleared.",
     icon: PhoneCall,
     featured: true,
+    featuredOrder: 4,
   },
   {
     slug: "vision-agent",
@@ -294,35 +297,37 @@ export const PROJECTS: Project[] = [
     hook:
       "Every surface of a live diagnostics platform, built solo from scratch — patient " +
       "app, catalog CMS, edge-rendered website and an AI lab-report generator.",
-    status: "in-progress",
+    status: "live",
     layers: ["product", "serving", "infra", "model"],
     stack: {
-      model: ["Gemini", "OCR"],
-      serving: ["Spring Boot", "Cloudflare Workers", "Playwright"],
+      model: ["Gemini API", "Tesseract OCR", "PyMuPDF"],
+      serving: ["Python", "Spring Boot 3", "Cloudflare Workers", "Playwright"],
       infra: ["Cloudflare D1 / R2 / Queues", "PostgreSQL", "Docker"],
-      product: ["Flutter", "React", "TypeScript"],
+      product: ["Flutter", "Riverpod", "React", "TypeScript", "Thymeleaf"],
     },
     components: [
       {
         name: "Patient app",
-        detail: "Flutter — multi-member booking, reports, biomarker trends",
+        detail:
+          "Flutter + Riverpod — Android, iOS, and web; family booking, reports, and biomarker trend charts.",
         icon: Smartphone,
       },
       {
         name: "CMS",
         detail:
-          "Spring Boot — catalog, pricing, promotions, public catalog API",
+          "Spring Boot 3 — versioned public API, draft/live/retired publishing, audit logs, and automatic CDN cache purging.",
         icon: LayoutDashboard,
       },
       {
         name: "Website",
-        detail: "drswift.in — Cloudflare Workers SSR, OTP login, checkout",
+        detail:
+          "drswift.in — Cloudflare Workers SSR, OTP and Google sign-in, booking, and checkout.",
         icon: Globe,
       },
       {
         name: "Report generator",
         detail:
-          "Lab PDF → OCR + Gemini → visual report → A4 PDF via Playwright",
+          "Python + Tesseract OCR + Gemini — schema-validated extraction, a tested report-rule registry, React visual reports, and print-ready Playwright output.",
         icon: FileText,
       },
     ],
@@ -333,14 +338,12 @@ export const PROJECTS: Project[] = [
       "accepts those events over HMAC-signed endpoints, processes each exactly once, and " +
       "purges the Cloudflare cache on catalog changes.",
     challenge:
-      "In the report generator, the LLM only transcribes the lab PDF into schema-validated " +
-      "JSON. Every clinical display decision (biomarker aliases, reference-range parsing, " +
-      "which of 8 chart types to use) lives in a deterministic, unit-tested Java registry. " +
-      "The preview and the PDF come from the same React report, rendered by Playwright.",
+      "The Python extraction service combines Tesseract OCR, PyMuPDF, and Gemini to turn lab PDFs into schema-validated data. A unit-tested rule registry across nine report panels owns the clinical display logic. The model extracts information; tested code decides how it is presented. The preview and print-ready PDF use the same React report, rendered by Playwright.",
     role: "Solo — design, build and deployment of all four surfaces",
     proof: [{ label: "drswift.in", url: "https://drswift.in" }],
     icon: Stethoscope,
     featured: true,
+    featuredOrder: 2,
     // Wide: the component grid needs two columns to read as a platform
     // rather than a list.
     wide: true,
@@ -352,7 +355,7 @@ export const PROJECTS: Project[] = [
     slug: "mr-sales",
     title: "Mr. Sales",
     hook: "A pharma field-force platform connecting offline field work, office approvals, and platform operations — with a Flutter app, company console, ops console, and product website.",
-    status: "in-progress",
+    status: "live",
     layers: ["product", "infra", "serving"],
     stack: {
       serving: ["Supabase RPC", "Edge Functions"],
@@ -369,7 +372,7 @@ export const PROJECTS: Project[] = [
       {
         name: "Company console",
         detail:
-          "React — people, clients, field activity, sales, claims, payroll, and company settings; a replacement console is being developed alongside the existing app.",
+          "React — people, clients, field activity, sales, claims, payroll, and company settings, with role-based access and organization-scoped visibility.",
         icon: Building2,
       },
       {
@@ -388,18 +391,19 @@ export const PROJECTS: Project[] = [
     architecture:
       "The Flutter app and React consoles share a Supabase backend. Row-level security and server-side visibility rules scope access to the organization and employee hierarchy. Field actions go through RPCs; an offline outbox queues visits, plans, expenses, and orders with client-generated IDs for idempotent retries. Visit photos and receipts stay in private storage, with signed access for authorized readers. The Astro product website is a separate surface on Vercel.",
     challenge:
-      "Field work has to continue through patchy connectivity without creating duplicate records when a request is retried. The app separates screens from repository implementations and adds a durable outbox around offline writes. The server enforces organization scope, employee visibility, and visit rules as well as the app. The replacement company console is developed separately while the existing tenant application remains available until the cut-over.",
+      "Field work has to continue through patchy connectivity without creating duplicate records when a request is retried. The app separates screens from repository implementations and adds a durable outbox around offline writes. The server enforces organization scope, employee visibility, and visit rules as well as the app. Role-based consoles keep field, company, and platform operations separate while sharing the same backend and authorization rules.",
     role: "Solo — product design, schema, mobile app, consoles, and website",
     proof: [{ label: "mrsales.in", url: "https://mrsales.in" }],
     icon: Briefcase,
     featured: true,
-    note: "Updated from Documents/MrSales source in November 2026. Store rollout and the replacement-console cut-over are still in progress; no customer, accuracy, or performance metrics are claimed.",
+    featuredOrder: 1,
+    note: "Updated from the current resume and Documents/MrSales source. Main project confirmed live in November 2026; no customer, accuracy, or performance metrics are claimed.",
   },
   {
     slug: "mr-rider",
     title: "Mr. Rider",
     hook: "A field-rider operations platform that connects on-duty GPS journeys, visits, tasks, and travel-expense review across mobile apps and company dashboards.",
-    status: "in-progress",
+    status: "live",
     layers: ["product", "serving", "infra"],
     stack: {
       serving: ["Supabase RPC", "Edge Functions"],
@@ -446,11 +450,31 @@ export const PROJECTS: Project[] = [
     proof: [{ label: "mrrider.in", url: "https://mrrider.in" }],
     icon: Bike,
     featured: true,
-    note: "Sourced from Documents/MrRider code and product documentation, November 2026. In progress. Public product screens are private by owner decision. No production accuracy, savings, customer counts, or payment-processing claims.",
+    featuredOrder: 3,
+    note: "Sourced from Documents/MrRider code and product documentation, November 2026. Main project confirmed live. Public product screens are private by owner decision. No production accuracy, savings, customer counts, or payment-processing claims.",
+  },
+  {
+    slug: "cleocure",
+    title: "CleoCure",
+    hook: "A live customer web platform for CleoCure Life Sciences, built end to end with React, Vite, and Cloudflare.",
+    status: "live",
+    layers: ["product", "infra"],
+    stack: {
+      product: ["React", "Vite"],
+      infra: ["Cloudflare"],
+    },
+    architecture:
+      "A React customer-facing web application, built with Vite and deployed on Cloudflare. The project covers the interface, application implementation, and deployment for CleoCure Life Sciences.",
+    role: "Sole engineer — end-to-end web platform and deployment",
+    proof: [{ label: "cleocure.com", url: "https://cleocure.com" }],
+    icon: Globe,
+    note: "Project and stack supplied in the current resume. Public website verified reachable in November 2026. No unpublished backend, commerce, traffic, or performance claims.",
   },
 ];
 
 /** Everything publishable on the site. */
 export const PUBLISHED_PROJECTS = PROJECTS.filter((p) => !p.draft);
 
-export const FEATURED_PROJECTS = PUBLISHED_PROJECTS.filter((p) => p.featured);
+export const FEATURED_PROJECTS = PUBLISHED_PROJECTS.filter(
+  (p) => p.featured,
+).sort((a, b) => (a.featuredOrder ?? Infinity) - (b.featuredOrder ?? Infinity));

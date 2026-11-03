@@ -6,13 +6,14 @@ import Link from "next/link";
 import { ProjectSummaryCard } from "@/components/ProjectSummaryCard";
 import { FEATURED_PROJECTS } from "@/lib/projects";
 import { RESUME_URL } from "@/lib/site";
+import { PROFILE } from "@/lib/profile";
 
 const CORE_EXPERTISE = [
-  "Large Language Models",
-  "RAG Systems",
-  "Multi-Agent Workflows",
-  "Computer Vision & OCR",
-  "WebRTC & Infra",
+  "Full-Stack Products",
+  "Flutter & React",
+  "Java & Python",
+  "Applied AI & RAG",
+  "Cloud & System Design",
 ];
 
 export default function Home() {
@@ -52,12 +53,14 @@ export default function Home() {
         >
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-text-primary leading-[1.1] tracking-tighter">
             Hi. I&apos;m Pardhu. <br />
-            <span className="text-brand-main">A Full Stack AI Engineer.</span>
+            <span className="text-brand-main">A {PROFILE.role}.</span>
           </h1>
 
+          <p className="text-sm md:text-base font-semibold text-brand-main">
+            {PROFILE.focus}
+          </p>
           <p className="text-xl md:text-2xl text-text-secondary font-medium leading-relaxed max-w-2xl mx-auto">
-            I ship voice, vision and retrieval systems end to end — model to
-            backend to product, without a handoff.
+            {PROFILE.summary}
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4 pt-3 md:pt-6">

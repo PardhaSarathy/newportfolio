@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { PUBLISHED_PROJECTS } from "@/lib/projects";
 import { SITE_PAGES } from "@/lib/site";
+import { PROFILE } from "@/lib/profile";
 
 export const dynamic = "force-static";
 export const dynamicParams = false;
@@ -148,7 +149,7 @@ export async function GET(
               marginTop: 15,
             }}
           >
-            Full Stack AI Engineer
+            {PROFILE.role}
           </div>
         )}
         <div
@@ -175,7 +176,7 @@ export async function GET(
         }}
       >
         <span style={{ fontSize: 14, letterSpacing: 2, color: "#9CC7B7" }}>
-          MODEL → BACKEND → PRODUCT
+          DESIGN → BUILD → SHIP
         </span>
         <span style={{ fontSize: 17, color: "#D1EBE1" }}>
           pardhukarnati.vercel.app

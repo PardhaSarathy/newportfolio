@@ -7,6 +7,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
   PUBLISHED_PROJECTS,
+  FEATURED_PROJECTS,
   LAYERS,
   LAYER_LABEL,
   type Layer,
@@ -15,9 +16,10 @@ import {
 type Filter = "All" | Layer;
 
 const FILTERS: Filter[] = ["All", ...LAYERS];
-const BROWSE_PROJECTS = [...PUBLISHED_PROJECTS].sort(
-  (a, b) => Number(!!b.featured) - Number(!!a.featured),
-);
+const BROWSE_PROJECTS = [
+  ...FEATURED_PROJECTS,
+  ...PUBLISHED_PROJECTS.filter((project) => !project.featured),
+];
 
 export default function ProjectsPage() {
   return (
@@ -74,8 +76,8 @@ function ProjectsContent({
           Selected Works.
         </h1>
         <p className="text-xl text-text-secondary max-w-2xl leading-relaxed">
-          Voice, vision and retrieval systems taken from model to backend to
-          shipped product. Filter by the layer each one proves.
+          Web platforms, mobile products, and applied AI — built end to end.
+          Explore the systems and the engineering behind them.
         </p>
       </div>
 

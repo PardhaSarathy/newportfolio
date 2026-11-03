@@ -44,11 +44,6 @@ const CERTIFICATES: Certificate[] = [
     accent: "bg-accent-model/10 text-accent-model ring-1 ring-accent-model/20",
   },
   {
-    title: "AWS Cloud Practitioner",
-    issuer: "Amazon Web Services",
-    accent: "bg-accent-infra/10 text-accent-infra ring-1 ring-accent-infra/20",
-  },
-  {
     title: "Python Gold",
     issuer: "HackerRank",
     accent:
@@ -121,6 +116,9 @@ export default function CertificationsPage() {
               </h3>
               <p className="text-sm md:text-base text-text-secondary leading-relaxed mt-2">
                 Sathyabama Institute of Science and Technology, Chennai
+              </p>
+              <p className="text-xs text-text-muted leading-relaxed mt-3">
+                GDSC contributor · Class representative for four years
               </p>
             </div>
             <p className="text-xs text-text-muted font-mono shrink-0 rounded-full border border-hairline bg-surface-sunken px-4 py-2 w-fit">

@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/Card";
 import { RESUME_URL } from "@/lib/site";
+import { EXPERIENCE, PROFILE } from "@/lib/profile";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -9,57 +10,76 @@ import {
   FileText,
   Layers3,
   Server,
-  Terminal,
+  Briefcase,
 } from "lucide-react";
 
 const expertise = [
   {
-    title: "Infrastructure & Deployment",
-    icon: Server,
-    accent: "text-accent-infra bg-accent-infra/10",
-    skills: [
-      "WebRTC & LiveKit",
-      "Docker & Kubernetes",
-      "System architecture & deployment",
-      "Workflow automation (n8n)",
-      "Complex API integrations",
-    ],
-  },
-  {
     title: "Backend & Data",
     icon: Database,
     accent: "text-accent-serving bg-accent-serving/10",
-    skills: ["Python", "Node.js & Express", "SQL & vector databases"],
+    skills: [
+      "Java 17/21 · Spring Boot 3",
+      "Python · FastAPI · Flask",
+      "Node.js · Express",
+      "PostgreSQL · SQL / PL-pgSQL",
+      "Supabase · RLS · RPC · Edge Functions",
+      "MongoDB · Firebase · Cloudflare D1",
+    ],
   },
   {
-    title: "Frontend",
+    title: "Frontend & Mobile",
     icon: Layers3,
     accent: "text-accent-product bg-accent-product/10",
-    skills: ["React", "JavaScript", "HTML & CSS"],
+    skills: [
+      "TypeScript · JavaScript",
+      "React · Vite · Tailwind CSS",
+      "Flutter · Dart · Riverpod · GoRouter",
+      "HTML · CSS · Thymeleaf",
+      "Design systems · WCAG accessibility",
+    ],
   },
   {
-    title: "Core Foundations",
-    icon: Terminal,
+    title: "Cloud, DevOps & Testing",
+    icon: Server,
+    accent: "text-accent-infra bg-accent-infra/10",
+    skills: [
+      "Cloudflare Workers · R2 · Queues · CDN",
+      "AWS EC2 / S3 · Vercel",
+      "Docker · Kubernetes · Nginx",
+      "Git · Linux · GitHub Actions CI/CD",
+      "Playwright · Vitest · JUnit · flutter_test",
+    ],
+  },
+  {
+    title: "System Design & Architecture",
+    icon: Briefcase,
     accent: "text-brand-main bg-brand-main/10",
-    skills: ["C", "Git & version control", "Linux", "Problem solving & DSA"],
+    skills: [
+      "REST APIs · Event-driven services",
+      "Multi-tenant SaaS · RBAC · Tenant isolation",
+      "HMAC signing · OAuth · OTP",
+      "Audit logging · Idempotent writes",
+      "WebSockets · Real-time systems",
+    ],
   },
 ];
 const principles = [
   {
-    title: "System Persistence.",
-    text: "Building agents that don’t just react, but remember and evolve over long-term interactions.",
+    title: "Own the whole system.",
+    text: "Taking responsibility for the design, database, APIs, interface, deployment, and live support that make a product work.",
   },
   {
-    title: "Human Utility.",
-    text: "Bridging the gap between raw AI capability and a product that helps someone do something useful.",
+    title: "AI with clear boundaries.",
+    text: "Using models for extraction, retrieval, and conversation while tested, deterministic code owns business-critical decisions.",
   },
   {
-    title: "Latency Matters.",
-    text: "Treating responsiveness as part of the experience, especially in real-time voice conversations.",
+    title: "Responsiveness matters.",
+    text: "Designing for real-time conversations and unreliable field connectivity, with fast feedback and safe retries.",
   },
   {
-    title: "Clean Code.",
-    text: "Maintainable, typed, and well-documented systems that stay understandable as they grow.",
+    title: "Maintainable by default.",
+    text: "Typed interfaces, automated tests, shared design tokens, and CI/CD that keep systems understandable as they grow.",
   },
 ];
 
@@ -88,21 +108,20 @@ export default function AboutPage() {
           </div>
           <div className="md:col-span-7 space-y-5 md:space-y-6 text-center md:text-left">
             <p className="text-xs font-bold text-text-muted uppercase tracking-[0.18em]">
-              Based in Hyderabad, India
+              Based in {PROFILE.location}
             </p>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-text-primary leading-tight">
-              A <span className="text-brand-main">Full Stack AI Engineer.</span>
+              A <span className="text-brand-main">{PROFILE.role}.</span>
               <br />
-              From model to product.
+              Full-stack products. Applied AI.
             </h2>
             <p className="text-base md:text-lg text-text-secondary leading-relaxed">
-              I build voice, vision, and retrieval systems end to end — from LLM
-              orchestration and RAG pipelines to the backend, infrastructure,
-              and the product people actually use.
+              {PROFILE.summary}
             </p>
             <p className="text-base text-text-secondary leading-relaxed">
-              My focus is connecting those pieces into one useful experience,
-              taking ownership of how the whole system fits together.
+              At Dr. Swift Diagnostics, I’m the sole engineer across customer
+              web platforms, mobile, backend, and AI workflows. My work spans
+              React, Flutter, Python, Java, and Node.js.
             </p>
             <div className="flex flex-wrap justify-center md:justify-start gap-3 pt-2">
               <Link
@@ -123,6 +142,65 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="space-y-7" aria-labelledby="experience-heading">
+        <div className="space-y-2">
+          <h2
+            id="experience-heading"
+            className="text-2xl md:text-3xl font-display font-bold text-text-primary"
+          >
+            Experience
+          </h2>
+          <p className="text-sm text-text-secondary leading-relaxed">
+            Building products and taking responsibility for what ships.
+          </p>
+        </div>
+        <ol className="space-y-5">
+          {EXPERIENCE.map((job) => (
+            <li key={job.company}>
+              <Card
+                hoverEffect={false}
+                className="rounded-[2rem] border border-hairline p-6 md:p-8"
+              >
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                  <div className="space-y-1.5">
+                    <h3 className="text-xl md:text-2xl font-bold text-text-primary">
+                      {job.role}
+                    </h3>
+                    <p className="text-sm font-semibold text-brand-main">
+                      {job.company}
+                    </p>
+                    <p className="text-xs text-text-muted">{job.location}</p>
+                  </div>
+                  <p className="flex items-center gap-2 self-start rounded-full border border-hairline bg-surface-sunken px-3 py-2 text-xs text-text-secondary font-mono whitespace-nowrap">
+                    {job.current && (
+                      <span
+                        aria-hidden
+                        className="h-1.5 w-1.5 rounded-full bg-brand-main"
+                      />
+                    )}
+                    {job.period}
+                  </p>
+                </div>
+                <ul className="mt-5 space-y-3 max-w-3xl">
+                  {job.highlights.map((highlight) => (
+                    <li
+                      key={highlight}
+                      className="flex items-start gap-3 text-sm text-text-secondary leading-relaxed"
+                    >
+                      <span
+                        aria-hidden
+                        className="mt-2 h-1.5 w-1.5 rounded-full bg-brand-main shrink-0"
+                      />
+                      {highlight}
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </li>
+          ))}
+        </ol>
       </section>
 
       <section className="space-y-7" aria-labelledby="expertise-heading">
@@ -148,21 +226,23 @@ export default function AboutPage() {
               </span>
               <div>
                 <p className="text-[10px] font-bold tracking-widest uppercase text-text-muted mb-1">
-                  Core focus
+                  Applied specialism
                 </p>
                 <h3 className="text-xl md:text-2xl font-bold text-text-primary">
-                  AI & Agentic Systems
+                  Applied AI & Real-Time Systems
                 </h3>
               </div>
             </div>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
               {[
-                "Large language models",
-                "Retrieval-augmented generation",
-                "Multi-agent workflows",
-                "Multimodal agents: voice, vision & text",
-                "Computer vision & OCR",
-                "Agentic AI & prompt engineering",
+                "LLM APIs: OpenAI, Gemini & Claude",
+                "RAG · LangChain · LangGraph",
+                "Agentic workflows · Function calling",
+                "Computer vision · OCR · NLP",
+                "Pipecat · LiveKit · WebRTC",
+                "SIP · Twilio · Speech-to-speech",
+                "Prompt engineering · Transformers",
+                "PyTorch · TensorFlow",
               ].map((skill) => (
                 <li
                   key={skill}

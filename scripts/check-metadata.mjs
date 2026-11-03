@@ -34,8 +34,8 @@ const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) =>
 assert.equal(new Set(urls).size, urls.length, "Duplicate sitemap entries");
 assert.equal(
   urls.length,
-  14,
-  "Expected five main pages and nine published projects",
+  15,
+  "Expected five main pages and ten published projects",
 );
 for (const required of [
   "/",
@@ -45,6 +45,7 @@ for (const required of [
   "/contact",
   "/projects/mr-rider",
   "/projects/mr-sales",
+  "/projects/cleocure",
 ]) {
   assert(
     urls.includes(new URL(required, canonicalOrigin).href),

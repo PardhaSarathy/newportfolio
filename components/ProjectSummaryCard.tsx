@@ -21,6 +21,7 @@ const selectedTech: Record<string, string[]> = {
 };
 
 const statusStyle = {
+  live: "bg-accent-model/10 text-accent-model ring-accent-model/25",
   shipped: "bg-accent-model/10 text-accent-model ring-accent-model/25",
   "in-progress": "bg-accent-infra/10 text-accent-infra ring-accent-infra/25",
   "case-study-only": "bg-surface-sunken text-text-secondary ring-hairline",
@@ -91,7 +92,7 @@ export function ProjectSummaryCard({
             <p className="text-sm md:text-base text-text-secondary leading-relaxed">
               {summaries[project.slug] ??
                 project.hook ??
-                "In development. A detailed write-up is on the way."}
+                "A detailed technical write-up is on the way."}
             </p>
           </div>
         </div>

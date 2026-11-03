@@ -16,8 +16,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { clsx } from "clsx";
+import { PROFILE } from "@/lib/profile";
 
-const EMAIL = "pardhu.karnati2003@gmail.com";
+const EMAIL = PROFILE.email;
 
 const INTERESTS = [
   "collaboration",
