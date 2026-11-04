@@ -405,12 +405,16 @@ export const PROJECTS: Project[] = [
     components: [
       {
         name: "Field & manager app",
+        contribution:
+          "Built the day-to-day experience for field reps and managers, including offline field actions and team approvals.",
         detail:
           "Flutter: day plans, location-checked visits, orders, expenses, tour plans, leave, and team approvals; offline actions queue for sync.",
         icon: Smartphone,
       },
       {
         name: "Company console",
+        contribution:
+          "Built the office workspace for company teams to manage people, clients, field activity and claims.",
         detail:
           "React: people, clients, field activity, sales, claims, payroll, and company settings, with role-based access and organization-scoped visibility.",
         icon: Building2,
@@ -419,15 +423,75 @@ export const PROJECTS: Project[] = [
         name: "Platform ops console",
         detail:
           "React: organization onboarding, plans, subscriptions, invoices, support, system health, and audited administrative actions.",
+        contribution:
+          "Built the operational workspace for onboarding organizations, managing plans and supporting companies.",
         icon: ServerCog,
       },
       {
         name: "Product website",
         detail:
           "Astro + GSAP: product storytelling, pricing, and a server-side demo-enquiry form at mrsales.in.",
+        contribution:
+          "Designed and built the public product story, pricing pages and demo-enquiry experience.",
         icon: Globe,
       },
     ],
+    problem:
+      "Pharma field work spans visits, orders and expenses, often through patchy connectivity. Managers need to review requests, office teams need visibility into company activity, and platform staff need their own controls. The product connects those workflows while keeping each organization's records and roles separate.",
+    caseStudy: {
+      responsibility:
+        "I owned product design and engineering across the database schema, Flutter app, company console, platform ops console and public website.",
+      journeys: [
+        {
+          title: "From a day plan to a recorded visit",
+          steps: [
+            {
+              title: "Plan the field day",
+              detail: "Reps submit a day plan and use the app to see their work and upcoming visits.",
+            },
+            {
+              title: "Record the visit",
+              detail: "A visit combines a location check, call notes and a photo, with orders captured in the same field app.",
+            },
+            {
+              title: "Keep working offline",
+              detail: "Supported field actions queue when the signal drops and sync when it returns, with retry IDs preventing duplicate records.",
+            },
+          ],
+        },
+        {
+          title: "From a field request to team review",
+          steps: [
+            {
+              title: "Submit the request",
+              detail: "Reps submit expenses with receipts, leave, tour plans and orders through the app.",
+            },
+            {
+              title: "Review as a manager",
+              detail: "Managers review their team's requests and approve or reject them, with a reason required for rejection.",
+            },
+            {
+              title: "Bring the office into the loop",
+              detail: "Company teams use their console to review field activity, sales and claims within their organization and role.",
+            },
+          ],
+        },
+      ],
+      outcomes: [
+        {
+          title: "Field work through patchy signal",
+          detail: "Day plans, visits, orders and expenses have an offline queue with idempotent retries when connectivity returns.",
+        },
+        {
+          title: "Connected, role-based workspaces",
+          detail: "The field app and company console share records through one backend, with organization and employee-hierarchy visibility enforced server-side.",
+        },
+        {
+          title: "A platform beyond the field app",
+          detail: "An ops console supports organization onboarding and audited administration, while the live product website explains the service and accepts demo enquiries.",
+        },
+      ],
+    },
     architecture:
       "The Flutter app and React consoles share a Supabase backend. Row-level security and server-side visibility rules scope access to the organization and employee hierarchy. Field actions go through RPCs; an offline outbox queues visits, plans, expenses, and orders with client-generated IDs for idempotent retries. Visit photos and receipts stay in private storage, with signed access for authorized readers. The Astro product website is a separate surface on Vercel.",
     challenge:
@@ -459,12 +523,16 @@ export const PROJECTS: Project[] = [
     components: [
       {
         name: "Rider & manager app",
+        contribution:
+          "Built the rider and manager workflows for on-duty journeys, visits, tasks and travel review.",
         detail:
           "Flutter: on-duty location tracking, offline GPS uploads, visits, assigned tasks, routes, and manager review. Location collection stops outside duty.",
         icon: Smartphone,
       },
       {
         name: "Company dashboard",
+        contribution:
+          "Built the company workspace for field visibility, route review, approvals and travel records.",
         detail:
           "React + MapLibre: live field visibility, routes, attendance, approvals, travel records, and downloadable workbooks.",
         icon: MapPin,
@@ -473,15 +541,75 @@ export const PROJECTS: Project[] = [
         name: "Platform ops console",
         detail:
           "React: company administration, platform settings, support, app-update controls, and health monitoring.",
+        contribution:
+          "Built platform controls for company administration, support and app-update management.",
         icon: ServerCog,
       },
       {
         name: "Product website",
         detail:
           "Astro + GSAP: original route illustrations, product workflows, GPS-verification explanations, and demo enquiries at mrrider.in.",
+        contribution:
+          "Designed and built the public website with original journey illustrations and explanations of the measurement workflow.",
         icon: Globe,
       },
     ],
+    problem:
+      "A phone's live GPS estimate is not enough to finalize a travel-expense record. Field journeys can include missing signal and uncertain GPS gaps, while companies still need distance records they can review. The product separates on-duty tracking, server-side measurement and manager review, with location collection stopping outside duty.",
+    caseStudy: {
+      responsibility:
+        "My engineering work spans the rider and manager app, company dashboard, platform ops console, backend measurement workflow and public website.",
+      journeys: [
+        {
+          title: "From starting duty to measured distance",
+          steps: [
+            {
+              title: "Start the work journey",
+              detail: "The rider app records location during duty, alongside visits and assigned tasks. Collection stops outside duty.",
+            },
+            {
+              title: "Carry the trail through signal gaps",
+              detail: "GPS observations can upload after connectivity returns, keeping collection separate from server measurement.",
+            },
+            {
+              title: "Measure on the server",
+              detail: "The server cleans the trail and measures ridden distance, checking completed legs against road-distance and trusted-history estimates.",
+            },
+          ],
+        },
+        {
+          title: "From an uncertain journey to review",
+          steps: [
+            {
+              title: "Surface the uncertainty",
+              detail: "GPS gaps and provisional distance estimates are routed for review rather than silently treated as final travel records.",
+            },
+            {
+              title: "Review the journey",
+              detail: "Managers and company teams review routes, uncertain journeys and travel records through their own workspaces.",
+            },
+            {
+              title: "Work with the records",
+              detail: "The company dashboard brings travel records, attendance and approvals together, with downloadable workbooks for further review.",
+            },
+          ],
+        },
+      ],
+      outcomes: [
+        {
+          title: "Duty-aware field tracking",
+          detail: "The rider app supports on-duty location collection and offline GPS uploads, with visits and tasks alongside the journey.",
+        },
+        {
+          title: "Measurement with a review path",
+          detail: "Server-side trail checks and distance measurement are separate from the phone's estimate. Uncertain journeys remain reviewable by managers and company teams.",
+        },
+        {
+          title: "Traceable travel records",
+          detail: "Measured days record an engine version, and later rule changes do not silently rewrite locked records. Company dashboards provide travel records and workbook exports.",
+        },
+      ],
+    },
     architecture:
       "The Flutter app records GPS points during duty and uploads them to a shared Supabase backend. Server-side measurement cleans the trail, computes ridden distance, and compares completed legs with road-distance and trusted-history estimates. PostgreSQL, PostGIS, and pgRouting support the routing layer. Managers and company dashboards review uncertain journeys and travel records; the ops console manages the platform. Companies remain separated by row-level security, and the Astro website is deployed independently on Vercel.",
     challenge:
