@@ -110,6 +110,7 @@ export interface ProjectLink {
  */
 export interface ProjectComponent {
   name: string;
+  contribution?: string;
   /** One short line. Omit rather than pad. */
   detail?: string;
   icon: LucideIcon;
@@ -126,6 +127,14 @@ export interface Project {
   /** Distinct surfaces built within this one project. */
   components?: ProjectComponent[];
   problem?: string;
+  caseStudy?: {
+    responsibility: string;
+    journeys: {
+      title: string;
+      steps: { title: string; detail: string }[];
+    }[];
+    outcomes: { title: string; detail: string }[];
+  };
   architecture?: string;
   challenge?: string;
   metrics?: { label: string; value: string }[];
@@ -306,29 +315,62 @@ export const PROJECTS: Project[] = [
     components: [
       {
         name: "Patient app",
+        contribution: "Built the patient experience for family bookings, report access and biomarker trends.",
         detail:
           "Flutter + Riverpod: Android, iOS, and web; family booking, reports, and biomarker trend charts.",
         icon: Smartphone,
       },
       {
         name: "CMS",
+        contribution: "Built the staff publishing workflow and the API that supplies the public catalog.",
         detail:
           "Spring Boot 3: versioned public API, draft/live/retired publishing, audit logs, and automatic CDN cache purging.",
         icon: LayoutDashboard,
       },
       {
         name: "Website",
+        contribution: "Built the public browsing, sign-in, booking and checkout experience.",
         detail:
           "drswift.in: Cloudflare Workers SSR, OTP and Google sign-in, booking, and checkout.",
         icon: Globe,
       },
       {
         name: "Report generator",
+        contribution: "Built the pipeline from lab PDFs to structured data, visual reports and printable output.",
         detail:
           "Python + Tesseract OCR + Gemini: schema-validated extraction, a tested report-rule registry, React visual reports, and print-ready Playwright output.",
         icon: FileText,
       },
     ],
+    problem:
+      "Patients need to find and book tests, staff need to publish the catalog, and lab PDFs need to become readable reports. The platform connects these workflows across mobile, web and internal tools, with controlled publishing and consistent report output.",
+    caseStudy: {
+      responsibility:
+        "I owned design, implementation and deployment across all four surfaces: the patient app, catalog CMS, public website and report generator.",
+      journeys: [
+        {
+          title: "From finding a test to booking it",
+          steps: [
+            { title: "Browse the catalog", detail: "The public website presents tests and pricing from the published CMS catalog." },
+            { title: "Sign in and book", detail: "Patients use OTP or Google sign-in, then continue through booking and checkout." },
+            { title: "Connect the booking", detail: "Booking events sync back to the CMS through a queued workflow." },
+          ],
+        },
+        {
+          title: "From a lab PDF to a visual report",
+          steps: [
+            { title: "Read the source document", detail: "PDF extraction and OCR read the lab document; Gemini helps extract structured data." },
+            { title: "Validate and present", detail: "Schema validation checks the extracted structure. Tested rules control how results are displayed." },
+            { title: "Preview and print", detail: "The same React report powers the visual preview and the print-ready PDF." },
+          ],
+        },
+      ],
+      outcomes: [
+        { title: "Patient-facing workflows, shipped", detail: "A live website for browsing and booking, alongside a patient app for family bookings, reports and biomarker trends." },
+        { title: "Controlled catalog publishing", detail: "Draft, live and retired states, audit logs and cache purging keep publishing explicit across the platform." },
+        { title: "One report, two outputs", detail: "Structured extraction and tested display rules feed a shared report for preview and printable PDF output." },
+      ],
+    },
     architecture:
       "The website runs as a Cloudflare Worker that renders pages and acts as the BFF for " +
       "the app and field staff. It reads the catalog from the Spring Boot CMS (PostgreSQL) " +

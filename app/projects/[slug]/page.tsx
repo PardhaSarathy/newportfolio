@@ -5,9 +5,11 @@ import {
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
+  Check,
   Layers3,
   Lightbulb,
   Wrench,
+  Route,
 } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import {
@@ -68,11 +70,13 @@ export default async function ProjectPage({
 
   const sections = [
     { id: "overview", label: "Project brief" },
-    ...(project.components ? [{ id: "product", label: "What I built" }] : []),
+    ...(project.components ? [{ id: "product", label: project.caseStudy ? "My contribution" : "What I built" }] : []),
+    ...(project.caseStudy ? [{ id: "walkthrough", label: "Walkthrough" }] : []),
     ...(project.architecture || hasSystemMap(slug)
       ? [{ id: "architecture", label: "Architecture" }]
       : []),
     ...(project.challenge ? [{ id: "decisions", label: "Decisions" }] : []),
+    ...(project.caseStudy ? [{ id: "outcome", label: "Outcome" }] : []),
     ...(project.stack ? [{ id: "stack", label: "Stack" }] : []),
   ];
 
@@ -165,9 +169,16 @@ export default async function ProjectPage({
               : project.layers.map((layer) => LAYER_LABEL[layer]).join(" · ")}
           </p>
         </div>
+        {project.caseStudy && (
+          <div className="sm:col-span-2 pt-6 md:pt-8 space-y-5 max-w-3xl">
+            <h2 className="text-2xl md:text-3xl font-display font-bold text-text-primary">The problem to solve</h2>
+            <p className="text-base md:text-lg text-text-secondary leading-relaxed">{project.problem}</p>
+            <p className="text-base md:text-lg text-text-secondary leading-relaxed">{project.caseStudy.responsibility}</p>
+          </div>
+        )}
       </div>
 
-      {hasProjectPreview(slug) && <ProjectPreview slug={slug} />}
+      {!project.caseStudy && hasProjectPreview(slug) && <ProjectPreview slug={slug} />}
 
       {project.metrics && (
         <section
@@ -191,8 +202,8 @@ export default async function ProjectPage({
         <section id="product" className="space-y-6 scroll-mt-28">
           <SectionHeading
             icon={<Layers3 size={22} aria-hidden />}
-            title="What I built"
-            subtitle="The connected surfaces that make up the product."
+            title={project.caseStudy ? "My contribution" : "What I built"}
+            subtitle={project.caseStudy ? "End-to-end ownership, across four connected surfaces." : "The connected surfaces that make up the product."}
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {project.components.map((component) => (
@@ -212,6 +223,9 @@ export default async function ProjectPage({
                 <h3 className="text-xl font-bold text-text-primary">
                   {component.name}
                 </h3>
+                {component.contribution && (
+                  <p className="text-text-primary text-base leading-relaxed">{component.contribution}</p>
+                )}
                 {component.detail && (
                   <p className="text-text-secondary text-sm leading-relaxed">
                     {component.detail}
@@ -220,6 +234,36 @@ export default async function ProjectPage({
               </Card>
             ))}
           </div>
+        </section>
+      )}
+
+      {project.caseStudy && (
+        <section id="walkthrough" className="space-y-8 scroll-mt-28">
+          <SectionHeading
+            icon={<Route size={22} aria-hidden />}
+            title="Two workflows, one platform"
+            subtitle="A public website preview, followed by the journeys behind it."
+          />
+          {hasProjectPreview(slug) && <ProjectPreview slug={slug} />}
+          <div className="grid gap-10 md:grid-cols-2 md:gap-12">
+            {project.caseStudy.journeys.map((journey) => (
+              <div key={journey.title} className="space-y-6">
+                <h3 className="text-xl font-display font-bold text-text-primary">{journey.title}</h3>
+                <ol className="space-y-0">
+                  {journey.steps.map((step, index) => (
+                    <li key={step.title} className="relative flex gap-4 pb-6 last:pb-0 [&:not(:last-child)]:before:absolute [&:not(:last-child)]:before:left-[15px] [&:not(:last-child)]:before:top-9 [&:not(:last-child)]:before:bottom-1 [&:not(:last-child)]:before:w-px [&:not(:last-child)]:before:bg-hairline">
+                      <span className="flex size-8 shrink-0 items-center justify-center rounded-full border border-brand-main/25 bg-brand-main/5 font-mono text-xs text-brand-main" aria-hidden>{String(index + 1).padStart(2, "0")}</span>
+                      <div className="space-y-2 pt-1">
+                        <h4 className="font-semibold text-text-primary leading-snug">{step.title}</h4>
+                        <p className="text-sm text-text-secondary leading-relaxed">{step.detail}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-text-muted leading-relaxed">Simplified workflow overview for this case study.</p>
         </section>
       )}
 
@@ -256,6 +300,24 @@ export default async function ProjectPage({
               {project.challenge}
             </p>
           </Card>
+        </section>
+      )}
+
+      {project.caseStudy && (
+        <section id="outcome" className="space-y-6 scroll-mt-28">
+          <SectionHeading
+            icon={<Check size={22} aria-hidden />}
+            title="What shipped"
+            subtitle="The capabilities delivered across the platform."
+          />
+          <dl className="divide-y divide-hairline border-y border-hairline">
+            {project.caseStudy.outcomes.map((outcome) => (
+              <div key={outcome.title} className="grid gap-3 py-6 md:grid-cols-[1fr_1.5fr] md:gap-10">
+                <dt className="flex items-start gap-3 font-semibold text-text-primary"><Check size={18} className="mt-1 shrink-0 text-brand-main" aria-hidden />{outcome.title}</dt>
+                <dd className="text-text-secondary leading-relaxed">{outcome.detail}</dd>
+              </div>
+            ))}
+          </dl>
         </section>
       )}
 

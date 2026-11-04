@@ -24,6 +24,9 @@ decisions on 4 November 2026. The exceptions below preserve that identity.
 - Navigation vocabulary: Home, Profile, Projects, Credentials, Contact.
 - Keep the approved headline, centered introduction, arch portrait and dock.
 - Only public website screenshots are shown. No private app or console screens.
+- Detailed case studies lead with the problem and personal contribution, then
+  show a public preview, explain user workflows, and describe shipped outcomes.
+  Workflow illustrations are labeled; capabilities are not presented as measured impact.
 - Use sentence case, specific labels and clear action verbs. Project names and
   technical acronyms keep their proper spelling. Do not invent evidence.
 
