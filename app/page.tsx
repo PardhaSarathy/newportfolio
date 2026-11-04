@@ -1,23 +1,25 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, FileText, Github, Linkedin } from "lucide-react";
 import Link from "next/link";
 import { ProjectSummaryCard } from "@/components/ProjectSummaryCard";
-import { FEATURED_PROJECTS } from "@/lib/projects";
+import { FEATURED_PROJECTS, PUBLISHED_PROJECTS } from "@/lib/projects";
+import { ContactInvitation } from "@/components/ContactInvitation";
 import { RESUME_URL } from "@/lib/site";
 import { PROFILE } from "@/lib/profile";
 
 const CORE_EXPERTISE = [
-  "Full-Stack Products",
+  "Full-stack products",
   "Flutter & React",
   "Java & Python",
   "Applied AI & RAG",
-  "Cloud & System Design",
+  "Cloud & system design",
+];
+
+const SELECTED_PROJECTS = [
+  ...FEATURED_PROJECTS.filter((project) => project.status === "live"),
+  ...PUBLISHED_PROJECTS.filter((project) => project.status === "live" && !project.featured),
 ];
 
 export default function Home() {
-  const reduceMotion = useReducedMotion();
   return (
     <div className="home-page relative w-full max-w-5xl mx-auto px-4 pt-8 md:pt-16 pb-24">
       {/* Background Orbs */}
@@ -27,30 +29,17 @@ export default function Home() {
       {/* Hero Section */}
       <section className="home-hero flex flex-col items-center text-center gap-8">
         {/* Availability Badge */}
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: reduceMotion ? 0 : 0.6 }}
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-bg-card/70 dark:bg-white/5 backdrop-blur-md rounded-full text-text-primary font-bold text-xs uppercase tracking-widest border border-hairline shadow-sm">
+        <div>
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-bg-card/70 dark:bg-white/5 rounded-full text-text-primary font-semibold text-xs border border-hairline">
             <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-main opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-main"></span>
             </span>
             Available for new projects
           </div>
-        </motion.div>
+        </div>
 
         {/* Introduction */}
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: reduceMotion ? 0 : 0.6,
-            delay: reduceMotion ? 0 : 0.1,
-          }}
-          className="home-introduction flex flex-col gap-6 max-w-4xl mx-auto"
-        >
+        <div className="home-introduction flex flex-col gap-6 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-text-primary leading-[1.1] tracking-tighter">
             Hi. I&apos;m Pardhu. <br />
             <span className="text-brand-main">A {PROFILE.role}.</span>
@@ -66,7 +55,7 @@ export default function Home() {
           <div className="home-actions flex flex-wrap items-center justify-center gap-4 pt-3 md:pt-6">
             <a
               href="#selected-work"
-              className="inline-flex min-h-12 items-center justify-center gap-2 px-6 py-3 rounded-full bg-brand-main text-white dark:text-[#052018] font-bold text-sm hover:bg-brand-main/90 transition-colors shadow-md shadow-brand-main/20"
+              className="inline-flex min-h-12 items-center justify-center gap-2 px-6 py-3 rounded-full bg-brand-main text-white dark:text-[#052018] font-bold text-sm hover:bg-brand-main/90 transition-colors duration-150"
             >
               View my work <ArrowUpRight size={18} aria-hidden />
             </a>
@@ -85,7 +74,7 @@ export default function Home() {
                 href="https://github.com/PardhaSarathy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 text-text-secondary hover:text-brand-main transition-[color,background-color,transform] rounded-full hover:bg-brand-main/10 active:scale-95"
+                className="p-3 text-text-secondary hover:text-brand-main transition-colors rounded-full hover:bg-brand-main/10"
                 aria-label="GitHub Profile"
               >
                 <Github size={24} />
@@ -95,53 +84,36 @@ export default function Home() {
                 href="https://www.linkedin.com/in/pardhasaradhireddy/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 text-text-secondary hover:text-brand-main transition-[color,background-color,transform] rounded-full hover:bg-brand-main/10 active:scale-95"
+                className="p-3 text-text-secondary hover:text-brand-main transition-colors rounded-full hover:bg-brand-main/10"
                 aria-label="LinkedIn Profile"
               >
                 <Linkedin size={24} />
               </a>
             </div>
           </div>
-        </motion.div>
-      </section>
-
-      {/* Expertise starts beyond the dock's initial resting area. */}
-      <motion.div
-        initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: reduceMotion ? 0 : 0.25,
-          duration: reduceMotion ? 0 : 0.6,
-        }}
-        className="mt-12 flex flex-col items-center gap-5"
-      >
-        <p className="text-xs font-bold text-text-muted tracking-[0.2em] uppercase">
-          Core Expertise
-        </p>
-        <div className="flex flex-wrap justify-center gap-2 md:gap-3 max-w-2xl px-2">
-          {CORE_EXPERTISE.map((skill) => (
-            <span
-              key={skill}
-              className="px-4 py-2 rounded-xl bg-surface-sunken border border-hairline text-text-primary text-xs md:text-sm font-semibold transition-colors hover:bg-brand-main/10 cursor-default"
-            >
-              {skill}
-            </span>
-          ))}
+          <div className="flex flex-wrap justify-center items-center gap-x-3 gap-y-2 text-xs sm:text-[13px] text-text-muted" aria-label="Live production projects">
+            <span className="font-semibold text-text-secondary">Live work</span>
+            {SELECTED_PROJECTS.map((project) => (
+              <Link key={project.slug} href={`/projects/${project.slug}`} className="rounded-sm underline decoration-hairline underline-offset-4 hover:text-brand-main transition-colors">
+                {project.slug === "drswift-diagnostics" ? "Dr. Swift" : project.title}
+              </Link>
+            ))}
+          </div>
         </div>
-      </motion.div>
+      </section>
 
       {/* Selected Works Section */}
       <section
         id="selected-work"
         aria-labelledby="selected-work-heading"
-        className="mt-20 md:mt-28 space-y-10 scroll-mt-8"
+        className="mt-12 space-y-8 scroll-mt-8"
       >
         <div className="flex items-end justify-between gap-4">
           <h2
             id="selected-work-heading"
             className="text-3xl md:text-4xl font-display font-bold text-text-primary"
           >
-            Selected Work
+            Selected work
           </h2>
           <Link
             href="/projects"
@@ -152,19 +124,23 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {FEATURED_PROJECTS.map((project, index) => (
+          {SELECTED_PROJECTS.map((project) => (
             <ProjectSummaryCard
               key={project.slug}
               project={project}
-              delay={index * 0.06}
-              wide={
-                FEATURED_PROJECTS.length % 2 === 1 &&
-                index === FEATURED_PROJECTS.length - 1
-              }
+              showPreview
             />
           ))}
         </div>
       </section>
+
+      <section aria-labelledby="core-expertise-heading" className="mt-16 md:mt-20 border-t border-hairline pt-8 space-y-4">
+        <h2 id="core-expertise-heading" className="text-lg font-display font-bold text-text-primary">Core expertise</h2>
+        <ul className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-text-secondary">
+          {CORE_EXPERTISE.map((skill) => <li key={skill}>{skill}</li>)}
+        </ul>
+      </section>
+      <div className="mt-16 md:mt-20"><ContactInvitation /></div>
     </div>
   );
 }

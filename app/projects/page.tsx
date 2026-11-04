@@ -3,6 +3,7 @@
 import { Suspense, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ProjectSummaryCard } from "@/components/ProjectSummaryCard";
+import { ContactInvitation } from "@/components/ContactInvitation";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import {
@@ -74,10 +75,10 @@ function ProjectsContent({
       {/* Header */}
       <div className="flex flex-col items-center text-center space-y-6">
         <h1 className="text-5xl md:text-7xl font-display font-bold text-text-primary">
-          Selected Works.
+          Selected work.
         </h1>
         <p className="text-xl text-text-secondary max-w-2xl leading-relaxed">
-          Web platforms, mobile products, and applied AI — built end to end.
+          Web platforms, mobile products, and applied AI, built end to end.
           Explore the systems and the engineering behind them.
         </p>
       </div>
@@ -185,6 +186,7 @@ function ProjectsContent({
           />
         </div>
       </div>
+      <ContactInvitation />
     </div>
   );
 }
@@ -204,8 +206,8 @@ function ProjectGroup({ title, projects, live = false, reduceMotion }: {
         <AnimatePresence mode="popLayout">
           {projects.map((project) => (
             <motion.div key={project.slug} layout={!reduceMotion}
-              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+              initial={reduceMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               transition={{ duration: reduceMotion ? 0 : 0.2 }} className="h-full">
               <ProjectSummaryCard project={project} showPreview={live} />
             </motion.div>

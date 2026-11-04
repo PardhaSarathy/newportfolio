@@ -11,7 +11,7 @@ import {
 import {
   Home,
   User,
-  FlaskConical,
+  FolderKanban,
   Library,
   Mail,
   LucideIcon,
@@ -28,9 +28,9 @@ import { DockGesture } from "@/lib/dock-gesture";
 const links = [
   { href: "/", icon: Home, label: "Home" },
   { href: "/about", icon: User, label: "Profile" },
-  { href: "/projects", icon: FlaskConical, label: "Lab" },
-  { href: "/certifications", icon: Library, label: "Shelf" },
-  { href: "/contact", icon: Mail, label: "Signal" },
+  { href: "/projects", icon: FolderKanban, label: "Projects" },
+  { href: "/certifications", icon: Library, label: "Credentials" },
+  { href: "/contact", icon: Mail, label: "Contact" },
 ];
 
 export function FloatingDock() {
@@ -343,8 +343,8 @@ function ThemeToggleIcon({
       </motion.div>
 
       <span className={TOOLTIP_CLASS}>
-        <span className="hidden dark:inline">Light Mode</span>
-        <span className="inline dark:hidden">Dark Mode</span>
+        <span className="hidden dark:inline">Light mode</span>
+        <span className="inline dark:hidden">Dark mode</span>
       </span>
     </button>
   );

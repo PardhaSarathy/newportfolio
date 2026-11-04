@@ -28,13 +28,13 @@ const INTERESTS = [
 ] as const;
 
 const formSchema = z.object({
-  name: z.string().trim().min(2, { message: "Name is required" }),
+  name: z.string().trim().min(2, { message: "Enter your name using at least 2 characters." }),
   interest: z.enum(INTERESTS),
-  email: z.string().trim().email({ message: "Invalid email address" }),
+  email: z.string().trim().email({ message: "Enter an email address like name@company.com." }),
   message: z
     .string()
     .trim()
-    .min(10, { message: "A little more detail, please" }),
+    .min(10, { message: "Add at least 10 characters about your project or question." }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -68,8 +68,8 @@ export default function ContactPage() {
   // Static site: hand off to the user's mail client. No artificial delay —
   // the spinner used to imply a send that never happened.
   const onSubmit = (data: FormValues) => {
-    const subject = `Signal from ${data.name}: ${data.interest}`;
-    const body = `${data.message}\n\n—\n${data.name}\n${data.email}`;
+    const subject = `Portfolio enquiry from ${data.name}: ${data.interest}`;
+    const body = `${data.message}\n\n${data.name}\n${data.email}`;
     setDraftReady(true);
     window.location.assign(
       `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
@@ -84,7 +84,7 @@ export default function ContactPage() {
 
       <div className="mb-8 text-center relative z-10">
         <h1 className="text-4xl font-display font-bold text-text-primary">
-          Signal
+          Contact
         </h1>
         <p className="text-text-secondary mt-2">
           A project, an opportunity, or just a hello.
@@ -93,7 +93,7 @@ export default function ContactPage() {
 
       <div className="w-full mb-8 px-5 py-5 rounded-2xl bg-bg-card/70 border border-hairline flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="min-w-0 text-center sm:text-left">
-          <p className="text-xs text-text-muted font-bold uppercase tracking-wider mb-2">
+          <p className="text-xs text-text-muted font-bold tracking-wide mb-2">
             Prefer a direct email?
           </p>
           <a
@@ -129,7 +129,7 @@ export default function ContactPage() {
 
       <Card
         hoverEffect={false}
-        className="w-full p-8 md:p-12 border-2 border-hairline shadow-xl bg-bg-card/80 backdrop-blur-md relative overflow-hidden"
+        className="w-full p-6 md:p-8 bg-bg-card/90 relative"
       >
         <form
           noValidate
@@ -145,7 +145,7 @@ export default function ContactPage() {
               {...register("name")}
               id="name"
               type="text"
-              placeholder="your name"
+              placeholder="Alex Morgan"
               autoComplete="name"
               aria-invalid={!!errors.name}
               aria-describedby={errors.name ? "name-error" : undefined}
@@ -209,7 +209,7 @@ export default function ContactPage() {
               {...register("email")}
               id="email"
               type="email"
-              placeholder="your email address"
+              placeholder="name@company.com"
               autoComplete="email"
               aria-invalid={!!errors.email}
               aria-describedby={errors.email ? "email-error" : undefined}
@@ -259,13 +259,12 @@ export default function ContactPage() {
             )}
           </div>
 
-          <div className="flex justify-center md:justify-end pt-2">
+          <div className="flex justify-end pt-2">
             <motion.button
               type="submit"
               disabled={isSubmitting}
-              whileHover={reduceMotion ? undefined : { scale: 1.03 }}
-              whileTap={reduceMotion ? undefined : { scale: 0.97 }}
-              className="flex items-center gap-2 px-8 py-3 bg-brand-main text-white dark:text-[#052018] rounded-full font-bold text-lg shadow-lg shadow-brand-main/30 hover:shadow-brand-main/50 transition-shadow disabled:opacity-70"
+              whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+              className="flex w-full sm:w-auto justify-center items-center gap-2 px-8 py-3 bg-brand-main text-white dark:text-[#052018] rounded-full font-bold text-lg hover:bg-brand-main/90 transition-colors duration-150 disabled:opacity-70"
             >
               Compose email <ArrowUpRight size={20} aria-hidden />
             </motion.button>
@@ -294,7 +293,7 @@ export default function ContactPage() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn Profile"
-            className="p-3 bg-bg-card rounded-full shadow-sm text-text-secondary hover:text-brand-main hover:scale-110 active:scale-95 transition-[color,transform]"
+            className="p-3 bg-bg-card rounded-full shadow-sm text-text-secondary hover:text-brand-main transition-[color,transform]"
           >
             <Linkedin size={20} />
           </a>
@@ -303,7 +302,7 @@ export default function ContactPage() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub Profile"
-            className="p-3 bg-bg-card rounded-full shadow-sm text-text-secondary hover:text-brand-main hover:scale-110 active:scale-95 transition-[color,transform]"
+            className="p-3 bg-bg-card rounded-full shadow-sm text-text-secondary hover:text-brand-main transition-[color,transform]"
           >
             <Github size={20} />
           </a>

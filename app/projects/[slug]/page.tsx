@@ -67,7 +67,7 @@ export default async function ProjectPage({
     project.components || project.architecture || project.challenge;
 
   const sections = [
-    { id: "overview", label: "Overview" },
+    { id: "overview", label: "Project brief" },
     ...(project.components ? [{ id: "product", label: "What I built" }] : []),
     ...(project.architecture || hasSystemMap(slug)
       ? [{ id: "architecture", label: "Architecture" }]
@@ -88,7 +88,7 @@ export default async function ProjectPage({
       <header className="case-hero flex flex-col items-center text-center gap-6 max-w-4xl mx-auto">
         <div
           className={cn(
-            "case-hero-icon w-20 h-20 rounded-3xl flex items-center justify-center shadow-lg shadow-black/5",
+            "case-hero-icon w-20 h-20 rounded-3xl flex items-center justify-center",
             accent.tile,
           )}
         >
@@ -115,7 +115,7 @@ export default async function ProjectPage({
             <span
               key={layer}
               className={cn(
-                "px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider",
+                "px-3 py-1.5 rounded-lg text-xs font-bold tracking-wide",
                 accentOfLayer(layer).tile,
               )}
             >
@@ -148,7 +148,7 @@ export default async function ProjectPage({
         className="scroll-mt-28 grid grid-cols-1 sm:grid-cols-2 gap-4"
       >
         <div className="rounded-2xl border border-hairline bg-bg-card/70 backdrop-blur-sm p-6">
-          <p className="text-xs uppercase tracking-widest font-bold text-text-muted mb-2">
+          <p className="text-xs tracking-wide font-bold text-text-muted mb-2">
             My role
           </p>
           <p className="font-semibold text-text-primary leading-relaxed">
@@ -156,12 +156,12 @@ export default async function ProjectPage({
           </p>
         </div>
         <div className="rounded-2xl border border-hairline bg-bg-card/70 backdrop-blur-sm p-6">
-          <p className="text-xs uppercase tracking-widest font-bold text-text-muted mb-2">
+          <p className="text-xs tracking-wide font-bold text-text-muted mb-2">
             {project.components ? "Project scope" : "Focus"}
           </p>
           <p className="font-semibold text-text-primary leading-relaxed">
             {project.components
-              ? `${project.components.length} connected surfaces — ${project.components.map((component) => component.name).join(", ")}`
+              ? `${project.components.length} connected surfaces: ${project.components.map((component) => component.name).join(", ")}`
               : project.layers.map((layer) => LAYER_LABEL[layer]).join(" · ")}
           </p>
         </div>
@@ -179,7 +179,7 @@ export default async function ProjectPage({
               <p className="text-3xl md:text-4xl font-display font-bold text-brand-main">
                 {metric.value}
               </p>
-              <p className="mt-2 text-xs font-bold uppercase tracking-wider text-text-secondary">
+              <p className="mt-2 text-xs font-bold tracking-wide text-text-secondary">
                 {metric.label}
               </p>
             </div>
@@ -195,11 +195,10 @@ export default async function ProjectPage({
             subtitle="The connected surfaces that make up the product."
           />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {project.components.map((component, index) => (
+            {project.components.map((component) => (
               <Card
                 hoverEffect={false}
                 key={component.name}
-                delay={index * 0.04}
                 className="border border-hairline flex flex-col items-start gap-4"
               >
                 <span
@@ -323,7 +322,7 @@ export default async function ProjectPage({
           {project.proof?.length
             ? "Explore the live project using the link above."
             : project.status === "case-study-only"
-              ? "Client work — a public demo is not available on this page."
+              ? "Client work: a public demo is not available on this page."
               : "A public demo link is not available yet."}
         </p>
         <Link
@@ -345,7 +344,7 @@ export default async function ProjectPage({
           <ArrowLeft size={16} aria-hidden /> All projects
         </Link>
         <Link href={`/projects/${next.slug}`} className="group sm:text-right">
-          <span className="block text-xs text-text-muted uppercase tracking-wider mb-2">
+          <span className="block text-xs text-text-muted tracking-wide mb-2">
             Next project
           </span>
           <span className="inline-flex items-center gap-2 text-lg font-bold text-text-primary group-hover:text-brand-main">

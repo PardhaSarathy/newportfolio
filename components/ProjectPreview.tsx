@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Only public marketing websites. No private app or console screens.
@@ -18,12 +17,8 @@ export function ProjectPreview({ slug, compact = false }: { slug: string; compac
   const preview = previews[slug];
   if (!preview) return null;
   return (
-    <figure className={cn("overflow-hidden rounded-2xl border border-hairline bg-surface-sunken", !compact && "rounded-3xl")}>
-      <figcaption className="flex items-center justify-between gap-3 px-4 py-3 text-xs text-text-secondary border-b border-hairline">
-        <span className="inline-flex items-center gap-2"><Globe size={14} aria-hidden />{preview.domain}</span>
-        <span className="text-text-muted">Public website</span>
-      </figcaption>
-      <div className="relative aspect-[32/17] overflow-hidden bg-[#f8f6f1]">
+    <figure className="space-y-3">
+      <div className={cn("relative aspect-[32/17] overflow-hidden border border-hairline bg-bg-card", compact ? "rounded-lg" : "rounded-3xl")}>
         <Image
           src={`/projects/${preview.image}`}
           alt={`${preview.title} public website homepage`}
@@ -32,6 +27,10 @@ export function ProjectPreview({ slug, compact = false }: { slug: string; compac
           className="object-contain"
         />
       </div>
+      <figcaption className="flex items-center justify-between gap-3 text-xs text-text-muted">
+        <span>{preview.domain}</span>
+        <span>Public website</span>
+      </figcaption>
     </figure>
   );
 }

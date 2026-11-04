@@ -125,9 +125,19 @@ html {
 body {
   background-color: var(--color-bg-mist);
   color: var(--color-text-primary);
-  transition:
-    background-color 0.5s ease,
-    color 0.5s ease;
+}
+
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+
+@media (max-width: 359px) {
+  .home-hero { gap: 1.5rem; }
+  .home-introduction { gap: 1rem; }
+  .home-introduction h1 { font-size: 2.5rem; }
+  .home-introduction > p:first-of-type { font-size: 0.75rem; }
+  .home-introduction > p:last-of-type { font-size: 1.125rem; line-height: 1.5; }
+  .home-actions { gap: 0.75rem; }
+  .home-actions > a { padding-inline: 1rem; }
 }
 
 :where(a, button, input, textarea, select):focus-visible {

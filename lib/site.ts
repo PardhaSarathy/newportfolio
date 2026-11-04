@@ -32,7 +32,7 @@ export const SITE_PAGES = [
   {
     path: "/projects",
     imageKey: "work",
-    title: "Lab | Pardhu",
+    title: "Projects | Pardhu",
     description:
       "Explore Pardhu’s AI and full-stack engineering projects, including Dr.Swift Diagnostics, Mr. Sales, Mr. Rider, Cleocure, and production AI agents.",
     previewTitle: "Ideas into working systems.",
@@ -43,7 +43,7 @@ export const SITE_PAGES = [
   {
     path: "/certifications",
     imageKey: "credentials",
-    title: "Shelf | Pardhu",
+    title: "Credentials | Pardhu",
     description:
       "Pardhu Karnati’s education and credentials in computer science, AI, deep learning, cloud computing, and MATLAB, with certificate previews.",
     previewTitle: "Always learning. Always building.",
@@ -54,7 +54,7 @@ export const SITE_PAGES = [
   {
     path: "/contact",
     imageKey: "contact",
-    title: "Signal | Pardhu",
+    title: "Contact | Pardhu",
     description:
       "Contact Pardhu Karnati about AI engineering, full-stack development, project collaboration, or engineering opportunities.",
     previewTitle: "Let’s build something useful.",

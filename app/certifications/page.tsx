@@ -80,7 +80,7 @@ export default function CertificationsPage() {
       <div className="w-full max-w-5xl mx-auto px-4 pb-24 space-y-12 md:space-y-16">
         <header className="space-y-4 pt-4 md:pt-8">
           <h1 className="text-4xl md:text-5xl font-display font-bold text-text-primary tracking-tight">
-            Shelf
+            Credentials
           </h1>
           <p className="text-base md:text-lg text-text-secondary leading-relaxed">
             Education, credentials, and continuous learning.
@@ -122,7 +122,7 @@ export default function CertificationsPage() {
               </p>
             </div>
             <p className="text-xs text-text-muted font-mono shrink-0 rounded-full border border-hairline bg-surface-sunken px-4 py-2 w-fit">
-              2021 — 2025
+              2021 to 2025
             </p>
           </Card>
         </section>
@@ -209,7 +209,7 @@ export default function CertificationsPage() {
               id="specializations-heading"
               className="text-2xl md:text-3xl font-display font-bold text-text-primary"
             >
-              Specializations & Bootcamps
+              Specializations & bootcamps
             </h2>
             <p className="text-sm text-text-secondary leading-relaxed">
               MathWorks Developer Certification Series · MathWorks Training
@@ -225,7 +225,7 @@ export default function CertificationsPage() {
                   setSelectedCertificate({ url: mod.url, alt: mod.label })
                 }
                 aria-label={`View ${mod.label} certificate`}
-                className="group rounded-3xl border border-hairline bg-bg-card p-4 sm:p-5 text-left hover:border-brand-main/30 transition-colors shadow-lg shadow-black/5 dark:shadow-black/20 focus-visible:outline-2 focus-visible:outline-brand-main focus-visible:outline-offset-4"
+                className="group rounded-3xl border border-hairline bg-bg-card p-4 sm:p-5 text-left hover:border-brand-main/30 transition-colors focus-visible:outline-2 focus-visible:outline-brand-main focus-visible:outline-offset-4"
               >
                 <span className="block relative aspect-[16/9] rounded-xl overflow-hidden bg-surface-sunken">
                   <Image

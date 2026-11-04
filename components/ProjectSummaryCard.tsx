@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Card } from "@/components/ui/Card";
-import { accentOf, STATUS_LABEL, LAYER_LABEL, type Project } from "@/lib/projects";
+import { STATUS_LABEL, LAYER_LABEL, type Project } from "@/lib/projects";
 import { cn } from "@/lib/utils";
 import { ProjectPreview } from "@/components/ProjectPreview";
 
@@ -11,9 +11,9 @@ const summaries: Record<string, string> = {
   "drswift-diagnostics":
     "A connected diagnostics platform: patient app, catalog CMS, website, and AI-powered lab reports.",
   "mr-sales":
-    "Offline field work, office approvals, and platform operations — connected across mobile, web, and a shared backend.",
+    "Offline field work, office approvals, and platform operations: connected across mobile, web, and a shared backend.",
   "mr-rider":
-    "On-duty GPS, field visits, and travel-expense review — connecting riders, managers, and company operations.",
+    "On-duty GPS, field visits, and travel-expense review: connecting riders, managers, and company operations.",
 };
 
 const selectedTech: Record<string, string[]> = {
@@ -30,16 +30,13 @@ const statusStyle = {
 
 export function ProjectSummaryCard({
   project,
-  delay = 0,
   wide = false,
   showPreview = false,
 }: {
   project: Project;
-  delay?: number;
   wide?: boolean;
   showPreview?: boolean;
 }) {
-  const accent = accentOf(project);
   const stack = project.stack;
   const tags =
     selectedTech[project.slug] ??
@@ -58,9 +55,8 @@ export function ProjectSummaryCard({
 
   return (
     <Card
-      delay={delay}
       className={cn(
-        "relative group h-full p-6 md:p-8 border border-hairline hover:border-brand-main/30 rounded-[2rem] flex flex-col",
+        "relative group h-full p-4 md:p-6 rounded-3xl md:rounded-[2rem] flex flex-col",
         wide && "md:col-span-2",
       )}
     >
@@ -75,11 +71,10 @@ export function ProjectSummaryCard({
           <div className="flex items-start justify-between gap-3">
             <span
               className={cn(
-                "w-12 h-12 rounded-2xl flex shrink-0 items-center justify-center",
-                accent.tile,
+                "w-8 h-8 flex shrink-0 items-center justify-center text-text-muted",
               )}
             >
-              <project.icon size={25} aria-hidden />
+              <project.icon size={22} strokeWidth={1.5} aria-hidden />
             </span>
             <span
               className={cn(
@@ -133,12 +128,12 @@ export function ProjectSummaryCard({
           {displayTags.length > 0 && (
             <ul
               aria-label={tags.length ? "Selected technologies" : "Engineering layers"}
-              className="flex flex-wrap gap-2 mb-5"
+              className="flex flex-wrap gap-x-4 gap-y-2 mb-5"
             >
               {displayTags.map((tag) => (
                 <li
                   key={tag}
-                  className="px-2.5 py-1 rounded-lg bg-surface-sunken text-text-secondary text-xs font-semibold border border-hairline"
+                  className="text-text-muted text-[13px] leading-relaxed"
                 >
                   {tag}
                 </li>
@@ -147,7 +142,7 @@ export function ProjectSummaryCard({
           )}
           <span className="border-t border-hairline pt-4 flex items-center justify-between gap-3 text-sm font-bold text-brand-main">
             Explore project
-            <span className="w-8 h-8 rounded-full bg-brand-main/10 flex items-center justify-center group-hover:bg-brand-main/20 transition-colors">
+            <span className="w-8 h-8 flex items-center justify-center">
               <ArrowUpRight size={17} aria-hidden />
             </span>
           </span>

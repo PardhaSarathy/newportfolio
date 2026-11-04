@@ -151,13 +151,13 @@ export function ProjectSystemMap({ slug }: { slug: string }) {
   const map = maps[slug];
   if (!map) return null;
   return (
-    <div className="rounded-3xl border border-brand-main/20 bg-bg-card/80 p-4 md:p-8 space-y-6 md:space-y-7 shadow-lg shadow-brand-main/5">
+    <div className="rounded-3xl border border-brand-main/20 bg-bg-card/80 p-4 md:p-8 space-y-6 md:space-y-7">
       <p className="text-sm text-text-secondary leading-relaxed max-w-3xl">
         {map.intro}
       </p>
       {map.paths.map((path) => (
         <div key={path.label} className="space-y-4">
-          <h3 className="text-xs font-bold tracking-widest uppercase text-text-muted">
+          <h3 className="text-xs font-bold tracking-wide text-text-muted">
             {path.label}
           </h3>
           <ol

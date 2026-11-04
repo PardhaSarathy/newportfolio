@@ -25,7 +25,7 @@ import {
  * Cards and case-study pages are generated from these fields so the data and
  * the presentation stay separable.
  *
- * HARD RULE — do not invent project details. A field left `undefined` here is a
+ * HARD RULE: do not invent project details. A field left `undefined` here is a
  * real gap awaiting input from Pardhasaradhi, not a placeholder to fill
  * creatively. Never add latency numbers, accuracy figures, user counts, dates,
  * or architecture claims that were not supplied. Fabricated metrics on a
@@ -70,7 +70,7 @@ export interface Accent {
 
 /**
  * One accent per layer, so the palette encodes coverage rather than domain.
- * Class strings are spelled out in full — Tailwind scans source literals and
+ * Class strings are spelled out in full: Tailwind scans source literals and
  * cannot see interpolated names like `bg-${x}`.
  */
 const LAYER_ACCENT: Record<Layer, Accent> = {
@@ -171,11 +171,11 @@ export const PROJECTS: Project[] = [
     hook: "A self-hosted voice-agent experiment exploring a local speech and conversation pipeline.",
     status: "in-progress",
     layers: ["model", "serving", "infra"],
-    // stack: TBD — which STT, LLM and TTS models; serving runtime; target hardware.
-    // problem: TBD — latency, per-minute cost, or data residency. Pick the real one.
-    // metrics: TBD — time-to-first-audio and full turn latency, against the
+    // stack: TBD: which STT, LLM and TTS models; serving runtime; target hardware.
+    // problem: TBD: latency, per-minute cost, or data residency. Pick the real one.
+    // metrics: TBD: time-to-first-audio and full turn latency, against the
     // cloud-hosted equivalent. That comparison is the story.
-    proofNote: "Recorded video/audio — live hosting is too costly to leave up.",
+    proofNote: "Recorded video/audio: live hosting is too costly to leave up.",
     role: "Solo",
     icon: Mic,
     // Keep this experiment out of featured work until a fuller case study exists.
@@ -237,15 +237,15 @@ export const PROJECTS: Project[] = [
     title: "Production RAG",
     status: "in-progress",
     layers: ["model", "serving", "product"],
-    // problem: DECISION NEEDED — generic RAG demos are the most saturated
+    // problem: DECISION NEEDED: generic RAG demos are the most saturated
     // category on AI portfolios. Pick a use case whose retrieval problem is
     // visibly hard: heterogeneous documents, freshness, ambiguous queries,
     // or domain jargon that breaks naive embedding search.
-    // metrics: must include retrieval eval — Recall@k against a labeled set
+    // metrics: must include retrieval eval: Recall@k against a labeled set
     // is the minimum, not vibes.
     role: "Solo",
     icon: Database,
-    note: "Use case undecided — withheld until there is something real to show.",
+    note: "Use case undecided: withheld until there is something real to show.",
     draft: true,
   },
   {
@@ -254,7 +254,7 @@ export const PROJECTS: Project[] = [
     hook: "Intelligent travel companion that generates personalized itineraries using generative AI.",
     status: "shipped",
     layers: ["product", "serving"],
-    // stack: TBD — mobile framework, backend, which model.
+    // stack: TBD: mobile framework, backend, which model.
     proofNote: "Play Store listing pending.",
     role: "Solo",
     icon: Plane,
@@ -266,8 +266,8 @@ export const PROJECTS: Project[] = [
     hook: "English for Indian users, taught through their own local languages.",
     status: "shipped",
     layers: ["product", "model"],
-    // stack: TBD — which languages, how, and whether speech is involved.
-    // problem: TBD — existing apps teach English through English. Explain why
+    // stack: TBD: which languages, how, and whether speech is involved.
+    // problem: TBD: existing apps teach English through English. Explain why
     // that fails for the target user; the local-language angle is the story.
     proofNote: "Play Store listing pending.",
     role: "Solo",
@@ -284,7 +284,7 @@ export const PROJECTS: Project[] = [
     },
     // challenge: frame as a shipping and cost-control story, not a model
     // story. The AI call is one request; the engineering is everything around it.
-    // metrics: TBD — cost per scan, latency, failure rate.
+    // metrics: TBD: cost per scan, latency, failure rate.
     proofNote: "Play Store listing pending.",
     role: "Solo",
     icon: Salad,
@@ -293,7 +293,7 @@ export const PROJECTS: Project[] = [
     slug: "drswift-diagnostics",
     title: "Dr.Swift Diagnostics",
     hook:
-      "Every surface of a live diagnostics platform, built solo from scratch — patient " +
+      "Every surface of a live diagnostics platform, built solo from scratch: patient " +
       "app, catalog CMS, edge-rendered website and an AI lab-report generator.",
     status: "live",
     layers: ["product", "serving", "infra", "model"],
@@ -307,25 +307,25 @@ export const PROJECTS: Project[] = [
       {
         name: "Patient app",
         detail:
-          "Flutter + Riverpod — Android, iOS, and web; family booking, reports, and biomarker trend charts.",
+          "Flutter + Riverpod: Android, iOS, and web; family booking, reports, and biomarker trend charts.",
         icon: Smartphone,
       },
       {
         name: "CMS",
         detail:
-          "Spring Boot 3 — versioned public API, draft/live/retired publishing, audit logs, and automatic CDN cache purging.",
+          "Spring Boot 3: versioned public API, draft/live/retired publishing, audit logs, and automatic CDN cache purging.",
         icon: LayoutDashboard,
       },
       {
         name: "Website",
         detail:
-          "drswift.in — Cloudflare Workers SSR, OTP and Google sign-in, booking, and checkout.",
+          "drswift.in: Cloudflare Workers SSR, OTP and Google sign-in, booking, and checkout.",
         icon: Globe,
       },
       {
         name: "Report generator",
         detail:
-          "Python + Tesseract OCR + Gemini — schema-validated extraction, a tested report-rule registry, React visual reports, and print-ready Playwright output.",
+          "Python + Tesseract OCR + Gemini: schema-validated extraction, a tested report-rule registry, React visual reports, and print-ready Playwright output.",
         icon: FileText,
       },
     ],
@@ -337,7 +337,7 @@ export const PROJECTS: Project[] = [
       "purges the Cloudflare cache on catalog changes.",
     challenge:
       "The Python extraction service combines Tesseract OCR, PyMuPDF, and Gemini to turn lab PDFs into schema-validated data. A unit-tested rule registry across nine report panels owns the clinical display logic. The model extracts information; tested code decides how it is presented. The preview and print-ready PDF use the same React report, rendered by Playwright.",
-    role: "Solo — design, build and deployment of all four surfaces",
+    role: "Solo: design, build and deployment of all four surfaces",
     proof: [{ label: "drswift.in", url: "https://drswift.in" }],
     icon: Stethoscope,
     featured: true,
@@ -346,13 +346,13 @@ export const PROJECTS: Project[] = [
     // rather than a list.
     wide: true,
     note:
-      "Current employer work — cleared for the site by Pardhasaradhi. Details verified " +
-      "against the codebases (Sep 2026). metrics: TBD — no production numbers supplied.",
+      "Current employer work: cleared for the site by Pardhasaradhi. Details verified " +
+      "against the codebases (Sep 2026). metrics: TBD: no production numbers supplied.",
   },
   {
     slug: "mr-sales",
     title: "Mr. Sales",
-    hook: "A pharma field-force platform connecting offline field work, office approvals, and platform operations — with a Flutter app, company console, ops console, and product website.",
+    hook: "A pharma field-force platform connecting offline field work, office approvals, and platform operations: with a Flutter app, company console, ops console, and product website.",
     status: "live",
     layers: ["product", "infra", "serving"],
     stack: {
@@ -364,25 +364,25 @@ export const PROJECTS: Project[] = [
       {
         name: "Field & manager app",
         detail:
-          "Flutter — day plans, location-checked visits, orders, expenses, tour plans, leave, and team approvals; offline actions queue for sync.",
+          "Flutter: day plans, location-checked visits, orders, expenses, tour plans, leave, and team approvals; offline actions queue for sync.",
         icon: Smartphone,
       },
       {
         name: "Company console",
         detail:
-          "React — people, clients, field activity, sales, claims, payroll, and company settings, with role-based access and organization-scoped visibility.",
+          "React: people, clients, field activity, sales, claims, payroll, and company settings, with role-based access and organization-scoped visibility.",
         icon: Building2,
       },
       {
         name: "Platform ops console",
         detail:
-          "React — organization onboarding, plans, subscriptions, invoices, support, system health, and audited administrative actions.",
+          "React: organization onboarding, plans, subscriptions, invoices, support, system health, and audited administrative actions.",
         icon: ServerCog,
       },
       {
         name: "Product website",
         detail:
-          "Astro + GSAP — product storytelling, pricing, and a server-side demo-enquiry form at mrsales.in.",
+          "Astro + GSAP: product storytelling, pricing, and a server-side demo-enquiry form at mrsales.in.",
         icon: Globe,
       },
     ],
@@ -390,7 +390,7 @@ export const PROJECTS: Project[] = [
       "The Flutter app and React consoles share a Supabase backend. Row-level security and server-side visibility rules scope access to the organization and employee hierarchy. Field actions go through RPCs; an offline outbox queues visits, plans, expenses, and orders with client-generated IDs for idempotent retries. Visit photos and receipts stay in private storage, with signed access for authorized readers. The Astro product website is a separate surface on Vercel.",
     challenge:
       "Field work has to continue through patchy connectivity without creating duplicate records when a request is retried. The app separates screens from repository implementations and adds a durable outbox around offline writes. The server enforces organization scope, employee visibility, and visit rules as well as the app. Role-based consoles keep field, company, and platform operations separate while sharing the same backend and authorization rules.",
-    role: "Solo — product design, schema, mobile app, consoles, and website",
+    role: "Solo: product design, schema, mobile app, consoles, and website",
     proof: [{ label: "mrsales.in", url: "https://mrsales.in" }],
     icon: Briefcase,
     featured: true,
@@ -418,25 +418,25 @@ export const PROJECTS: Project[] = [
       {
         name: "Rider & manager app",
         detail:
-          "Flutter — on-duty location tracking, offline GPS uploads, visits, assigned tasks, routes, and manager review. Location collection stops outside duty.",
+          "Flutter: on-duty location tracking, offline GPS uploads, visits, assigned tasks, routes, and manager review. Location collection stops outside duty.",
         icon: Smartphone,
       },
       {
         name: "Company dashboard",
         detail:
-          "React + MapLibre — live field visibility, routes, attendance, approvals, travel records, and downloadable workbooks.",
+          "React + MapLibre: live field visibility, routes, attendance, approvals, travel records, and downloadable workbooks.",
         icon: MapPin,
       },
       {
         name: "Platform ops console",
         detail:
-          "React — company administration, platform settings, support, app-update controls, and health monitoring.",
+          "React: company administration, platform settings, support, app-update controls, and health monitoring.",
         icon: ServerCog,
       },
       {
         name: "Product website",
         detail:
-          "Astro + GSAP — original route illustrations, product workflows, GPS-verification explanations, and demo enquiries at mrrider.in.",
+          "Astro + GSAP: original route illustrations, product workflows, GPS-verification explanations, and demo enquiries at mrrider.in.",
         icon: Globe,
       },
     ],
@@ -444,7 +444,7 @@ export const PROJECTS: Project[] = [
       "The Flutter app records GPS points during duty and uploads them to a shared Supabase backend. Server-side measurement cleans the trail, computes ridden distance, and compares completed legs with road-distance and trusted-history estimates. PostgreSQL, PostGIS, and pgRouting support the routing layer. Managers and company dashboards review uncertain journeys and travel records; the ops console manages the platform. Companies remain separated by row-level security, and the Astro website is deployed independently on Vercel.",
     challenge:
       "A phone's live distance estimate cannot be treated as a verified travel-expense record. Tracking, distance measurement, and approval are separate concerns: the phone reports observations, the server measures, and uncertain GPS gaps or provisional estimates go to review. Learned route history is bounded by road-distance checks, while an engine version is recorded for measured days so later rule changes do not silently rewrite locked records. Tracking also has to respect duty boundaries and continue through intermittent connectivity.",
-    role: "Product engineering — mobile, dashboards, backend, and website",
+    role: "Product engineering: mobile, dashboards, backend, and website",
     proof: [{ label: "mrrider.in", url: "https://mrrider.in" }],
     icon: Bike,
     featured: true,
@@ -463,7 +463,7 @@ export const PROJECTS: Project[] = [
     },
     architecture:
       "A React customer-facing web application, built with Vite and deployed on Cloudflare. The project covers the interface, application implementation, and deployment for CleoCure Life Sciences.",
-    role: "Sole engineer — end-to-end web platform and deployment",
+    role: "Sole engineer: end-to-end web platform and deployment",
     proof: [{ label: "cleocure.com", url: "https://cleocure.com" }],
     icon: Globe,
     note: "Project and stack supplied in the current resume. Public website verified reachable in November 2026. No unpublished backend, commerce, traffic, or performance claims.",

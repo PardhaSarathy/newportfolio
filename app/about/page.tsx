@@ -15,7 +15,7 @@ import {
 
 const expertise = [
   {
-    title: "Backend & Data",
+    title: "Backend & data",
     icon: Database,
     accent: "text-accent-serving bg-accent-serving/10",
     skills: [
@@ -28,7 +28,7 @@ const expertise = [
     ],
   },
   {
-    title: "Frontend & Mobile",
+    title: "Frontend & mobile",
     icon: Layers3,
     accent: "text-accent-product bg-accent-product/10",
     skills: [
@@ -40,7 +40,7 @@ const expertise = [
     ],
   },
   {
-    title: "Cloud, DevOps & Testing",
+    title: "Cloud, DevOps & testing",
     icon: Server,
     accent: "text-accent-infra bg-accent-infra/10",
     skills: [
@@ -52,7 +52,7 @@ const expertise = [
     ],
   },
   {
-    title: "System Design & Architecture",
+    title: "System design & architecture",
     icon: Briefcase,
     accent: "text-brand-main bg-brand-main/10",
     skills: [
@@ -107,7 +107,7 @@ export default function AboutPage() {
             </div>
           </div>
           <div className="profile-copy md:col-span-7 flex flex-col gap-5 md:gap-6 text-center md:text-left">
-            <p className="text-xs font-bold text-text-muted uppercase tracking-[0.18em]">
+            <p className="text-xs font-bold text-text-muted tracking-[0.18em]">
               Based in {PROFILE.location}
             </p>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-text-primary leading-tight">
@@ -126,7 +126,7 @@ export default function AboutPage() {
             <div className="flex flex-wrap justify-center md:justify-start gap-3 pt-2">
               <Link
                 href="/projects"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand-main text-white dark:text-[#052018] text-sm font-bold shadow-md shadow-brand-main/20 hover:bg-brand-main/90 transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand-main text-white dark:text-[#052018] text-sm font-bold hover:bg-brand-main/90 transition-colors"
               >
                 Explore my work <ArrowUpRight size={16} aria-hidden />
               </Link>
@@ -209,7 +209,7 @@ export default function AboutPage() {
             id="expertise-heading"
             className="text-2xl md:text-3xl font-display font-bold text-text-primary"
           >
-            Technical Arsenal
+            Technical expertise
           </h2>
           <p className="text-sm text-text-secondary leading-relaxed">
             The tools and disciplines behind the work.
@@ -218,18 +218,18 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
           <Card
             hoverEffect={false}
-            className="md:col-span-2 rounded-[2rem] border border-brand-main/25 p-6 md:p-8 shadow-lg shadow-brand-main/5"
+            className="md:col-span-2 rounded-[2rem] border border-brand-main/25 p-6 md:p-8"
           >
             <div className="flex items-center gap-4 mb-6">
               <span className="w-11 h-11 rounded-xl flex shrink-0 items-center justify-center bg-brand-main/10 text-brand-main">
                 <BrainCircuit size={23} aria-hidden />
               </span>
               <div>
-                <p className="text-xs font-bold tracking-widest uppercase text-text-muted mb-1">
+                <p className="text-xs font-bold tracking-wide text-text-muted mb-1">
                   Applied specialism
                 </p>
                 <h3 className="text-xl md:text-2xl font-bold text-text-primary">
-                  Applied AI & Real-Time Systems
+                  Applied AI & real-time systems
                 </h3>
               </div>
             </div>
