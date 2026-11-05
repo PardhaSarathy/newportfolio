@@ -185,6 +185,7 @@ function useMagnification(
 
   const size = useTransform([distance, touchMode], ([value, touch]) => {
     const val = value as number;
+    const base = canMagnify && touch !== 1 ? 48 : 44;
     const max = 80;
     if (
       touch === 1 ||
@@ -193,8 +194,8 @@ function useMagnification(
       val < -RANGE ||
       val > RANGE
     )
-      return 44;
-    return 44 + (1 - Math.abs(val) / RANGE) * (max - 44);
+      return base;
+    return base + (1 - Math.abs(val) / RANGE) * (max - base);
   });
 
   // Touch keeps 44px hit areas fixed; transform the circles above those areas.
@@ -284,7 +285,7 @@ function DockIcon({
           style={{ scale: iconScale }}
           className="flex items-center justify-center"
         >
-          <Icon className="w-5 h-5" />
+          <Icon className="w-5 h-5 md:w-[22px] md:h-[22px]" />
         </motion.div>
       </motion.div>
 
@@ -337,8 +338,8 @@ function ThemeToggleIcon({
           style={{ scale: iconScale }}
           className="flex items-center justify-center"
         >
-          <Sun className="w-5 h-5 hidden dark:block" />
-          <Moon className="w-5 h-5 block dark:hidden" />
+          <Sun className="w-5 h-5 md:w-[22px] md:h-[22px] hidden dark:block" />
+          <Moon className="w-5 h-5 md:w-[22px] md:h-[22px] block dark:hidden" />
         </motion.div>
       </motion.div>
 
