@@ -53,6 +53,9 @@ The runtime theme tokens are in `app/globals.css`.
 - Keep technology names as quiet text. Use pills for statuses and existing
   navigation/actions. Color must never be the only status cue.
 - Touch controls aim for at least 44px. Form fields are at least 48px.
+- The dock is a prominent navigation landmark: 64px desktop buttons with 28px
+  icons inside a 96px bar. Phones use 48px buttons, reducing to 44px below 360px.
+  Keep its wave, reserve bottom clearance, and keep project section links clear.
 - Text pairings measured against flat card colors exceed 4.5:1; this is not a
   blanket contrast claim for every translucent layer or image.
 

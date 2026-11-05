@@ -75,7 +75,7 @@ export default function RootLayout({
           <main
             id="main-content"
             tabIndex={-1}
-            className="pt-10 pb-32 min-h-[90vh] flex flex-col relative z-10 outline-none"
+            className="pt-10 pb-[var(--dock-clearance)] min-h-[90vh] flex flex-col relative z-10 outline-none"
           >
             {children}
           </main>

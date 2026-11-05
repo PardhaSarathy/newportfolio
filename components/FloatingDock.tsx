@@ -148,7 +148,7 @@ export function FloatingDock() {
         }
       }}
       style={{ touchAction: "pan-y pinch-zoom" }}
-      className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] md:bottom-8 inset-x-0 mx-auto w-max max-w-[calc(100vw-1rem)] md:w-fit z-50 flex items-end justify-center gap-0.5 md:gap-3 px-2 md:px-4 py-1.5 md:py-3 rounded-full bg-white/50 dark:bg-[#0A1C16]/60 backdrop-blur-2xl shadow-[0_8px_28px_rgba(2,90,78,0.18)] dark:shadow-[0_0_25px_rgba(169,240,212,0.3)] border border-white/60 dark:border-[#A9F0D4]/20 h-16 md:h-20 transition-colors duration-200"
+      className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] md:bottom-8 inset-x-0 mx-auto w-max max-w-[calc(100vw-1rem)] md:w-fit z-50 flex items-end justify-center gap-0.5 min-[360px]:gap-1 md:gap-4 px-2 md:px-6 py-3 md:py-3.5 rounded-full bg-white/50 dark:bg-[#0A1C16]/60 backdrop-blur-2xl shadow-[0_8px_28px_rgba(2,90,78,0.18)] dark:shadow-[0_0_25px_rgba(169,240,212,0.3)] border border-white/60 dark:border-[#A9F0D4]/20 h-[76px] md:h-24 transition-colors duration-200"
     >
       {links.map((link) => (
         <DockIcon
@@ -159,7 +159,7 @@ export function FloatingDock() {
         />
       ))}
 
-      <div className="w-px h-10 bg-hairline self-center mx-1 transition-colors duration-500" />
+      <div className="w-px h-10 md:h-12 bg-hairline self-center mx-1 transition-colors duration-500" />
 
       <ThemeToggleIcon mouseX={mouseX} touchMode={touchMode} />
     </motion.nav>
@@ -175,7 +175,7 @@ function useMagnification(
   touchMode: MotionValue<number>,
   ref: React.RefObject<HTMLElement | null>,
 ) {
-  const canMagnify = useCanMagnify();
+  const { canMagnify, baseSize } = useDockSizing();
   const reduceMotion = useReducedMotion();
 
   const distance = useTransform(mouseX, (val) => {
@@ -185,8 +185,7 @@ function useMagnification(
 
   const size = useTransform([distance, touchMode], ([value, touch]) => {
     const val = value as number;
-    const base = canMagnify && touch !== 1 ? 48 : 44;
-    const max = 80;
+    const max = 96;
     if (
       touch === 1 ||
       !canMagnify ||
@@ -194,11 +193,11 @@ function useMagnification(
       val < -RANGE ||
       val > RANGE
     )
-      return base;
-    return base + (1 - Math.abs(val) / RANGE) * (max - base);
+      return baseSize;
+    return baseSize + (1 - Math.abs(val) / RANGE) * (max - baseSize);
   });
 
-  // Touch keeps 44px hit areas fixed; transform the circles above those areas.
+  // Touch keeps its responsive hit areas fixed; transform the circles above them.
   // This gives the wave room to move without widening the dock off-screen.
   const touchInfluence = useTransform(
     [distance, touchMode],
@@ -285,7 +284,7 @@ function DockIcon({
           style={{ scale: iconScale }}
           className="flex items-center justify-center"
         >
-          <Icon className="w-5 h-5 md:w-[22px] md:h-[22px]" />
+          <Icon className="size-[22px] min-[360px]:size-6 md:size-7" />
         </motion.div>
       </motion.div>
 
@@ -338,8 +337,8 @@ function ThemeToggleIcon({
           style={{ scale: iconScale }}
           className="flex items-center justify-center"
         >
-          <Sun className="w-5 h-5 md:w-[22px] md:h-[22px] hidden dark:block" />
-          <Moon className="w-5 h-5 md:w-[22px] md:h-[22px] block dark:hidden" />
+          <Sun className="size-[22px] min-[360px]:size-6 md:size-7 hidden dark:block" />
+          <Moon className="size-[22px] min-[360px]:size-6 md:size-7 block dark:hidden" />
         </motion.div>
       </motion.div>
 
@@ -351,16 +350,20 @@ function ThemeToggleIcon({
   );
 }
 
-function useCanMagnify() {
-  const [canMagnify, setCanMagnify] = useState(false);
+function useDockSizing() {
+  const [sizing, setSizing] = useState({ canMagnify: false, baseSize: 44 });
   useEffect(() => {
-    const media = window.matchMedia(
-      "(min-width: 768px) and (hover: hover) and (pointer: fine)",
-    );
-    const sync = () => setCanMagnify(media.matches);
+    const desktop = window.matchMedia("(min-width: 768px)");
+    const roomyPhone = window.matchMedia("(min-width: 360px)");
+    const pointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const media = [desktop, roomyPhone, pointer];
+    const sync = () => setSizing({
+      canMagnify: desktop.matches && pointer.matches,
+      baseSize: desktop.matches ? 64 : roomyPhone.matches ? 48 : 44,
+    });
     sync();
-    media.addEventListener("change", sync);
-    return () => media.removeEventListener("change", sync);
+    media.forEach((query) => query.addEventListener("change", sync));
+    return () => media.forEach((query) => query.removeEventListener("change", sync));
   }, []);
-  return canMagnify;
+  return sizing;
 }
